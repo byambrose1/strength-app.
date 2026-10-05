@@ -1,31 +1,47 @@
-# Build brief for Replit Agent
+# Build brief: turning the prototype into the live product
 
-Paste everything below into Replit Agent after importing this repository.
+For a developer or a build agent. Read `docs/PRODUCT.md` first.
 
----
+## What exists
 
-This repository contains a working single-file prototype, `index.html`, of Holdfast: a 12-week strength programme for people on weekly weight-loss injections. Turn it into a real web app. Keep the existing screens, wording, colours, layout and programme logic exactly as they are unless a step below says otherwise. Do not redesign it.
+A working front end with no backend. Open `index.html` in a browser to run it.
+
+| File | Holds |
+|---|---|
+| `index.html` | Page shell and bottom navigation |
+| `css/styles.css` | All styling. Flat colours, no gradients. |
+| `js/content.js` | Everything a professional reviews: exercises, levels, swaps, screening, safety notes, routines, food guidance, lessons, coach notes |
+| `js/logic.js` | Programme rules as pure functions |
+| `js/app.js` | Screens, interactions, and saving to the browser |
+| `tests/logic.test.js` | Tests for the rules. Run `node tests/logic.test.js`. |
+
+Member data is saved in `localStorage` under `holdfast-v4`. Anything marked "Prototype note" on screen is a stand-in for a backend feature.
 
 ## Keep unchanged
 
-- All programme logic between the comments `programme logic (pure)` and `end pure logic` in `index.html`: `pick`, `sessionList`, `dayPlan`, `dose`, `shouldDrop`, `review`, and the exercise library.
-- The seven-step setup, including the health check. A member who answers yes to any health question must tick the clearance box before a plan is built.
-- The flat colour palette. No gradients.
-- The footer disclaimer. The app must never give advice about medication, dose or diagnosis.
+- The rules in `js/logic.js`. If one must change, change its test in the same commit.
+- The content in `js/content.js`, unless the owner asks. It is under professional review.
+- The nine-step setup. A member who answers yes to any health question must tick the clearance box before a plan is built.
+- The look, the wording and the footer disclaimer.
 
 ## Build, in this order
 
-1. **Accounts.** Email sign-up and login. One account per member.
-2. **Database.** Move everything now kept in `localStorage` under the key `holdfast-v3` into the database, per member: profile, daily logs, strength test results, and weights used per exercise. Health check answers are health data: store them securely and never expose one member's data to another.
-3. **Payments.** Stripe subscription at £18 a month with a 7-day free trial. Setup and the example plan stay free to view. The Today, My plan, Progress and Learn screens need an active subscription or trial. Add a manage or cancel subscription link.
-4. **Videos.** Replace each video placeholder with a real player. Add an admin-only page where the owner can attach a video URL to: the brand film, each exercise by name, the strength test demo, and each lesson. Until a video is attached, keep showing the placeholder.
-5. **Admin view.** An owner-only page listing members with: join date, current week, sessions done in the last 7 days, latest strength score, and whether they flagged new pain in the weekly check-in.
-6. **Legal pages.** Privacy policy, terms, and a health disclaimer, linked from the footer. Leave clearly marked placeholder text for the owner to replace.
+1. **Accounts.** Email sign-up and login.
+2. **Database.** Move the `holdfast-v4` state to the server, per member: profile, daily logs, strength tests, weights, wins, messages. Health answers and conditions are health data: store them securely, never expose one member's data to another, and keep them out of analytics.
+3. **Payments.** A monthly subscription with a 7-day free trial. Price is set by the owner. Welcome, setup and the example member stay free. Add manage and cancel.
+4. **Coach inbox.** Owner-only. Shows member messages and lets a coach reply. Flags: new pain reported, a "stop" or "skip" feeling logged, no session for 10 days, strength score down.
+5. **Videos.** Replace each placeholder with a player. An owner-only page attaches a video URL to each exercise by name, each routine, each lesson, each phase's coach note, the test demo and the brand film. Keep the placeholder until one is attached.
+6. **Circles.** Place each member in a group of up to 12 by start month. Members post short text answers to the weekly question and can react. No images, no direct messages. The owner can remove a post.
+7. **Reminders.** Opt-in email or push: session days, the 4-weekly strength test, the weekly check-in.
+8. **Bring a friend.** A personal invite link that gives the friend a free trial week.
+9. **Legal pages.** Privacy policy, terms and health disclaimer, with marked placeholder text for the owner to replace.
 
 ## Rules
 
-- UK English, pounds sterling.
-- Mobile first. It must work at 400px wide with no sideways scrolling.
-- Do not name any medication brand anywhere in the app or its marketing pages.
-- Do not invent testimonials, member numbers, team members or credentials.
-- Ask before adding any feature not listed here.
+- No chatbot and no AI-written replies to members. Messages are answered by people.
+- Never invent testimonials, member numbers, team members, credentials or circle activity.
+- Never name a medication brand in the product or its marketing pages.
+- Never give advice on medication, dose or diagnosis.
+- UK English and pounds sterling.
+- Mobile first: it must work at 400px wide with no sideways scrolling.
+- Ask the owner before adding anything not listed here.
