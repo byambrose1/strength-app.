@@ -1,16 +1,25 @@
 # Holdfast
 
-A 12-week strength programme for people on weekly weight-loss injections. It plans the training week around injection day, checks the member has eaten enough before training, and adjusts the plan every week.
+The strength programme for people on weight-loss medication. Lose the weight, keep your strength.
 
-## What is here
+Holdfast is a working name.
 
-- `index.html`: the whole working prototype in one file. Open it in a browser to run it.
-- `REPLIT_BRIEF.md`: the build brief to paste into Replit Agent.
+## Run it
+
+Open `index.html` in a browser. There is nothing to install.
+
+Run the rule tests with `node tests/logic.test.js`.
+
+## Read next
+
+- `docs/PRODUCT.md`: who it is for, what it does, and what sets it apart
+- `docs/BUILD_BRIEF.md`: what a developer needs to build to make it a live product
+- `js/content.js` and `js/guides.js`: every exercise, step-by-step guide, routine and piece of guidance, for professional review
 
 ## Status
 
-Prototype. Member data is saved only in the browser on that device. There are no accounts, no payments and no real videos yet.
+Prototype. Member data is saved only in the browser on that device. There are no accounts, payments, real videos or real community yet.
 
-The exercise library, sets and reps, progression rules, injury swaps and health screening questions are drafts and need review by a qualified exercise professional before real members use them.
+The exercise library, sets and reps, injury swaps, safety notes, guided routines, food guidance and health screening questions are drafts. They need review by a qualified exercise professional, and the food and side-effect guidance by a suitable clinician, before real members use them.
 
-Holdfast gives exercise guidance only. It never advises on medication, dose or diagnosis.
+Holdfast gives exercise and general wellbeing guidance only. It never advises on medication, dose or diagnosis.
