@@ -121,7 +121,9 @@ One product: **Holdfast, an app with coaching built into it.** There are no tier
 - coach messages and form checks
 - a circle of members and a weekly live class
 
-The coaching belongs to the app. Coaches are Holdfast's coaching team, employed or contracted by the business, and no individual is named in the product or its marketing.
+The coaching belongs to the app. Members see "your coach" and "a qualified coach", never a named individual.
+
+**Staffing at launch:** the founder answers as the Holdfast coach. This is not announced or shown anywhere in the product. More coaches join the same way later, with nothing for members to notice.
 
 ### What each part needs to be real
 
