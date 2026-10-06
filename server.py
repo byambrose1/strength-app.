@@ -1,27 +1,38 @@
-"""Serve the unchanged Holdfast prototype without exposing repository files."""
+"""Serve the Holdfast prototype: the page and the files it loads, and nothing else in the repository."""
 
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 from pathlib import Path
 from urllib.parse import urlsplit
 
 
-PAGE = Path(__file__).with_name("index.html")
+ROOT = Path(__file__).parent
+# Only these files are ever served. Docs, tests and config stay private.
+FILES = {
+    "/": ("index.html", "text/html; charset=utf-8"),
+    "/index.html": ("index.html", "text/html; charset=utf-8"),
+    "/css/styles.css": ("css/styles.css", "text/css; charset=utf-8"),
+    "/js/content.js": ("js/content.js", "text/javascript; charset=utf-8"),
+    "/js/guides.js": ("js/guides.js", "text/javascript; charset=utf-8"),
+    "/js/logic.js": ("js/logic.js", "text/javascript; charset=utf-8"),
+    "/js/app.js": ("js/app.js", "text/javascript; charset=utf-8"),
+}
 
 
 class Handler(BaseHTTPRequestHandler):
     def do_GET(self):
-        self.serve_page()
+        self.serve_file()
 
     def do_HEAD(self):
-        self.serve_page(head_only=True)
+        self.serve_file(head_only=True)
 
-    def serve_page(self, head_only=False):
-        if urlsplit(self.path).path not in ("/", "/index.html"):
+    def serve_file(self, head_only=False):
+        entry = FILES.get(urlsplit(self.path).path)
+        if entry is None:
             self.send_error(404)
             return
-        content = PAGE.read_bytes()
+        content = (ROOT / entry[0]).read_bytes()
         self.send_response(200)
-        self.send_header("Content-Type", "text/html; charset=utf-8")
+        self.send_header("Content-Type", entry[1])
         self.send_header("Content-Length", str(len(content)))
         self.send_header("Cache-Control", "no-store")
         self.end_headers()
