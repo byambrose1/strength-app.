@@ -2,6 +2,10 @@
 
 Working name. The brand name is not settled.
 
+## What it is
+
+One product: an app with coaching built into it. Members buy Holdfast, not a coach's time, and there is no separate coaching tier. The coaches are Holdfast's coaching team and no individual is named.
+
 ## The member
 
 An adult on weight-loss medication, usually new to strength training and often wary of gyms. Many live with obesity, type 2 diabetes, high blood pressure or sore joints. They mostly want to lose weight. What they fear is ending up lighter but weaker, feeling rough on the medication, and putting it all back on when they stop.

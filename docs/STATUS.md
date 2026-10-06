@@ -107,7 +107,7 @@ These need accounts and a database.
 3. **It teaches.** Step-by-step guides, counted sets, and a way out when it is too hard or it hurts.
 4. **The whole journey,** including coming off and staying off.
 5. **Proof:** a strength score that holds or rises while weight falls.
-6. **People, not chatbots.** When coaching launches, messages are answered by a coaching team, never by software.
+6. **Coaching built in.** Real coaches inside the app: messages, form checks, a circle and a live class. Never a chatbot.
 
 ## 6. Fastest route to market
 
@@ -115,23 +115,31 @@ Members pay for Holdfast: the app, the programme and everything that comes with 
 
 ### What is being sold
 
-| Tier | What the member gets | What it needs behind it |
+One product: **Holdfast, an app with coaching built into it.** There are no tiers and no "with coaching" add-on. A member who joins gets all of it:
+
+- the plan, sessions, guides, toolkit, strength score and progress
+- coach messages and form checks
+- a circle of members and a weekly live class
+
+The coaching belongs to the app. Coaches are Holdfast's coaching team, employed or contracted by the business, and no individual is named in the product or its marketing.
+
+### What each part needs to be real
+
+| Part of the product | Works today | Needs before members rely on it |
 |---|---|---|
-| **Holdfast** | The full app: plan, sessions, guides, toolkit, strength score, progress | Nothing staffed. It runs itself. |
-| **Holdfast with coaching** (later) | The above, plus coach messages, form checks, a circle and live classes | A coaching team. Coaches are staff or contractors of the business. |
+| Plan, sessions, guides, toolkit, score, progress | Yes | Content review and videos |
+| Coach messages and form checks | Screens only | Accounts, a coach inbox, and coaches to answer |
+| Circle | Screen only | Accounts and members |
+| Live class | Described slot | A coach to run it and a booking link |
 
-Launch with the first tier. It is the part that scales without anyone's hours, and it is what "bigger than one person" means in practice.
-
-### Software-first launch (about 2 weeks, close to no cost)
+### Launch (about 2 weeks for the app; coaching follows the backend)
 
 | Piece | How |
 |---|---|
 | The app | Host it free on GitHub Pages. It is a static site, so no server or credits are needed. |
 | Payment | A Stripe payment link, pasted into `LAUNCH.joinUrl` |
-| Videos | The first 12 exercise clips. Anyone qualified can film them; they are presented as Holdfast's, not as one person's. |
-| Coach messages, circle, live class | Switched off or marked "coming soon" until there is a team to staff them |
-
-Start with a small founding group so problems show up early.
+| Videos | The first 12 exercise clips, presented as Holdfast's |
+| Coaching | Shown in the app from day one. Each coaching feature is switched on as soon as it has the backend and the coaches behind it, and until then says plainly when it opens. |
 
 Two limits to know about at this stage:
 
