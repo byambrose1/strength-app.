@@ -122,6 +122,9 @@ const CONTENT = {
     'For life': 'The programme does not end, it settles in. Two or three sessions a week, for good, is what keeps the weight off and the strength on.'
   },
 
+  /* Launch settings. Put the founding-member payment link here to show a Join button on the landing page. */
+  LAUNCH: { joinUrl: '' },
+
   WINS: ['Stairs felt easier', 'Carried the shopping', 'Clothes fit differently', 'Slept better', 'Trained when I did not feel like it', 'Got up off the floor easily'],
   CIRCLE_PROMPT: 'What felt easier this week than it did a month ago?'
 };

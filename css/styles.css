@@ -177,3 +177,57 @@ ol li{margin-bottom:4px}
 @keyframes pace{from{width:0}to{width:100%}}
 @media (prefers-reduced-motion: reduce){.pace i{animation:none;width:100%}}
 h3{margin-top:4px}
+
+/* --- added: landing page, questionnaire, desktop layout --- */
+h1{font-size:2.6rem;font-weight:800;letter-spacing:-.03em}
+a{color:var(--berry)}
+.btn.small{padding:10px 16px;font-size:.92rem}
+a.btn{text-decoration:none;display:inline-block}
+.topnav{display:none}
+.lhero{display:flex;flex-direction:column;gap:24px}
+.lcopy{display:flex;flex-direction:column;gap:14px;align-items:flex-start;min-width:0}
+.lead{font-size:1.15rem;max-width:34rem}
+.phone{align-self:center;width:300px;max-width:100%;border:10px solid var(--plum);border-radius:40px;background:var(--bg);overflow:hidden;flex:none}
+.phonein{zoom:.74;padding:14px;display:flex;flex-direction:column;gap:12px}
+.phone .chip{cursor:default}
+.facts{display:grid;gap:10px}
+.facts div{background:var(--plum);color:#FFFFFF;border-radius:20px;padding:18px;min-width:0}
+.facts b{font-family:var(--display);font-size:1.5rem;color:var(--sun);display:block;line-height:1.1;margin-bottom:6px}
+.lsec{display:flex;flex-direction:column;gap:16px;scroll-margin-top:16px}
+.feats{display:grid;gap:10px}
+.feats .glyph{width:14px;height:14px;border-radius:50%}
+.faq summary{font-family:var(--display);font-weight:800}
+.faq p{margin-top:8px}
+.lcta{text-align:center;align-items:center}
+.sources a{color:var(--muted)}
+.quiz{display:flex;flex-direction:column;gap:16px}
+.say{display:grid;grid-template-columns:26px 1fr;gap:12px;align-items:start;background:var(--surface);border-radius:4px 20px 20px 20px;padding:14px 16px;box-shadow:0 1px 0 var(--line)}
+.say p{font-size:1.05rem;min-width:0}
+.tile small:empty{display:none}
+
+@media (min-width: 900px){
+  body.landing .wrap{max-width:1080px;gap:56px;padding-block:20px 60px}
+  body.landing header{position:static}
+  body.landing .topnav{display:flex;gap:26px;align-items:center;justify-content:flex-end;margin-top:-98px}
+  body.landing .topnav a{color:var(--ink);text-decoration:none;font-weight:600}
+  body.landing .lhero{flex-direction:row;align-items:center;justify-content:space-between;gap:48px}
+  body.landing h1{font-size:4.2rem}
+  body.landing .lsec h2,body.landing .lcta h2{font-size:2.4rem}
+  body.landing .facts{grid-template-columns:repeat(3,1fr);gap:16px}
+  body.landing .feats{grid-template-columns:repeat(3,1fr);gap:16px}
+  body.landing .split{flex-direction:row;gap:48px;align-items:flex-start}
+  body.landing .split>*{flex:1 1 0;min-width:0}
+  body.landing .narrow{max-width:720px;margin-inline:auto;width:100%}
+  body.landing .lcta{padding:56px 24px}
+  body.landing .phone{width:320px}
+  body.focus .wrap{max-width:600px;padding-top:40px}
+  body.inapp{padding-left:230px}
+  body.inapp .wrap{max-width:640px;padding-bottom:40px}
+  body.inapp #tabs{left:0;top:0;bottom:0;right:auto;width:230px;border-top:0;border-right:1px solid var(--line);align-items:flex-start;justify-content:flex-start;padding:84px 14px 20px}
+  body.inapp #tabs div{grid-template-columns:1fr;gap:6px}
+  body.inapp #tabs button{flex-direction:row;justify-content:flex-start;gap:12px;font-size:.98rem;padding:12px 14px}
+}
+.steps{display:flex;flex-direction:column;gap:16px}
+.step{display:grid;grid-template-columns:40px 1fr;gap:14px;align-items:start}
+.step>b{width:40px;height:40px;border-radius:50%;background:var(--sun);color:var(--plum);display:grid;place-items:center;font-family:var(--display);font-size:1.1rem}
+.step div{min-width:0}

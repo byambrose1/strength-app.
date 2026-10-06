@@ -22,7 +22,7 @@ Member data is saved in `localStorage` under `holdfast-v4`. Anything marked "Pro
 
 - The rules in `js/logic.js`. If one must change, change its test in the same commit.
 - The content in `js/content.js` and `js/guides.js`, unless the owner asks. It is under professional review.
-- The nine-step setup. A member who answers yes to any health question must tick the clearance box before a plan is built.
+- The nine-question sign-up. A member who taps any health check item must tick the clearance box before a plan is built.
 - The look, the wording and the footer disclaimer.
 
 ## Build, in this order

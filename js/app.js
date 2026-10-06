@@ -63,56 +63,106 @@ const exNote = () => S.profile.example ? `<div class="note"><p class="small"><st
 const routineRow = id => { const r = C.ROUTINES[id]; return `<button class="rowbtn" data-act="routine" data-val="${id}"><span class="glyph ${r.group === 'mind' ? 'g3' : 'g2'}">${r.mins}</span><span><strong>${r.title}</strong><small>${r.blurb} · ${r.mins} min</small></span></button>`; };
 
 /* ---------- screens ---------- */
-function viewWelcome() {
-  return `<section class="hero"><p class="eyebrow">For anyone on weight-loss medication</p><h2>Lose the weight. Keep your strength.</h2>
-    <p>Weight-loss medication takes the weight off. Holdfast makes sure it is fat you lose, not muscle, and looks after you on the rough days.</p>
-    <button class="btn white" data-act="start">Build my plan</button></section>
-  <div class="card"><h3>What you get</h3><ul class="ticks">
-    <li><span><strong>Strength sessions you follow along with.</strong> 15 to 35 minutes, at home or the gym, a video for every exercise.</span></li>
-    <li><span><strong>A week that fits your medication.</strong> Weekly injection, daily tablet, or coming off it.</span></li>
-    <li><span><strong>Help on the rough days.</strong> Short routines for nausea, constipation and tiredness.</span></li>
-    <li><span><strong>A calmer head around food.</strong> Two-minute guided moments for cravings and mealtimes.</span></li>
-    <li><span><strong>Proof it is working.</strong> A strength score you re-test every 4 weeks.</span></li>
-    <li><span><strong>Real people.</strong> A coach who answers, and a small circle of members who started when you did.</span></li></ul></div>
-  ${video('See how Holdfast works', '1 minute. Brand film goes here.')}
-  <div class="card"><h3>The Holdfast standard</h3><ul class="ticks">
-    <li><span><strong>Health-screened before you start.</strong> The same kind of check used in GP exercise referral.</span></li>
-    <li><span><strong>Built for real bodies.</strong> Written for people living with obesity, type 2 diabetes, high blood pressure and sore joints.</span></li>
-    <li><span><strong>People, not chatbots.</strong> Every message is answered by a qualified coach.</span></li>
-    <li><span><strong>Exercise only.</strong> We never advise on your medication or dose.</span></li></ul></div>
-  <button class="link" data-act="example">Look around an example member's plan first</button>`;
+/* A small, static picture of the app for the landing page. Example data, not a real member. */
+function phoneMock() {
+  const days = [['Mon', 'walk', 'Walk'], ['Tue', 'strength done', 'Lift'], ['Wed', 'jab', 'Jab'], ['Thu', 'easy', 'Rest'], ['Fri', 'strength today', 'Lift'], ['Sat', 'walk', 'Walk'], ['Sun', 'strength', 'Lift']];
+  return `<div class="phone" role="img" aria-label="The Holdfast app showing an example member's week and today's strength session"><div class="phonein">
+    <section class="stage"><div class="stagehead"><div><span class="pill">Week 3 · Foundations</span><h2>Hi Sam</h2><p class="soft small">2 more this week to keep your muscle.</p></div>${ring(1, 3)}</div>
+      <div class="week">${days.map(d => `<div class="day ${d[1]}"><b>${d[0]}</b><i></i><span>${d[2]}</span></div>`).join('')}</div></section>
+    <section class="todaycard strength"><p class="eyebrow">Today · Friday</p><h2>Strength session A</h2><p>4 exercises · about 25 minutes</p><span class="btn white">Start session</span></section>
+    <div class="card"><h3>How are you feeling today?</h3><div class="chips"><span class="chip">Good</span><span class="chip">Queasy</span><span class="chip">Wiped out</span></div></div>
+  </div></div>`;
 }
 
+function viewWelcome() {
+  const join = C.LAUNCH.joinUrl ? `<a class="btn ghost" href="${C.LAUNCH.joinUrl}" target="_blank" rel="noopener">Join the founding members</a>` : '';
+  const feats = [['g1', 'Strength sessions that teach you', '15 to 35 minutes, at home or the gym. Every move shown step by step, counted with you, and made easier at a tap.'], ['g2', 'A week that fits your medication', 'Weekly injection, daily tablet, or coming off it. Your plan bends around how you actually feel.'], ['g3', 'Help on the rough days', 'Feeling sick, bunged up or wiped out? Tell us, and today changes to match, with a short routine to help.'], ['g1', 'A calmer head around food', 'Two-minute guided moments for cravings and mealtimes. Simple food ideas for low-appetite days.'], ['g2', 'Proof it is working', 'A strength score you re-test every four weeks. Watch it hold, or climb, while the scales drop.'], ['g3', 'Real people', 'A qualified coach who answers you, and a small circle of members who started when you did.']];
+  const faqs = [['I have never done strength training. Is this for me?', 'Yes. It is built for beginners. You get a safety check before you start, a written guide and a video for every exercise, and a button to make any move easier.'], ['Which medication does it work with?', 'Any of them. We only ask whether you take it weekly, daily, or have stopped. We never ask for the name or the dose, and we never give advice about your medication.'], ['Do I need a gym or equipment?', 'No. A sturdy chair and a stair is enough. If you have bands, dumbbells, a kettlebell or a gym membership, your plan uses them.'], ['I cannot get down on the floor. Can I still do it?', 'Yes. Tell us at the start and every exercise will be standing or seated.'], ['What if I feel too rough to train?', 'Then you do not train. Tell the app how you feel and it swaps the session for something gentler, or for rest. That is the plan working, not you failing.'], ['What does it cost?', 'Building your plan is free. Founding member pricing will be confirmed at launch, and you will always see the price before you pay anything.'], ['Is this medical advice?', 'No. Holdfast gives exercise and general wellbeing guidance. Your prescriber, pharmacist or GP is the right person for anything about your medication or your health.']];
+  return `<nav class="topnav" aria-label="Page"><a href="#inside">What you get</a><a href="#how">How it works</a><a href="#questions">Questions</a><button class="btn small" data-act="start">Build my plan</button></nav>
+  <section class="lhero"><div class="lcopy"><p class="eyebrow">For anyone on weight-loss medication</p><h1>Lose the weight.<br>Keep your strength.</h1>
+    <p class="lead">The medication takes the weight off. We make sure it is fat you lose and not muscle, and we look after you on the days it is hard going.</p>
+    <div class="row"><button class="btn" data-act="start">Build my plan</button>${join}</div><p class="small muted">Takes two minutes. No card needed.</p>
+    <button class="link" data-act="example">Or look around an example member's plan first</button></div>${phoneMock()}</section>
+
+  <section class="facts"><div><b>10 years</b><p class="small">Without strength training, the muscle lost on these medications can be comparable to a decade of ageing.<sup>1</sup></p></div><div><b>0.8 kg a month</b><p class="small">How fast weight came back, on average, after people stopped the injections.<sup>2</sup></p></div><div><b>"Concentrate on strength"</b><p class="small">England's Chief Medical Officer, on what people taking these medicines should do.<sup>3</sup></p></div></section>
+
+  <section id="inside" class="lsec"><h2>Everything you need, nothing you do not</h2><div class="feats">${feats.map(f => `<div class="card"><span class="glyph ${f[0]}"></span><h3>${f[1]}</h3><p class="small muted">${f[2]}</p></div>`).join('')}</div></section>
+
+  <section id="how" class="lsec split"><div><h2>How it works</h2><div class="steps">
+    <div class="step"><b>1</b><div><strong>Answer nine quick questions</strong><p class="small muted">Your medication rhythm, your kit, your body. Two minutes.</p></div></div>
+    <div class="step"><b>2</b><div><strong>Get a plan that is actually yours</strong><p class="small muted">Sessions on your best days, built from what you own and what your body can do.</p></div></div>
+    <div class="step"><b>3</b><div><strong>Follow along, a little at a time</strong><p class="small muted">We count your reps, time your rests, and adjust every week.</p></div></div></div></div>
+    <div class="card"><h3>The Holdfast standard</h3><ul class="ticks">
+    <li><span><strong>Health-screened before you start.</strong> The same kind of check used in GP exercise referral.</span></li>
+    <li><span><strong>Built for real bodies.</strong> For people living with obesity, type 2 diabetes, high blood pressure and sore joints.</span></li>
+    <li><span><strong>People, not chatbots.</strong> Every message is answered by a qualified coach.</span></li>
+    <li><span><strong>Exercise only.</strong> We never advise on your medication or dose.</span></li></ul></div></section>
+
+  <section id="questions" class="lsec narrow"><h2>Questions people ask us</h2>${faqs.map(f => `<details class="card faq"><summary>${f[0]}</summary><p>${f[1]}</p></details>`).join('')}</section>
+
+  <section class="hero lcta"><h2>Two minutes from now, you could have your plan.</h2><p>No card. No gym. No judgement.</p><button class="btn white" data-act="start">Build my plan</button></section>
+  <p class="small muted sources"><sup>1</sup> <a href="https://ukactive.com/news/report-warns-of-weight-loss-jabs-impact-on-muscle-mass-as-authors-call-for-strength-training-support-for-all-users/" target="_blank" rel="noopener">ukactive and Les Mills evidence review, 2025</a>. <sup>2</sup> <a href="https://www.nationalhealthexecutive.com/articles/study-finds-rapid-weight-regain-after-stopping-weight-loss-injections" target="_blank" rel="noopener">University of Oxford analysis in the BMJ</a>. <sup>3</sup> <a href="https://www.paf-media.co.uk/whitty-backs-weights-for-glp-1-users" target="_blank" rel="noopener">Chief Medical Officer's physical activity guidance</a>.</p>`;
+}
+
+/* ---------- sign-up questionnaire: one question at a time, single answers move on by themselves ---------- */
 const STEPS = 9;
-function viewSetup() {
-  const d = S.draft; let body, ok = true;
-  const anyYes = C.SCREEN.some((_, i) => d['q' + i] === 'yes'), allAns = C.SCREEN.every((_, i) => d['q' + i]);
-  if (step === 0) { ok = !!(d.name && d.name.trim());
-    body = `<h2>What should we call you?</h2><p class="muted">Nine short questions and your plan is ready.</p><div class="card"><label for="name" class="small muted">First name</label><input type="text" id="name" maxlength="24" autocomplete="given-name" value="${esc(d.name || '')}"></div>`;
-  } else if (step === 1) { ok = allAns && (!anyYes || d.cleared);
-    body = `<h2>A quick health check</h2><p class="muted">Five questions so we know strength training is safe for you.</p><div class="card">
-    ${C.SCREEN.map((q, i) => `<fieldset><legend class="small">${q}</legend><div class="chips">${chip('q' + i, 'no', d['q' + i], 'No')}${chip('q' + i, 'yes', d['q' + i], 'Yes')}</div></fieldset>`).join('')}</div>
-    ${anyYes ? `<div class="note"><p><strong>Check with your GP or prescriber before you start.</strong> You answered yes to at least one question.</p><label class="check small"><input type="checkbox" id="cleared" data-act="cleared" ${d.cleared ? 'checked' : ''}><span>My GP or prescriber has told me strength training is safe for me.</span></label></div>` : ''}`;
-  } else if (step === 2) { ok = !!(d.cond && d.cond.length);
-    body = `<h2>Are you living with any of these?</h2><p class="muted">Lots of our members are. We add the right safety notes to your plan.</p><div class="tiles">${Object.keys(C.CONDITIONS).map(k => tile('cond', k, d.cond || [], C.CONDITIONS[k][0], C.CONDITIONS[k][1])).join('')}</div>`;
-  } else if (step === 3) { ok = !!d.goal;
-    body = `<h2>What matters most to you?</h2><p class="muted">We will keep bringing you back to this.</p><div class="tiles">${tile('goal', 'muscle', d.goal, 'Keep my muscle', 'Lose fat, not strength')}${tile('goal', 'stronger', d.goal, 'Feel stronger', 'Stairs, shopping, life')}${tile('goal', 'energy', d.goal, 'More energy', 'Less wiped out')}${tile('goal', 'confidence', d.goal, 'Confidence', 'Know what I am doing')}</div>`;
-  } else if (step === 4) { ok = !!d.med;
-    body = `<h2>How do you take your medication?</h2><p class="muted">We only need the rhythm, never the name or the dose.</p><div class="tiles one">${tile('med', 'weekly', d.med, 'A weekly injection', 'Your week is built around injection day')}${tile('med', 'daily', d.med, 'A daily tablet or injection', 'Sessions spread evenly across your week')}${tile('med', 'none', d.med, 'I am coming off it, or already have', 'A plan for keeping the weight off and the strength on')}</div>`;
-  } else if (step === 5) { ok = d.jab !== undefined;
-    body = d.med === 'weekly' ? `<h2>Which day is your injection?</h2><p class="muted">No strength that day, rest the day after.</p>` : `<h2>Which day do you want to start your week?</h2><p class="muted">Your first strength session lands here. The rest are spread out from it.</p>`;
-    body += `<div class="card"><div class="chips">${C.FULL.map((n, i) => chip('jab', i, d.jab, n)).join('')}</div></div>`;
-  } else if (step === 6) { ok = !!(d.equip && d.equip.length);
-    body = `<h2>What can you train with?</h2><p class="muted">Pick everything you have. Each exercise uses the best kit available.</p><div class="tiles">${Object.keys(C.KIT).map(k => tile('equip', k, d.equip || [], C.KIT[k][0], C.KIT[k][1])).join('')}</div>`;
-  } else if (step === 7) { ok = !!(d.care && d.care.length);
-    body = `<h2>Anything we should look after?</h2><p class="muted">Pick all that apply. We swap in exercises that suit you.</p><div class="tiles">${Object.keys(C.CARE).map(k => tile('care', k, d.care || [], C.CARE[k][0], C.CARE[k][1])).join('')}</div>`;
-  } else { ok = !!(d.sessions && d.len && d.level);
-    body = `<h2>Shape your sessions</h2><div class="card"><fieldset><legend>Sessions a week</legend><div class="chips">${chip('sessions', 2, d.sessions, '2')}${chip('sessions', 3, d.sessions, '3')}</div></fieldset>
-    <fieldset><legend>How long have you got?</legend><div class="chips">${chip('len', 15, d.len, '15 min')}${chip('len', 25, d.len, '25 min')}${chip('len', 35, d.len, '35 min')}</div></fieldset>
-    <fieldset><legend>Strength training before?</legend><div class="chips">${chip('level', 'new', d.level, 'New to it')}${chip('level', 'some', d.level, 'A little')}${chip('level', 'regular', d.level, 'Regularly')}</div></fieldset></div>`;
+const AUTO = ['med', 'jab', 'goal'];
+function say() {
+  const d = S.draft, n = esc((d.name || '').trim()), has = (k, v) => (d[k] || []).includes(v);
+  switch (step) {
+    case 0: return 'Hello. A few quick questions, then I will build your plan. Two minutes, and no trick questions.';
+    case 1: return `Good to meet you, ${n}. First, the practical bit.`;
+    case 2: return d.med === 'weekly' ? 'Good. I will keep your hardest sessions well away from injection day.' : d.med === 'daily' ? 'Got it. With a daily dose there is no rough day to plan round, so I will spread things evenly.' : 'Coming off is when strength matters most. You are in the right place.';
+    case 3: return `${C.FULL[d.jab]} it is. Now the important one.`;
+    case 4: return ({ muscle: 'That is exactly what this is built for.', stronger: 'Good goal. You will notice it on the stairs first.', energy: 'Stronger muscles make everything cost less effort. We will get you there.', confidence: 'Then I will show you every move, step by step. No guessing.' })[d.goal] + ' Next, a safety check. I take this bit seriously.';
+    case 5: return has('screen', 'none') ? 'Nothing there to hold you back. Good.' : 'Thank you for telling me. Your GP\'s say-so comes first, always.';
+    case 6: return has('cond', 'none') ? 'Noted. Now, what have you got to train with?' : 'Useful to know. I will put the right safety notes into your sessions.';
+    case 7: return (d.equip || []).length === 1 && has('equip', 'none') ? 'A chair and a stair is enough to get strong. Honestly.' : 'Good. I will use the best of it for each exercise.';
+    default: return has('care', 'none') ? 'Lovely. Last one.' : has('care', 'floor') ? 'No floor work for you, then. Everything standing or seated. Last one.' : 'I will work round that. Last one.';
   }
-  return `<div><p class="eyebrow muted">Step ${step + 1} of ${STEPS}</p><div class="bar" style="grid-template-columns:repeat(${STEPS},1fr)">${[...Array(STEPS)].map((_, i) => `<i class="${i <= step ? 'on' : ''}"></i>`).join('')}</div></div>
-    ${body}<div class="row"><button class="btn ghost" data-act="back">Back</button><button class="btn" id="nextbtn" data-act="next" ${ok ? '' : 'disabled'}>${step === STEPS - 1 ? 'Build my plan' : 'Next'}</button></div>`;
+}
+function viewSetup() {
+  const d = S.draft; let body, ok = true, auto = false;
+  if (step === 0) { ok = !!(d.name && d.name.trim());
+    body = `<h2>What should I call you?</h2><div class="card"><label for="name" class="small muted">First name</label><input type="text" id="name" maxlength="24" autocomplete="given-name" value="${esc(d.name || '')}"></div>`;
+  } else if (step === 1) { auto = true;
+    body = `<h2>How do you take your medication?</h2><p class="muted">I only need the rhythm. Never the name, never the dose.</p><div class="tiles one">${tile('med', 'weekly', d.med, 'A weekly injection', 'Your week is built around injection day')}${tile('med', 'daily', d.med, 'A daily tablet or injection', 'Sessions spread evenly across your week')}${tile('med', 'none', d.med, 'I am coming off it, or already have', 'A plan for keeping the weight off and the strength on')}</div>`;
+  } else if (step === 2) { auto = true;
+    body = (d.med === 'weekly' ? `<h2>Which day is your injection?</h2><p class="muted">No strength that day, and rest the day after.</p>` : `<h2>Which day shall we start your week?</h2><p class="muted">Your first strength session lands here.</p>`) + `<div class="card"><div class="chips">${C.FULL.map((n, i) => chip('jab', i, d.jab, n)).join('')}</div></div>`;
+  } else if (step === 3) { auto = true;
+    body = `<h2>What do you want most from this?</h2><div class="tiles">${tile('goal', 'muscle', d.goal, 'Keep my muscle', 'Lose fat, not strength')}${tile('goal', 'stronger', d.goal, 'Feel stronger', 'Stairs, shopping, life')}${tile('goal', 'energy', d.goal, 'More energy', 'Less wiped out')}${tile('goal', 'confidence', d.goal, 'Confidence', 'Know what I am doing')}</div>`;
+  } else if (step === 4) { const sc = d.screen || [], flagged = sc.length && !sc.includes('none'); ok = sc.length && (!flagged || d.cleared);
+    body = `<h2>Do any of these apply to you?</h2><p class="muted">Tap any that do. Be honest, it only makes your plan safer.</p><div class="tiles one">${C.SCREEN.map((q, i) => tile('screen', 'q' + i, sc, q, '')).join('')}${tile('screen', 'none', sc, 'None of these apply to me', '')}</div>
+    ${flagged ? `<div class="note"><p><strong>Please check with your GP or prescriber before you start.</strong> Most people get a yes. It just needs to come from them, not from me.</p><label class="check small"><input type="checkbox" id="cleared" data-act="cleared" ${d.cleared ? 'checked' : ''}><span>My GP or prescriber has told me strength training is safe for me.</span></label></div>` : ''}`;
+  } else if (step === 5) { ok = !!(d.cond && d.cond.length);
+    body = `<h2>Are you living with any of these?</h2><p class="muted">No judgement. It just changes the safety notes I give you.</p><div class="tiles">${Object.keys(C.CONDITIONS).map(k => tile('cond', k, d.cond || [], C.CONDITIONS[k][0], C.CONDITIONS[k][1])).join('')}</div>`;
+  } else if (step === 6) { ok = !!(d.equip && d.equip.length);
+    body = `<h2>What can you train with?</h2><p class="muted">Pick everything you have.</p><div class="tiles">${Object.keys(C.KIT).map(k => tile('equip', k, d.equip || [], C.KIT[k][0], C.KIT[k][1])).join('')}</div>`;
+  } else if (step === 7) { ok = !!(d.care && d.care.length);
+    body = `<h2>Anything you want me to look after?</h2><p class="muted">Pick all that apply. I will swap in exercises that suit you.</p><div class="tiles">${Object.keys(C.CARE).map(k => tile('care', k, d.care || [], C.CARE[k][0], C.CARE[k][1])).join('')}</div>`;
+  } else { ok = !!(d.sessions && d.len && d.level);
+    body = `<h2>Last one: shape your sessions</h2><div class="card"><fieldset><legend>How many a week?</legend><div class="chips">${chip('sessions', 2, d.sessions, '2')}${chip('sessions', 3, d.sessions, '3')}</div><p class="small muted">Two is plenty to start.</p></fieldset>
+    <fieldset><legend>How long have you got?</legend><div class="chips">${chip('len', 15, d.len, '15 min')}${chip('len', 25, d.len, '25 min')}${chip('len', 35, d.len, '35 min')}</div></fieldset>
+    <fieldset><legend>Done strength training before?</legend><div class="chips">${chip('level', 'new', d.level, 'Never')}${chip('level', 'some', d.level, 'A little')}${chip('level', 'regular', d.level, 'Regularly')}</div></fieldset></div>`;
+  }
+  const next = auto && !d.editing ? '' : `<button class="btn" id="nextbtn" data-act="next" ${ok ? '' : 'disabled'}>${step === STEPS - 1 ? 'Build my plan' : 'Next'}</button>`;
+  return `<div class="quiz"><div class="bar" style="grid-template-columns:repeat(${STEPS},1fr)" role="img" aria-label="Question ${step + 1} of ${STEPS}">${[...Array(STEPS)].map((_, i) => `<i class="${i <= step ? 'on' : ''}"></i>`).join('')}</div>
+    <div class="say"><span class="mark"></span><p>${say()}</p></div>${body}<div class="row"><button class="btn ghost" data-act="back">Back</button>${next}</div></div>`;
+}
+
+/* The plan, shown back to the member before they go in. */
+function viewReveal() {
+  const p = S.profile; let first = null;
+  for (let i = 0; i < 7 && !first; i++) { const d = addDays(NOW, i), pl = dayPlan(p, d.getDay()); if (pl.type === 'strength') first = { when: i === 0 ? 'Today' : i === 1 ? 'Tomorrow' : C.FULL[d.getDay()], pl }; }
+  const built = [p.med === 'weekly' ? `Strength kept well away from your ${C.FULL[p.jab]} injection` : p.med === 'daily' ? 'Sessions spread evenly across your week' : 'A plan for keeping the weight off and the strength on',
+    `${p.sessions} sessions a week, ${p.len} minutes each, starting at level ${p.stage + 1} of 6`, 'Using ' + p.equip.map(k => C.KIT[k][0].toLowerCase()).join(', ')];
+  if (!p.care.includes('none')) built.push('Adapted for: ' + p.care.map(k => C.CARE[k][0].toLowerCase()).join(', '));
+  if (!p.cond.includes('none')) built.push('Safety notes for ' + p.cond.map(k => C.CONDITIONS[k][0].toLowerCase()).join(', '));
+  return `<div class="quiz"><div class="say"><span class="mark"></span><p>Here it is, ${esc(p.name)}. Built round you, and it will keep adjusting as you go.</p></div>
+    <section class="stage"><div><span class="pill">Your week</span></div>${weekStrip()}</section>
+    <div class="card"><h3>What I built in</h3><ul class="ticks">${built.map(x => `<li><span>${x}</span></li>`).join('')}</ul></div>
+    <div class="card"><h3>Your first session: ${first.when}</h3><p class="small muted">${sessionList(p, first.pl.session).map(e => e[0]).join(', ')}</p><p class="small">Never done these? Every one comes with a step-by-step guide, and I will count with you.</p></div>
+    <button class="btn" data-go="today">Take me in</button></div>`;
 }
 
 function viewToday() {
@@ -301,11 +351,12 @@ function viewCircle() {
   return h;
 }
 
-const VIEWS = { welcome: viewWelcome, setup: viewSetup, today: viewToday, session: viewSession, test: viewTest, routine: viewRoutine, moves: viewMoves, plan: viewPlan, toolkit: viewToolkit, food: viewFood, progress: viewProgress, circle: viewCircle };
+const VIEWS = { welcome: viewWelcome, setup: viewSetup, today: viewToday, session: viewSession, test: viewTest, routine: viewRoutine, reveal: viewReveal, moves: viewMoves, plan: viewPlan, toolkit: viewToolkit, food: viewFood, progress: viewProgress, circle: viewCircle };
 const TABBED = ['today', 'plan', 'toolkit', 'progress', 'circle'];
 function render() {
   const inApp = S.profile && (TABBED.includes(view) || view === 'food' || view === 'moves');
   tabs.hidden = !inApp;
+  document.body.className = view === 'welcome' ? 'landing' : inApp ? 'inapp' : 'focus';
   tabs.querySelectorAll('button').forEach(b => b.setAttribute('aria-current', b.dataset.go === (view === 'food' ? 'toolkit' : view === 'moves' ? 'plan' : view)));
   hd.innerHTML = `<span class="brand"><span class="mark"></span>Holdfast</span>`;
   app.innerHTML = VIEWS[view]();
@@ -351,12 +402,12 @@ document.addEventListener('click', e => {
 
   if (a === 'start') { if (S.profile && S.profile.example) S = blank(); S.draft = {}; step = 0; go('setup'); return; }
   if (a === 'example') { S = example(); go('today'); return; }
-  if (a === 'edit') { const p = S.profile; S.draft = { name: p.name, goal: p.goal, med: p.med, jab: p.jab, equip: p.equip.slice(), care: p.care.slice(), cond: p.cond.slice(), sessions: p.sessions, len: p.len, level: p.level, editing: true }; C.SCREEN.forEach((_, i) => S.draft['q' + i] = 'no'); step = 0; go('setup'); return; }
+  if (a === 'edit') { const p = S.profile; S.draft = { name: p.name, goal: p.goal, med: p.med, jab: p.jab, equip: p.equip.slice(), care: p.care.slice(), cond: p.cond.slice(), sessions: p.sessions, len: p.len, level: p.level, editing: true }; S.draft.screen = ['none']; step = 0; go('setup'); return; }
   if (a === 'back') { if (step === 0) go(S.profile ? 'plan' : 'welcome'); else { step--; go('setup'); } return; }
   if (a === 'next') { if (step < STEPS - 1) { step++; go('setup'); return; }
     const old = S.profile, keep = d.editing && old;
     S.profile = { name: d.name.trim(), goal: d.goal, med: d.med, jab: +d.jab, equip: d.equip, care: d.care, cond: d.cond, sessions: +d.sessions, len: +d.len, level: d.level, stage: keep && old.level === d.level ? old.stage : C.START[d.level], start: keep ? old.start : TODAY };
-    S.draft = {}; save(); go('today'); return; }
+    const edited = d.editing; S.draft = {}; save(); go(edited ? 'plan' : 'reveal'); return; }
   if (a === 'reset') { if (d.resetArmed) { try { localStorage.removeItem(KEY); } catch (e) {} S = blank(); go('welcome'); return; } d.resetArmed = true; render(); return; }
   if (a === 'comeoff') { S.profile.med = 'none'; delete S.profile.easeUntil; save(); msg = ''; go('plan'); return; }
 
@@ -390,7 +441,8 @@ document.addEventListener('click', e => {
     try { navigator.clipboard.writeText(ta.value).then(done, fallback); } catch (err) { fallback(); } return; }
   if (a === 'easeweek') { S.profile.easeUntil = iso(addDays(NOW, 7)); S.draft.dosechg = undefined; save(); msg = 'Easy week set. Sessions are lighter for the next 7 days.'; render(); return; }
 
-  if (/^q\d$/.test(a) || ['goal', 'level', 'pain', 'med', 'dosechg'].includes(a)) { d[a] = val; if (a === 'med') delete d.jab; }
+  if (['goal', 'level', 'pain', 'med', 'dosechg'].includes(a)) { d[a] = val; if (a === 'med' && !d.editing) delete d.jab; }
+  else if (a === 'screen') { d.screen = toggle(d.screen, val, 'none'); if (d.screen.includes('none')) d.cleared = false; }
   else if (['jab', 'sessions', 'len'].includes(a)) d[a] = +val;
   else if (a === 'equip') d.equip = toggle(d.equip, val);
   else if (a === 'care') d.care = toggle(d.care, val, 'none');
@@ -409,6 +461,7 @@ document.addEventListener('click', e => {
     else if (a === 'finish') { l.finished = true; save(); go('today'); return; }
     else if (a === 'apply') { S.profile.stage = +val; msg = 'Next week is set. See you at your next session.'; }
   }
+  if (view === 'setup' && AUTO.includes(a) && !d.editing) { render(); setTimeout(() => { if (view === 'setup') { step++; go('setup'); } }, 260); return; }
   save(); render();
 });
 document.addEventListener('input', e => { if (e.target.id === 'name') { S.draft.name = e.target.value; const n = document.getElementById('nextbtn'); if (n) n.disabled = !e.target.value.trim(); } });

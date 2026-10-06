@@ -12,6 +12,7 @@ Run the rule tests with `node tests/logic.test.js`.
 
 ## Read next
 
+- `docs/STATUS.md`: everything built, everything left, and the fastest route to market
 - `docs/PRODUCT.md`: who it is for, what it does, and what sets it apart
 - `docs/BUILD_BRIEF.md`: what a developer needs to build to make it a live product
 - `js/content.js` and `js/guides.js`: every exercise, step-by-step guide, routine and piece of guidance, for professional review
