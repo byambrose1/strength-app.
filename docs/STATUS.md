@@ -107,26 +107,36 @@ These need accounts and a database.
 3. **It teaches.** Step-by-step guides, counted sets, and a way out when it is too hard or it hurts.
 4. **The whole journey,** including coming off and staying off.
 5. **Proof:** a strength score that holds or rises while weight falls.
-6. **People, not chatbots.** A coach, a small circle, a live class.
+6. **People, not chatbots.** When coaching launches, messages are answered by a coaching team, never by software.
 
 ## 6. Fastest route to market
 
-The app does not need accounts to start earning. The human parts can run on tools you already have.
+Members pay for Holdfast: the app, the programme and everything that comes with it. They are not buying one coach's time, and nothing in the product or its marketing names an individual.
 
-### Founding members launch (about 2 weeks, close to no cost)
+### What is being sold
+
+| Tier | What the member gets | What it needs behind it |
+|---|---|---|
+| **Holdfast** | The full app: plan, sessions, guides, toolkit, strength score, progress | Nothing staffed. It runs itself. |
+| **Holdfast with coaching** (later) | The above, plus coach messages, form checks, a circle and live classes | A coaching team. Coaches are staff or contractors of the business. |
+
+Launch with the first tier. It is the part that scales without anyone's hours, and it is what "bigger than one person" means in practice.
+
+### Software-first launch (about 2 weeks, close to no cost)
 
 | Piece | How |
 |---|---|
 | The app | Host it free on GitHub Pages. It is a static site, so no server or credits are needed. |
 | Payment | A Stripe payment link, pasted into `LAUNCH.joinUrl` |
-| Coach messages | WhatsApp or email, answered by you |
-| Circle | One WhatsApp group for the first cohort |
-| Live class | A weekly video call |
-| Videos | Film the first 12 on your phone |
+| Videos | The first 12 exercise clips. Anyone qualified can film them; they are presented as Holdfast's, not as one person's. |
+| Coach messages, circle, live class | Switched off or marked "coming soon" until there is a team to staff them |
 
-Limit it to 20 people you can reach yourself. The app is open to anyone with the link, so what they pay for is you: the coaching, the circle and the class.
+Start with a small founding group so problems show up early.
 
-Because data stays on each member's device, no health data is held on a server at this stage.
+Two limits to know about at this stage:
+
+- **Access is not locked.** Without accounts, anyone with the link can use the app, so payment is on trust until accounts are built.
+- **Data stays on each member's device,** so no health data is held on a server.
 
 ### Then build the backend, in this order
 
@@ -147,4 +157,4 @@ Because data stays on each member's device, no health data is held on a server a
 4. Film 12 clips
 5. Turn on GitHub Pages and add the payment link
 6. Privacy notice and terms
-7. Invite the first 20
+7. Invite the founding group
