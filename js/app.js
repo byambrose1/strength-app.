@@ -2,7 +2,7 @@
 const KEY = 'holdfast-v4';
 const NOW = new Date(), TODAY = iso(NOW);
 const esc = s => String(s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
-const blank = () => ({ profile: null, logs: {}, draft: {}, tests: [], loads: {}, wins: [], msgs: [] });
+const blank = () => ({ profile: null, logs: {}, draft: {}, tests: [], loads: {}, wins: [], msgs: [], voice: false });
 
 function example() {
   const p = { name: 'Sam', goal: 'muscle', med: 'weekly', jab: (NOW.getDay() + 5) % 7, sessions: 3, len: 25, equip: ['dumbbells', 'bands'], care: [], cond: ['diabetes'], level: 'some', stage: 1, start: iso(addDays(NOW, -16)), example: true };
@@ -23,6 +23,9 @@ function log() { return S.logs[TODAY] || (S.logs[TODAY] = {}); }
 let view = S.profile ? 'today' : 'welcome', step = 0, msg = '', timer = null;
 let T = { left: 30, count: 0, state: 'idle' };          // strength test
 let R = { id: null, i: 0, left: 0, paused: false };     // guided routine
+let G = { mode: 'idle', set: 1, t: 0, left: 0 };        // guided set: idle, rep, rest, done
+let X = { help: null, hurt: null };                     // help open on the current exercise
+function resetEx() { clearInterval(timer); G = { mode: 'idle', set: 1, t: 0, left: 0 }; X = { help: null, hurt: null }; }
 
 const app = document.getElementById('app'), hd = document.getElementById('hd'), tabs = document.getElementById('tabs');
 const on = (cur, val) => Array.isArray(cur) ? cur.includes(val) : String(cur) === String(val);
@@ -102,7 +105,7 @@ function viewSetup() {
   } else if (step === 6) { ok = !!(d.equip && d.equip.length);
     body = `<h2>What can you train with?</h2><p class="muted">Pick everything you have. Each exercise uses the best kit available.</p><div class="tiles">${Object.keys(C.KIT).map(k => tile('equip', k, d.equip || [], C.KIT[k][0], C.KIT[k][1])).join('')}</div>`;
   } else if (step === 7) { ok = !!(d.care && d.care.length);
-    body = `<h2>Anything we should look after?</h2><p class="muted">We swap in gentler exercises for these areas.</p><div class="tiles">${tile('care', 'knees', d.care || [], 'Knees', 'Gentler squats and steps')}${tile('care', 'back', d.care || [], 'Lower back', 'No loaded bending')}${tile('care', 'shoulders', d.care || [], 'Shoulders', 'No pressing overhead')}${tile('care', 'none', d.care || [], 'Nothing to flag', 'All good')}</div>`;
+    body = `<h2>Anything we should look after?</h2><p class="muted">Pick all that apply. We swap in exercises that suit you.</p><div class="tiles">${Object.keys(C.CARE).map(k => tile('care', k, d.care || [], C.CARE[k][0], C.CARE[k][1])).join('')}</div>`;
   } else { ok = !!(d.sessions && d.len && d.level);
     body = `<h2>Shape your sessions</h2><div class="card"><fieldset><legend>Sessions a week</legend><div class="chips">${chip('sessions', 2, d.sessions, '2')}${chip('sessions', 3, d.sessions, '3')}</div></fieldset>
     <fieldset><legend>How long have you got?</legend><div class="chips">${chip('len', 15, d.len, '15 min')}${chip('len', 25, d.len, '25 min')}${chip('len', 35, d.len, '35 min')}</div></fieldset>
@@ -148,21 +151,60 @@ function viewToday() {
   return h;
 }
 
+function guideHtml(name, open) {
+  const g = GUIDES[name]; if (!g) return '';
+  return `<details class="guidebox" ${open ? 'open' : ''}><summary>How to do it, step by step</summary>
+    <p class="small"><strong>Set up.</strong> ${g.s}</p><ol class="small">${g.m.map(x => `<li>${x}</li>`).join('')}</ol>
+    <p class="small"><strong>You should feel it in:</strong> ${g.f.charAt(0).toLowerCase() + g.f.slice(1)}.</p>
+    <p class="small"><strong>Breathing.</strong> ${C.BREATHE}</p></details>`;
+}
+
 function viewSession() {
   const p = S.profile, pl = dayPlan(p, NOW.getDay()), l = log(), list = sessionList(p, pl.session), n = list.length, pos = l.pos || 0;
   const light = l.light === undefined ? inEaseWeek(p, TODAY) : l.light;
+  const everDone = Object.values(S.logs).some(x => x.finished);
+  if (!everDone && !pos && !l.ready) return `<div><p class="eyebrow muted">Before your first session</p><h2>Let us get you set up safely</h2><p class="muted">Two minutes now makes every session easier.</p></div>
+    <div class="card"><h3>Have these ready</h3><ul class="ticks">${C.READY.map(x => `<li><span>${x}</span></li>`).join('')}</ul></div>
+    <div class="card"><h3>How hard should it feel?</h3><p class="small">${C.EFFORT}</p><p class="small">${C.BREATHE}</p></div>
+    <div class="card"><h3>You are in charge</h3><p class="small">Every exercise has three buttons: make it easier, this hurts, and am I doing it right. Use them. Stopping early is always allowed.</p></div>
+    <div class="row"><button class="btn ghost" data-act="prev">Not now</button><button class="btn" data-act="ready">I am ready</button></div>`;
   const bar = `<div class="bar" style="grid-template-columns:repeat(${n},1fr)">${list.map((_, i) => `<i class="${i <= pos ? 'on' : ''}"></i>`).join('')}</div>`;
   if (pos >= n) return `${bar}<h2>That is the session</h2><div class="card"><fieldset><legend>How did it feel?</legend><div class="chips">${chip('felt', 'easy', l.felt, 'Too easy')}${chip('felt', 'right', l.felt, 'About right')}${chip('felt', 'hard', l.felt, 'Too hard')}</div><p class="small muted">Your answer shapes next week.</p></fieldset></div>
     <div class="row"><button class="btn ghost" data-act="prev">Back</button><button class="btn" data-act="finish" ${l.felt ? '' : 'disabled'}>Finish</button></div>`;
-  const e = list[pos], hold = e[2].includes('h'), load = e[2].includes('l'), kg = S.loads[e[0]];
+
+  const e = list[pos], name = e[0], load = e[2].includes('l'), kg = S.loads[name], rx = prescription(p.stage, light, e[2]), g = GUIDES[name] || {};
   const safety = pos === 0 ? (p.cond || []).filter(c => C.SAFETY[c]).map(c => C.SAFETY[c][0]) : [];
-  return `<div><p class="eyebrow muted">Exercise ${pos + 1} of ${n}${light ? ' · lighter version' : ''}</p>${bar}</div>
+  const unit = rx.reps ? rx.reps + ' reps' : rx.secs + ' seconds';
+  let set;
+  if (G.mode === 'rep') set = `<p class="eyebrow muted">Set ${G.set} of ${rx.sets}</p><p class="big" id="gnum">${rx.reps ? Math.floor(G.t / 4) + 1 : G.left}</p><p class="muted">${rx.reps ? 'of ' + rx.reps + '. Slow and steady.' : 'seconds left. Keep breathing.'}</p>${rx.reps ? '<div class="pace"><i></i></div>' : ''}<button class="btn ghost" data-act="gstop">Stop the set</button>`;
+  else if (G.mode === 'rest') set = `<p class="eyebrow muted">Rest</p><p class="big" id="gnum">${G.left}</p><p class="muted">Shake it out. Have a sip of water.</p><button class="btn ghost" data-act="gskip">I am ready for set ${G.set + 1}</button>`;
+  else if (G.mode === 'done') set = `<span class="glyph g2">✓</span><p><strong>All ${rx.sets} ${rx.sets > 1 ? 'sets' : 'set'} done.</strong> Nicely done.</p>`;
+  else set = `<p class="eyebrow muted">Set ${G.set} of ${rx.sets}${light ? ' · lighter version' : ''}</p><p class="dose">${unit}</p><button class="btn" data-act="gstart">Start set ${G.set}</button><label class="check small"><input type="checkbox" id="voice" data-act="voice" ${S.voice ? 'checked' : ''}><span>Count out loud for me</span></label>`;
+
+  let help = '';
+  if (X.help === 'easier') help = `<div class="resp info"><strong>Try this</strong><p class="small">${g.e || 'Do fewer reps, or use less weight.'}</p><p class="small">Easier is not cheating. It is how you get to do it again next week.</p></div>`;
+  else if (X.help === 'hurts' && !X.hurt) help = `<div class="resp ease"><strong>What kind of feeling is it?</strong><div class="chips">${chip('hurt', 'sharp', X.hurt, 'Sharp or sudden pain')}${chip('hurt', 'work', X.hurt, 'Hard work or a dull ache')}</div></div>`;
+  else if (X.hurt === 'sharp') help = `<div class="resp stop"><strong>Stop this exercise.</strong><p class="small">Sharp pain is your body saying no, and you should listen. We have noted it for your coach. Move on to the next exercise, or stop here for today.</p><button class="btn" data-act="skipex">Skip this exercise</button></div>`;
+  else if (X.hurt === 'work') help = `<div class="resp info"><strong>That sounds like muscles working.</strong><p class="small">Warm, tired or a bit shaky is normal and it passes within a minute of stopping. If you want it gentler: ${(g.e || 'do fewer reps.').charAt(0).toLowerCase() + (g.e || 'do fewer reps.').slice(1)}</p></div>`;
+  else if (X.help === 'form') help = `<div class="resp info"><strong>Let a coach look</strong><p class="small">Prop your phone up, film two or three reps from the side, and a coach will tell you what to keep and what to change.</p><button class="btn" data-act="formcheck">Ask for a form check</button></div>`;
+  else if (X.help === 'formsent') help = `<div class="resp info"><strong>Form check requested for ${name}.</strong>${proto('Saved on this device. Once accounts are live, this opens your camera and sends the clip to the coach inbox.')}</div>`;
+
+  return `<div><p class="eyebrow muted">Exercise ${pos + 1} of ${n}</p>${bar}</div>
     ${safety.length ? `<div class="note"><p class="small"><strong>Before you start.</strong> ${safety.join(' ')}</p></div>` : ''}
-    ${video(e[0], 'Demo video goes here')}
-    <div><h2>${e[0]}</h2><p class="muted">${e[1]}</p></div>
-    <div class="card"><p class="eyebrow muted">Sets × ${hold ? 'seconds' : 'reps'}</p><p class="dose">${dose(p.stage, light, e[2])}</p><p class="small muted">Rest 60 to 90 seconds between sets. ${light ? 'Use about half your usual weight.' : 'The last 2 reps should feel hard but tidy.'}</p></div>
-    ${load ? `<div class="card"><div><h3>Weight used</h3><p class="small muted">${kg ? 'Saved for next time, so you can see it go up.' : 'Log it once and we remember it for next time.'}</p></div><div class="stepper"><button data-act="loaddown" data-val="${esc(e[0])}" aria-label="Less weight">−</button><b>${kg || 0} kg</b><button data-act="loadup" data-val="${esc(e[0])}" aria-label="More weight">+</button></div></div>` : ''}
+    ${video(name, 'Demo video goes here')}
+    <div><h2>${name}</h2><p class="muted">${e[1]}</p></div>
+    <div class="card">${guideHtml(name, p.level === 'new' || !everDone)}</div>
+    <div class="card guided">${set}</div>
+    <div class="card"><p class="small"><strong>Need a hand?</strong></p><div class="chips">${chip('help', 'easier', X.help, 'Make it easier')}${chip('help', 'hurts', X.help, 'This hurts')}${chip('help', 'form', X.help === 'formsent' ? 'form' : X.help, 'Am I doing it right?')}</div>${help}</div>
+    ${load ? `<div class="card"><div><h3>Weight used</h3><p class="small muted">${kg ? 'Saved for next time, so you can see it go up.' : 'Start light. Log it once and we remember it.'}</p></div><div class="stepper"><button data-act="loaddown" data-val="${esc(name)}" aria-label="Less weight">−</button><b>${kg || 0} kg</b><button data-act="loadup" data-val="${esc(name)}" aria-label="More weight">+</button></div></div>` : ''}
     <div class="row"><button class="btn ghost" data-act="prev">${pos ? 'Back' : 'Exit'}</button><button class="btn" data-act="nextex">Done, next</button></div>`;
+}
+
+function viewMoves() {
+  const p = S.profile;
+  return `<div><p class="eyebrow muted">My plan</p><h2>Learn your exercises</h2><p class="muted">Read them through, or try one with no weight, before your first session. Nothing here is timed.</p></div>` +
+    ['A', 'B'].map(w => `<h3>Session ${w}</h3>` + sessionList(p, w).map(e => `<div class="card"><div class="lesson">${video(e[0], '', 'thumb')}<div><strong>${e[0]}</strong><p class="small muted">${e[1]}</p></div></div>${guideHtml(e[0], false)}<p class="small"><strong>To make it easier:</strong> ${(GUIDES[e[0]] || {}).e || ''}</p></div>`).join('')).join('') +
+    `<button class="btn ghost" data-go="plan">Back to my plan</button>`;
 }
 
 function viewTest() {
@@ -193,10 +235,10 @@ function viewPlan() {
   <div class="card"><h3>Your week</h3><div class="list">`;
   for (let i = 0; i < 7; i++) { const dow = (p.jab + i) % 7, pl = dayPlan(p, dow);
     h += `<div class="item"><strong>${C.DAYS[dow]}</strong><div><span class="tag ${pl.type}">${pl.title}</span><p class="small muted">${pl.type === 'strength' ? sessionList(p, pl.session).map(e => e[0]).join(', ') : pl.text}</p></div></div>`; }
-  h += `</div></div>`;
+  h += `</div><button class="btn ghost" data-go="moves">Learn your exercises</button></div>`;
   const notes = (p.cond || []).filter(c => C.SAFETY[c]);
   if (notes.length) h += `<div class="card"><h3>Your safety notes</h3>${notes.map(c => `<div><p class="small"><strong>${C.CONDITIONS[c][0]}</strong></p><ul class="small">${C.SAFETY[c].map(x => `<li>${x}</li>`).join('')}</ul></div>`).join('')}</div>`;
-  h += `<div class="card"><h3>Built for you</h3><p class="small muted">Kit: ${p.equip.map(k => C.KIT[k][0].toLowerCase()).join(', ')}. ${p.sessions} sessions a week, ${p.len} minutes each.${p.care.includes('none') ? '' : ' Looking after your ' + p.care.join(', ').replace('back', 'lower back') + '.'}</p>${p.example ? '' : '<button class="btn ghost" data-act="edit">Change my plan</button>'}</div>`;
+  h += `<div class="card"><h3>Built for you</h3><p class="small muted">Kit: ${p.equip.map(k => C.KIT[k][0].toLowerCase()).join(', ')}. ${p.sessions} sessions a week, ${p.len} minutes each.${p.care.includes('none') ? '' : ' Adapted for: ' + p.care.map(k => C.CARE[k][0].toLowerCase()).join(', ') + '.'}</p>${p.example ? '' : '<button class="btn ghost" data-act="edit">Change my plan</button>'}</div>`;
   if (p.med !== 'none') h += `<div class="card"><h3>Coming off your medication?</h3><p class="small muted">Research shows weight tends to return after stopping. Strength training and daily movement are your best defence. Tell us when you stop and your plan switches to keeping it off.</p>${p.example ? '' : '<button class="btn ghost" data-act="comeoff">I have stopped my medication</button>'}</div>`;
   return h;
 }
@@ -259,12 +301,12 @@ function viewCircle() {
   return h;
 }
 
-const VIEWS = { welcome: viewWelcome, setup: viewSetup, today: viewToday, session: viewSession, test: viewTest, routine: viewRoutine, plan: viewPlan, toolkit: viewToolkit, food: viewFood, progress: viewProgress, circle: viewCircle };
+const VIEWS = { welcome: viewWelcome, setup: viewSetup, today: viewToday, session: viewSession, test: viewTest, routine: viewRoutine, moves: viewMoves, plan: viewPlan, toolkit: viewToolkit, food: viewFood, progress: viewProgress, circle: viewCircle };
 const TABBED = ['today', 'plan', 'toolkit', 'progress', 'circle'];
 function render() {
-  const inApp = S.profile && (TABBED.includes(view) || view === 'food');
+  const inApp = S.profile && (TABBED.includes(view) || view === 'food' || view === 'moves');
   tabs.hidden = !inApp;
-  tabs.querySelectorAll('button').forEach(b => b.setAttribute('aria-current', b.dataset.go === (view === 'food' ? 'toolkit' : view)));
+  tabs.querySelectorAll('button').forEach(b => b.setAttribute('aria-current', b.dataset.go === (view === 'food' ? 'toolkit' : view === 'moves' ? 'plan' : view)));
   hd.innerHTML = `<span class="brand"><span class="mark"></span>Holdfast</span>`;
   app.innerHTML = VIEWS[view]();
 }
@@ -285,6 +327,21 @@ function nextStep() {
   if (view === 'routine') render();
 }
 let back = 'today';
+
+/* ---------- guided set: counts reps at 4 seconds each, then times the rest ---------- */
+function speak(t) { if (!S.voice) return; try { speechSynthesis.cancel(); speechSynthesis.speak(new SpeechSynthesisUtterance(String(t))); } catch (e) {} }
+const setNum = v => { const el = document.getElementById('gnum'); if (el) el.textContent = v; };
+function endSet() {
+  if (G.set >= G.rx.sets) { G.mode = 'done'; clearInterval(timer); speak('Done'); } else { G.mode = 'rest'; G.left = 60; speak('Rest'); }
+  if (view === 'session') render();
+}
+function gtick() {
+  if (view !== 'session') { clearInterval(timer); return; }
+  if (G.mode === 'rep') {
+    if (G.rx.secs) { G.left--; setNum(G.left); if (G.left <= 0) endSet(); }
+    else { G.t++; if (G.t >= G.rx.reps * 4) endSet(); else if (G.t % 4 === 0) { setNum(G.t / 4 + 1); speak(G.t / 4 + 1); } }
+  } else if (G.mode === 'rest') { G.left--; setNum(G.left); if (G.left <= 0) { G.mode = 'idle'; G.set++; clearInterval(timer); speak('Next set'); render(); } }
+}
 
 /* ---------- interactions ---------- */
 document.addEventListener('click', e => {
@@ -314,6 +371,16 @@ document.addEventListener('click', e => {
   if (a === 'rskip') { nextStep(); return; }
   if (a === 'endroutine') { clearInterval(timer); go(back); return; }
 
+  if (a === 'gstart') { const p = S.profile, l = log(), e = sessionList(p, dayPlan(p, NOW.getDay()).session)[l.pos || 0];
+    G.rx = prescription(p.stage, l.light === undefined ? inEaseWeek(p, TODAY) : l.light, e[2]); G.mode = 'rep'; G.t = 0; G.left = G.rx.secs || 0;
+    clearInterval(timer); timer = setInterval(gtick, 1000); speak(G.rx.secs ? 'Go' : 1); render(); return; }
+  if (a === 'gstop') { clearInterval(timer); G.mode = 'idle'; render(); return; }
+  if (a === 'gskip') { clearInterval(timer); G.mode = 'idle'; G.set++; render(); return; }
+  if (a === 'help') { X.help = X.help === val ? null : val; X.hurt = null; if (val === 'easier' && X.help) { const l = log(); l.eased = (l.eased || 0) + 1; save(); } render(); return; }
+  if (a === 'hurt') { X.hurt = val; if (val === 'sharp') { const l = log(); l.pain = (l.pain || 0) + 1; S.msgs.push({ d: TODAY, t: 'Sharp pain reported during a session' }); save(); } render(); return; }
+  if (a === 'formcheck') { const p = S.profile, l = log(), e = sessionList(p, dayPlan(p, NOW.getDay()).session)[l.pos || 0]; S.msgs.push({ d: TODAY, t: 'Form check requested: ' + e[0] }); save(); X.help = 'formsent'; render(); return; }
+  if (a === 'ready') { log().ready = true; save(); go('session'); return; }
+  if (a === 'skipex') { const l = log(); l.pos = (l.pos || 0) + 1; resetEx(); save(); go('session'); return; }
   if (a === 'loadup' || a === 'loaddown') { S.loads[val] = Math.max(0, (S.loads[val] || 0) + (a === 'loadup' ? 1 : -1)); save(); render(); return; }
   if (a === 'win') { S.wins.push({ d: TODAY, t: val }); save(); render(); return; }
   if (a === 'postwin') { const t = document.getElementById('circlepost').value.trim(); if (t) { S.wins.push({ d: TODAY, t }); save(); msg = 'Saved to your wins.'; } render(); return; }
@@ -336,14 +403,14 @@ document.addEventListener('click', e => {
     else if (a === 'waterdown') l.water = Math.max(0, (l.water || 0) - 1);
     else if (a === 'light') l.light = true;
     else if (a === 'unlight') l.light = false;
-    else if (a === 'begin') { save(); go('session'); return; }
-    else if (a === 'nextex') { l.pos = (l.pos || 0) + 1; save(); go('session'); return; }
-    else if (a === 'prev') { if (!l.pos) { go('today'); return; } l.pos--; save(); go('session'); return; }
+    else if (a === 'begin') { resetEx(); save(); go('session'); return; }
+    else if (a === 'nextex') { l.pos = (l.pos || 0) + 1; resetEx(); save(); go('session'); return; }
+    else if (a === 'prev') { resetEx(); if (!l.pos) { go('today'); return; } l.pos--; save(); go('session'); return; }
     else if (a === 'finish') { l.finished = true; save(); go('today'); return; }
     else if (a === 'apply') { S.profile.stage = +val; msg = 'Next week is set. See you at your next session.'; }
   }
   save(); render();
 });
 document.addEventListener('input', e => { if (e.target.id === 'name') { S.draft.name = e.target.value; const n = document.getElementById('nextbtn'); if (n) n.disabled = !e.target.value.trim(); } });
-document.addEventListener('change', e => { if (e.target.dataset.act === 'cleared') { S.draft.cleared = e.target.checked; render(); } });
+document.addEventListener('change', e => { const a = e.target.dataset.act; if (a === 'cleared') { S.draft.cleared = e.target.checked; render(); } if (a === 'voice') { S.voice = e.target.checked; save(); } });
 render();

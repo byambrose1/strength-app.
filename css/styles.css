@@ -164,3 +164,16 @@ footer{font-size:.78rem;color:var(--muted)}
 textarea{font:500 1rem var(--body);padding:12px;border-radius:14px;border:2px solid var(--line);background:var(--surface);color:var(--ink);width:100%;resize:vertical}
 textarea:focus-visible{outline:3px solid var(--sun);outline-offset:2px}
 .link.inline{padding:0;font-size:inherit}
+
+/* --- added: exercise guidance and guided sets --- */
+.guidebox{display:flex;flex-direction:column;gap:8px}
+.guidebox summary{font-family:var(--display);font-weight:800;font-size:1.05rem}
+.guidebox[open] summary{margin-bottom:8px}
+.guidebox p{margin-top:8px}
+ol{margin:8px 0 0;padding-left:22px}
+ol li{margin-bottom:4px}
+.pace{width:100%;height:12px;border-radius:6px;background:var(--sunk);overflow:hidden}
+.pace i{display:block;height:100%;background:var(--mint);animation:pace 4s linear infinite}
+@keyframes pace{from{width:0}to{width:100%}}
+@media (prefers-reduced-motion: reduce){.pace i{animation:none;width:100%}}
+h3{margin-top:4px}

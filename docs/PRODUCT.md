@@ -16,7 +16,12 @@ An adult on weight-loss medication, usually new to strength training and often w
 
 | Part | What the member gets |
 |---|---|
-| Strength sessions | 15, 25 or 35 minutes, followed one exercise at a time, each with a short demo video. Built from the kit they own. |
+| Strength sessions | 15, 25 or 35 minutes, followed one exercise at a time. Built from the kit they own. |
+| Exercise guidance for beginners | Every exercise has a demo video slot, a written step-by-step guide (set up, the movement in order, where to feel it, breathing), and a way to make it easier. |
+| Guided sets | The app counts each rep at a steady pace, optionally out loud, then times the rest. Timed holds count down. |
+| Help in the moment | Three buttons on every exercise: make it easier, this hurts, am I doing it right. Sharp pain stops the exercise and is noted for the coach. A form check asks a real coach to look. |
+| First-session safety | A checklist before the very first session: sturdy chair, clear floor, footwear, water, phone in reach, eaten recently. |
+| Floor-free and supported versions | Members who cannot get down to the floor, or who need balance support, never get an exercise that asks for it. |
 | A week that fits their medication | Weekly injection, daily tablet or injection, or no medication. |
 | Feelings check | "How are you feeling today?" changes the day: lighter session, a relief routine, or no training. |
 | Relief routines | Guided 4 to 5 minute routines for constipation, nausea and low energy. |
@@ -28,10 +33,11 @@ An adult on weight-loss medication, usually new to strength training and often w
 ## What sets it apart
 
 1. **It is built for the medication, not adapted to it.** The week bends around injection day, a dose change triggers an easier week, and side effects change what today offers. General fitness apps do none of this.
-2. **It is built for the people GP exercise referral serves.** Health screening before a plan exists, safety notes for diabetes, blood pressure and joints, and gentler swaps for knees, backs and shoulders.
-3. **It covers the whole journey.** Starting, dose changes, the long middle, coming off and staying off. It does not end at 12 weeks.
-4. **It proves the promise.** The strength score shows strength holding or rising while weight falls. That number is what members show their friends.
-5. **It has people in it.** See below.
+2. **It is built for the people GP exercise referral serves.** Health screening before a plan exists, safety notes for diabetes, blood pressure and joints, gentler swaps for knees, backs and shoulders, and a whole floor-free, chair-supported programme for members who need one.
+3. **It teaches, it does not assume.** A beginner is shown how to set up, what to do in order, where they should feel it, how to breathe, and what to do when it is too hard or it hurts. Most fitness apps show a clip and a number.
+4. **It covers the whole journey.** Starting, dose changes, the long middle, coming off and staying off. It does not end at 12 weeks.
+5. **It proves the promise.** The strength score shows strength holding or rising while weight falls. That number is what members show their friends.
+6. **It has people in it.** See below.
 
 ## Human touch: rules for everything we build
 
@@ -92,7 +98,7 @@ Needs the backend: reminders by notification or email, weekly lesson unlock, a c
 
 | Item | Count |
 |---|---|
-| Exercise demo clips | 39 |
+| Exercise demo clips | 44 |
 | Guided routine recordings (voice or video) | 7 |
 | Lessons | 8 |
 | Weekly coach notes, one per phase to start | 4 |
@@ -100,7 +106,8 @@ Needs the backend: reminders by notification or email, weekly lesson unlock, a c
 
 ## Still to settle
 
-- **Professional review.** Every exercise, set and rep scheme, injury swap, safety note, routine and screening question in `js/content.js` is a draft.
+- **Professional review.** Every exercise, set and rep scheme, injury swap, safety note, routine and screening question in `js/content.js`, and every step-by-step guide in `js/guides.js`, is a draft.
+- **Voice.** "Count out loud" uses the phone's built-in voice for now. A recorded human voice would suit the brand better.
 - **Clinical advisor.** A dietitian and a pharmacist or GP reviewing the food and side-effect guidance would make the standard real.
 - **Insurance** for online programmes.
 - **Brand name and domain.**

@@ -22,6 +22,26 @@ assert.strictEqual(L.pick('squat', { ...base, care: ['knees'] })[0], 'Sit to sta
 assert.strictEqual(L.pick('press', { ...base, care: ['shoulders'] })[0], 'Wall slide');
 assert.strictEqual(L.pick('hinge', { ...base, care: ['back'] })[0], 'Glute bridge');
 
+// Members who cannot get down to the floor never get a floor exercise.
+const noFloor = { ...base, equip: ['none'], care: ['floor'] };
+assert.strictEqual(L.pick('push', { ...base, care: ['floor'] })[0], 'Wall press-up');
+assert.strictEqual(L.pick('core', noFloor)[0], 'Seated knee lift');
+assert.strictEqual(L.pick('hinge', noFloor)[0], 'Chair hip hinge');
+assert.strictEqual(L.pick('lunge', { ...base, care: ['knees', 'floor'] })[0], 'Supported step-back');
+assert.strictEqual(L.pick('hinge', { ...base, care: ['back', 'floor'] })[0], 'Chair hip hinge');
+['A', 'B'].forEach(w => ['none', 'bands', 'dumbbells', 'kettlebell', 'gym'].forEach(k => [15, 25, 35].forEach(len =>
+  L.sessionList({ ...base, equip: [k], care: ['floor', 'knees', 'back'], len }, w).forEach(e => assert.ok(!e[2].includes('f'), e[0] + ' is a floor exercise')))));
+// Balance support.
+assert.strictEqual(L.pick('lunge', { ...base, care: ['balance'] })[0], 'Supported step-back');
+assert.strictEqual(L.pick('carry', { ...base, care: ['balance'] })[0], 'Suitcase hold by a worktop');
+// Every exercise a member can be given has a step-by-step guide.
+const G = require('../js/guides.js'), CN = require('../js/content.js');
+const all = new Set([CN.BENCH_PRESS[0]]);
+Object.values(CN.LIB).forEach(m => Object.values(m).forEach(e => all.add(e[0])));
+Object.values(CN.ALT).forEach(l => l.forEach(a => all.add(a[1][0])));
+Object.values(CN.FLOORFREE).forEach(e => all.add(e[0]));
+all.forEach(n => assert.ok(G[n] && G[n].s && G[n].m.length >= 2 && G[n].f && G[n].e, 'No complete guide for ' + n));
+
 // Session length changes the number of exercises.
 assert.strictEqual(L.sessionList({ ...base, len: 15 }, 'A').length, 3);
 assert.strictEqual(L.sessionList(base, 'A').length, 4);
@@ -31,6 +51,8 @@ assert.strictEqual(L.sessionList({ ...base, len: 35 }, 'B').length, 5);
 assert.strictEqual(L.dose(1, false, ''), '2 × 10');
 assert.strictEqual(L.dose(1, true, 'h'), '1 × 30 sec');
 assert.strictEqual(L.dose(5, false, 'l'), '3 × 12');
+assert.deepStrictEqual(L.prescription(1, false, 'l'), { sets: 2, reps: 10 });
+assert.deepStrictEqual(L.prescription(1, true, 'h'), { sets: 1, secs: 30 });
 
 // How the member feels changes the day.
 assert.strictEqual(L.shouldEase({ eaten: 'no' }), true);

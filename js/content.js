@@ -23,23 +23,37 @@ const CONTENT = {
   /* Exercise library: movement -> kit -> [name, coaching cue, flags]. Flags: h = timed hold, l = weight can be logged. */
   LIB: {
     squat: { gym: ['Leg press', 'Feet hip width. Lower until knees reach 90 degrees.', 'l'], dumbbells: ['Goblet squat', 'One dumbbell at your chest. Sit between your hips.', 'l'], kettlebell: ['Kettlebell goblet squat', 'Hold the bell by the horns at your chest.', 'l'], bands: ['Band squat', 'Stand on the band, handles at shoulders.', ''], none: ['Sit to stand', 'From a chair, no hands. Lower for 3 seconds.', ''] },
-    push: { gym: ['Chest press machine', 'Handles level with mid chest. Press without locking out.', 'l'], dumbbells: ['Floor press', 'Lie on the floor. Elbows touch down softly.', 'l'], kettlebell: ['Kettlebell floor press', 'One arm at a time. Wrist straight.', 'l'], bands: ['Band chest press', 'Band anchored behind you at chest height.', ''], none: ['Incline press-up', 'Hands on a worktop. Body in one straight line.', ''] },
+    push: { gym: ['Chest press machine', 'Handles level with mid chest. Press without locking out.', 'l'], dumbbells: ['Floor press', 'Lie on the floor. Elbows touch down softly.', 'lf'], kettlebell: ['Kettlebell floor press', 'One arm at a time. Wrist straight.', 'lf'], bands: ['Band chest press', 'Band anchored behind you at chest height.', ''], none: ['Incline press-up', 'Hands on a worktop. Body in one straight line.', ''] },
     pull: { gym: ['Seated row machine', 'Sit tall. Pull elbows past your ribs.', 'l'], dumbbells: ['One-arm row', 'Hand on a chair. Pull to your hip.', 'l'], kettlebell: ['Kettlebell row', 'Hand on a chair. Pull the bell to your hip.', 'l'], bands: ['Band row', 'Anchor at waist height. Elbows brush your ribs.', ''], none: ['Loaded bag row', 'One hand on a chair. Pull a filled bag to your hip.', ''] },
-    core: { bands: ['Pallof press', 'Band to your side. Press out and resist the twist.', 'h'], none: ['Dead bug', 'Lower back stays on the floor. Opposite arm and leg.', 'h'] },
-    hinge: { gym: ['Dumbbell Romanian deadlift', 'Soft knees. Weights slide down your thighs.', 'l'], dumbbells: ['Romanian deadlift', 'Soft knees. Dumbbells slide down your thighs.', 'l'], kettlebell: ['Kettlebell deadlift', 'Bell between your feet. Push the floor away.', 'l'], bands: ['Band deadlift', 'Stand on the band. Hinge at the hips, back long.', ''], none: ['Glute bridge', 'Pause for 2 seconds at the top.', ''] },
+    core: { bands: ['Pallof press', 'Band to your side. Press out and resist the twist.', 'h'], none: ['Dead bug', 'Lower back stays on the floor. Opposite arm and leg.', 'hf'] },
+    hinge: { gym: ['Dumbbell Romanian deadlift', 'Soft knees. Weights slide down your thighs.', 'l'], dumbbells: ['Romanian deadlift', 'Soft knees. Dumbbells slide down your thighs.', 'l'], kettlebell: ['Kettlebell deadlift', 'Bell between your feet. Push the floor away.', 'l'], bands: ['Band deadlift', 'Stand on the band. Hinge at the hips, back long.', ''], none: ['Glute bridge', 'Pause for 2 seconds at the top.', 'f'] },
     lunge: { gym: ['Split squat', 'Hold a rail if you need balance.', 'l'], dumbbells: ['Split squat', 'Hold a chair if you need balance.', 'l'], kettlebell: ['Kettlebell step-up', 'Bell at your chest. Push through the whole foot.', 'l'], bands: ['Banded side step', 'Band above knees. Small steps, hips level.', ''], none: ['Step-up', 'Bottom stair. Push through the whole foot.', ''] },
     press: { gym: ['Shoulder press machine', 'Press up without shrugging.', 'l'], dumbbells: ['Overhead press', 'Seated if standing feels wobbly.', 'l'], kettlebell: ['Kettlebell press', 'One arm. Ribs down, squeeze your glutes.', 'l'], bands: ['Band overhead press', 'Stand on the band. Press straight up.', ''], none: ['Bag press overhead', 'Filled bag or two water bottles. Ribs down.', ''] },
     carry: { gym: ['Suitcase carry', 'One heavy dumbbell. Walk tall. Swap sides.', 'hl'], dumbbells: ['Suitcase carry', 'One heavy dumbbell. Walk tall. Swap sides.', 'hl'], kettlebell: ['Kettlebell carry', 'Bell in one hand. Walk tall. Swap sides.', 'hl'], bands: ['Band pull-apart', 'Arms straight, squeeze shoulder blades.', ''], none: ['Suitcase hold', 'Heavy bag in one hand. Stand tall. Swap sides.', 'h'] }
   },
   BENCH_PRESS: ['Dumbbell bench press', 'Feet flat on the floor. Lower to chest height.', 'l'],
 
-  /* Gentler swaps when a member flags an area to look after: movement -> [area, exercise]. */
+  /* Gentler swaps when a member flags something to look after: movement -> list of [area, exercise]. First match wins. */
   ALT: {
-    squat: ['knees', ['Sit to stand, high seat', 'Use a higher chair or add a cushion. Slow and steady.', '']],
-    lunge: ['knees', ['Glute bridge march', 'Hips up, lift one foot at a time.', '']],
-    hinge: ['back', ['Glute bridge', 'Pause for 2 seconds at the top.', '']],
-    press: ['shoulders', ['Wall slide', 'Back to the wall. Slide arms up as far as is comfortable.', '']]
+    squat: [['knees', ['Sit to stand, high seat', 'Use a higher chair or add a cushion. Slow and steady.', '']]],
+    lunge: [['knees', ['Glute bridge march', 'Hips up, lift one foot at a time.', 'f']], ['balance', ['Supported step-back', 'Hold a chair. Step one foot back, bend a little, return.', '']]],
+    hinge: [['back', ['Glute bridge', 'Pause for 2 seconds at the top.', 'f']]],
+    press: [['shoulders', ['Wall slide', 'Back to the wall. Slide arms up as far as is comfortable.', '']]],
+    carry: [['balance', ['Suitcase hold by a worktop', 'One hand on the worktop, weight in the other. Stand tall. Swap sides.', 'h']]]
   },
+  /* For members who cannot get down to the floor: any exercise flagged f is replaced with one of these. */
+  FLOORFREE: {
+    push: ['Wall press-up', 'Hands on a wall at chest height. Lean in, press away.', ''],
+    core: ['Seated knee lift', 'Sit tall on a chair. Lift one knee, hold, lower slowly.', 'h'],
+    hinge: ['Chair hip hinge', 'Hands on a chair back. Push your hips back, then stand tall.', ''],
+    lunge: ['Supported step-back', 'Hold a chair. Step one foot back, bend a little, return.', '']
+  },
+  CARE: { knees: ['Knees', 'Gentler squats and steps'], back: ['Lower back', 'No loaded bending'], shoulders: ['Shoulders', 'No pressing overhead'], floor: ['Getting down to the floor', 'Everything standing or seated'], balance: ['Balance', 'A chair or worktop to hold'], none: ['Nothing to flag', 'All good'] },
+
+  /* Shown once, before a member's very first session. */
+  READY: ['A sturdy chair that will not slide. Put it against a wall if you can.', 'Clear floor space with no loose rugs.', 'Flat shoes or bare feet. No socks on a hard floor.', 'Water within reach.', 'Your phone within reach.', 'You have eaten in the last couple of hours.'],
+  BREATHE: 'Breathe out on the effort, in on the way back. Never hold your breath.',
+  EFFORT: 'Finish each set feeling you could have done 2 or 3 more. If you could not, that was too much. If you could have done 10 more, add a little next time.',
 
   /* Health screening. Any "yes" needs GP or prescriber clearance before a plan is built. */
   SCREEN: [
@@ -73,7 +87,7 @@ const CONTENT = {
 
   /* Guided routines: steps are [instruction, seconds, breathe?]. */
   ROUTINES: {
-    move: { group: 'relief', title: 'Get things moving', mins: 5, blurb: 'Gentle movement for a sluggish gut', steps: [['Walk around the house or march on the spot at a comfortable pace.', 90], ['Lie on your back. Hug both knees to your chest and rock gently.', 45], ['Stay on your back, knees bent. Let both knees fall slowly to one side, then the other.', 45], ['Hand on your belly. Breathe in so your hand rises, out so it falls.', 60, 1], ['Stand up slowly and walk again.', 60]] },
+    move: { group: 'relief', title: 'Get things moving', mins: 5, blurb: 'Gentle movement for a sluggish gut', steps: [['Walk around the house or march on the spot at a comfortable pace.', 90], ['Lie on your back and hug both knees to your chest. Or stay seated and hug one knee at a time.', 45], ['On your back, let both knees fall slowly side to side. Or seated, turn gently to look over each shoulder.', 45], ['Hand on your belly. Breathe in so your hand rises, out so it falls.', 60, 1], ['Stand up slowly and walk again.', 60]] },
     settle: { group: 'relief', title: 'Settle a queasy stomach', mins: 4, blurb: 'Slow breathing and fresh air', steps: [['Sit tall, or stand by an open window. Loosen anything tight at your waist.', 30], ['Breathe in through your nose for 4, out through your mouth for 6.', 120, 1], ['Take a slow stroll. Stay upright, do not lie down.', 90]] },
     lift: { group: 'relief', title: 'Five-minute energy lift', mins: 5, blurb: 'When a full session is too much', steps: [['March on the spot. Swing your arms.', 60], ['Roll your shoulders back, slow and big.', 30], ['Stand up from a chair and sit back down, unhurried.', 60], ['Hands on a wall, lean in and press away.', 60], ['March again, a little quicker.', 60], ['Stand still. Three slow breaths.', 30, 1]] },
     pause: { group: 'mind', title: 'Pause before you eat', mins: 2, blurb: 'Two minutes that change the meal', steps: [['Sit down with your food in front of you. Put your phone face down.', 20], ['Breathe in for 4, out for 6.', 40, 1], ['How hungry are you, from 0 to 10? Just notice the number.', 25], ['Decide your first few bites will be the protein on your plate.', 20], ['Eat slowly. Stop when you are comfortably full.', 15]] },

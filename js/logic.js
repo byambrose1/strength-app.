@@ -6,12 +6,16 @@ const addDays = (d, n) => { const x = new Date(d); x.setDate(x.getDate() + n); r
 const parseDay = s => { const a = s.split('-'); return new Date(+a[0], +a[1] - 1, +a[2]); };
 const monday = d => iso(addDays(d, -((d.getDay() + 6) % 7)));
 
-/* Choose the exercise for one movement, from the member's kit and the areas they asked us to look after. */
+/* Choose the exercise for one movement, from the member's kit and what they asked us to look after.
+   Order: a gentler swap for a flagged area, then the best kit they own, then a floor-free version if they cannot get down to the floor. */
 function pick(slot, p) {
-  const a = C.ALT[slot];
-  if (a && (p.care || []).includes(a[0])) return a[1];
-  if (slot === 'push' && p.equip.includes('dumbbells') && p.equip.includes('bench') && !p.equip.includes('gym')) return C.BENCH_PRESS;
-  for (const k of C.ORDER) if ((k === 'none' || p.equip.includes(k)) && C.LIB[slot][k]) return C.LIB[slot][k];
+  const care = p.care || [];
+  let e = null;
+  for (const a of (C.ALT[slot] || [])) if (care.includes(a[0])) { e = a[1]; break; }
+  if (!e && slot === 'push' && p.equip.includes('dumbbells') && p.equip.includes('bench') && !p.equip.includes('gym')) e = C.BENCH_PRESS;
+  if (!e) for (const k of C.ORDER) if ((k === 'none' || p.equip.includes(k)) && C.LIB[slot][k]) { e = C.LIB[slot][k]; break; }
+  if (care.includes('floor') && e[2].includes('f') && C.FLOORFREE[slot]) e = C.FLOORFREE[slot];
+  return e;
 }
 
 /* Session A or B, sized to the minutes the member has. */
@@ -39,6 +43,13 @@ function dayPlan(p, dow) {
   if (map[off]) return { type: 'strength', short: 'Lift', title: 'Strength session ' + map[off], session: map[off] };
   if (off === 6) return { type: 'easy', short: 'Rest', title: 'Rest day', text: 'A full day off. Eat well and get to bed on time: that is when muscle rebuilds.' };
   return walk;
+}
+
+/* The numbers behind a set: how many sets, and either reps or seconds. */
+function prescription(stage, light, flags) {
+  let [sets, reps] = C.STAGES[stage];
+  if (light) sets = Math.max(1, sets - 1);
+  return (flags || '').includes('h') ? { sets, secs: reps * 3 } : { sets, reps };
 }
 
 function dose(stage, light, flags) {
@@ -74,4 +85,4 @@ function review(p, logs, dates) {
 const weekNo = (start, today) => Math.max(1, Math.floor((parseDay(today) - parseDay(start)) / 6048e5) + 1);
 const phase = w => w <= 4 ? 'Foundations' : w <= 8 ? 'Build' : w <= 12 ? 'Strong' : 'For life';
 
-if (typeof module !== 'undefined') module.exports = { iso, addDays, parseDay, monday, pick, sessionList, dayPlan, dose, shouldEase, mustSkip, inEaseWeek, review, weekNo, phase };
+if (typeof module !== 'undefined') module.exports = { iso, addDays, parseDay, monday, pick, sessionList, dayPlan, prescription, dose, shouldEase, mustSkip, inEaseWeek, review, weekNo, phase };
