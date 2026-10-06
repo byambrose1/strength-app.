@@ -66,7 +66,7 @@ Tested by clicking through in a browser on phone and desktop sizes.
 - Desktop layout with a side menu.
 - Learn your exercises screen.
 - Share message for telling a friend.
-- 60-plus automated checks on the programme rules.
+- 46 automated checks on the programme rules.
 
 ## 2. Screens exist, but not real yet
 
