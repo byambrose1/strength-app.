@@ -1,6 +1,6 @@
 # Filming list
 
-Generated from the app, so every title here matches the app exactly. 44 exercise clips, plus 7 routines, 8 lessons, 4 coach notes, a test demo and a short film for the home page.
+Generated from the app, so every title here matches the app exactly. 52 exercise clips, plus 7 routines, 8 lessons, 4 coach notes, a test demo and a short film for the home page.
 
 ## How to film
 
@@ -21,7 +21,7 @@ Generated from the app, so every title here matches the app exactly. 44 exercise
 
 Unlisted means anyone with the link can watch, but it does not appear in search. YouTube labels short upright clips as Shorts; that is fine, they still play in the app.
 
-## Day one: film these first (16 clips)
+## Day one: film these first (24 clips)
 
 These cover every member with no equipment, including the floor-free and supported versions. The app is usable with only these.
 
@@ -43,19 +43,35 @@ These cover every member with no equipment, including the floor-free and support
 | Title (exact) | What to show | Film |
 |---|---|---|
 | Sit to stand, high seat | Add a firm cushion to a sturdy chair, or use a higher seat. Feet flat, hip-width apart. Lean forward a little, nose over your toes. Push through your whole foot and stand up. Sit back down slowly and under control. | 3 slow reps |
+| Wall press-up | Stand an arm's length from a wall. Hands flat on it at chest height. Bend your elbows and lean your chest towards the wall. Keep your heels down and body straight. Press yourself back to standing. | 3 slow reps |
 | Glute bridge march | Lie on your back, knees bent, feet flat. Lift your hips into a bridge. Keep your hips level. Lift one foot an inch off the floor. Put it down and lift the other. Keep going. | 3 slow reps |
 | Supported step-back | Stand side-on to a sturdy chair or worktop, one hand holding it. Step one foot back about a stride. Bend both knees a little, as far as feels steady. Push through your front foot and step back together. Swap legs halfway. | 3 slow reps |
 | Wall slide | Stand with your back, head and bottom against a wall. Arms up in a goalpost shape, backs of your hands near the wall. Slide your arms up the wall. Go only as far as is comfortable. Slide back down slowly. | 3 slow reps |
 | Suitcase hold by a worktop | Stand beside a worktop with one hand resting on it. Hold a weight in the other hand, like a suitcase. Stand tall. Do not lean towards the weight. Hold for the time. Put it down, turn round and swap hands. | Hold 10 sec |
-| Wall press-up | Stand an arm's length from a wall. Hands flat on it at chest height. Bend your elbows and lean your chest towards the wall. Keep your heels down and body straight. Press yourself back to standing. | 3 slow reps |
 | Seated knee lift | Sit tall on the front of a sturdy chair. Hold the sides of the seat. Brace your tummy as if about to cough. Lift one knee a few inches and hold it. Lower slowly and swap legs. Keep going for the time. | Hold 10 sec |
 | Chair hip hinge | Stand behind a sturdy chair, hands resting on its back, feet hip-width apart. Soften your knees. Push your hips straight back as if closing a drawer with your bottom. Back stays long. Squeeze your bottom and stand tall. | 3 slow reps |
+
+### The fully seated programme
+
+Film every one of these sitting down the whole time, on a sturdy chair with no arms if you can.
+
+| Title (exact) | What to show | Film |
+|---|---|---|
+| Seated leg extension | Sit tall towards the front of a sturdy chair, feet flat. Hold the sides of the seat. Straighten one knee until your leg is out in front of you. Squeeze the front of your thigh and hold for two seconds. Lower slowly. Do all your reps, then swap legs. | 3 slow reps |
+| Seated chest press | Sit tall, away from the chair back. A water bottle or light weight in each hand at chest height, elbows out. Press both hands straight forward until your arms are nearly straight. Pause for a moment. Bring them back slowly to your chest. | 3 slow reps |
+| Seated row | Sit tall at the front of the chair. A water bottle or light weight in each hand, arms straight out in front. Pull your elbows back past your ribs. Squeeze your shoulder blades together. Reach forward again slowly. | 3 slow reps |
+| Seated hip hinge | Sit tall at the front of the chair, feet flat and wide, hands on your thighs. Keeping your back long, lean forward from your hips. Go only as far as is comfortable. Push through your feet and sit tall again, squeezing your bottom. | 3 slow reps |
+| Seated march | Sit tall towards the front of the chair. Hold the sides of the seat. Lift one knee, then lower it. Lift the other. Keep a steady rhythm. Count each lift as one rep. | 3 slow reps |
+| Seated overhead press | Sit tall with your back supported. A water bottle or light weight in each hand at your shoulders. Tuck your ribs down. Press your hands straight up until your arms are nearly straight. Lower slowly to your shoulders. | 3 slow reps |
+| Seated suitcase hold | Sit tall, away from the chair back. Hold a weight in one hand, arm hanging by your side. Sit as if the weight were not there. Do not lean. Hold for the time. Put it down and swap hands. | Hold 10 sec |
+| Seated arm raise | Sit tall with your back supported. Arms by your sides, a water bottle or light weight in each hand if comfortable. Lift both arms forward to shoulder height, no higher. Pause for a moment. Lower slowly. | 3 slow reps |
 
 ### Also day one
 
 | Title (exact) | What to show | Length |
 |---|---|---|
 | How to do the test | The 30-second sit to stand: arms crossed, full stand, full sit | 30 sec |
+| How to do the seated test | The 30-second arm curl: seated, weight in one hand, full curl up, all the way down | 30 sec |
 | See how Holdfast works | The home page film: who it is for and what it does | 60 sec |
 | Coach note: Foundations | Say this in your own words: "These first weeks are about turning up, not lifting heavy. If you finish thinking "I could have done more", you got it exactly right." | 30 sec |
 | Coach note: Build | Say this in your own words: "You have the habit now. This is where we ask a bit more of you. Add a little weight when the last two reps feel easy." | 30 sec |

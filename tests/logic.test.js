@@ -31,6 +31,19 @@ assert.strictEqual(L.pick('lunge', { ...base, care: ['knees', 'floor'] })[0], 'S
 assert.strictEqual(L.pick('hinge', { ...base, care: ['back', 'floor'] })[0], 'Chair hip hinge');
 ['A', 'B'].forEach(w => ['none', 'bands', 'dumbbells', 'kettlebell', 'gym'].forEach(k => [15, 25, 35].forEach(len =>
   L.sessionList({ ...base, equip: [k], care: ['floor', 'knees', 'back'], len }, w).forEach(e => assert.ok(!e[2].includes('f'), e[0] + ' is a floor exercise')))));
+// A member who must stay seated gets a fully seated programme, whatever kit or other needs they have.
+['A', 'B'].forEach(w => [15, 25, 35].forEach(len => ['none', 'gym', 'dumbbells'].forEach(k =>
+  L.sessionList({ ...base, equip: [k], care: ['seated', 'knees'], len }, w).forEach(e => assert.ok(/^Seated/.test(e[0]), e[0] + ' is not seated')))));
+assert.strictEqual(L.pick('press', { ...base, care: ['seated', 'shoulders'] })[0], 'Seated arm raise');
+assert.strictEqual(L.dayPlan({ ...base, med: 'daily', jab: 1, care: ['seated'] }, 2).title, 'Move day');
+// Wrists and hips.
+assert.strictEqual(L.pick('push', { ...base, care: ['wrists'] })[0], 'Wall press-up');
+assert.strictEqual(L.pick('squat', { ...base, care: ['hips'] })[0], 'Sit to stand, high seat');
+assert.strictEqual(L.pick('lunge', { ...base, care: ['hips'] })[0], 'Supported step-back');
+assert.strictEqual(L.pick('hinge', { ...base, care: ['hips', 'floor'] })[0], 'Chair hip hinge');
+// An exercise the member has left out does not come back.
+assert.ok(!L.sessionList({ ...base, skip: ['Goblet squat'] }, 'A').some(e => e[0] === 'Goblet squat'));
+assert.strictEqual(L.sessionList({ ...base, skip: ['Goblet squat'] }, 'A').length, 3);
 // Balance support.
 assert.strictEqual(L.pick('lunge', { ...base, care: ['balance'] })[0], 'Supported step-back');
 assert.strictEqual(L.pick('carry', { ...base, care: ['balance'] })[0], 'Suitcase hold by a worktop');
@@ -40,6 +53,7 @@ const all = new Set([CN.BENCH_PRESS[0]]);
 Object.values(CN.LIB).forEach(m => Object.values(m).forEach(e => all.add(e[0])));
 Object.values(CN.ALT).forEach(l => l.forEach(a => all.add(a[1][0])));
 Object.values(CN.FLOORFREE).forEach(e => all.add(e[0]));
+Object.values(CN.SEATED).forEach(e => all.add(e[0])); all.add(CN.SEATED_SHOULDERS[0]);
 all.forEach(n => assert.ok(G[n] && G[n].s && G[n].m.length >= 2 && G[n].f && G[n].e, 'No complete guide for ' + n));
 
 // Session length changes the number of exercises.

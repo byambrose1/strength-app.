@@ -35,9 +35,10 @@ const CONTENT = {
 
   /* Gentler swaps when a member flags something to look after: movement -> list of [area, exercise]. First match wins. */
   ALT: {
-    squat: [['knees', ['Sit to stand, high seat', 'Use a higher chair or add a cushion. Slow and steady.', '']]],
-    lunge: [['knees', ['Glute bridge march', 'Hips up, lift one foot at a time.', 'f']], ['balance', ['Supported step-back', 'Hold a chair. Step one foot back, bend a little, return.', '']]],
-    hinge: [['back', ['Glute bridge', 'Pause for 2 seconds at the top.', 'f']]],
+    squat: [['knees', ['Sit to stand, high seat', 'Use a higher chair or add a cushion. Slow and steady.', '']], ['hips', ['Sit to stand, high seat', 'Use a higher chair or add a cushion. Slow and steady.', '']]],
+    push: [['wrists', ['Wall press-up', 'Hands on a wall at chest height. Lean in, press away.', '']]],
+    lunge: [['knees', ['Glute bridge march', 'Hips up, lift one foot at a time.', 'f']], ['balance', ['Supported step-back', 'Hold a chair. Step one foot back, bend a little, return.', '']], ['hips', ['Supported step-back', 'Hold a chair. Step one foot back, bend a little, return.', '']]],
+    hinge: [['back', ['Glute bridge', 'Pause for 2 seconds at the top.', 'f']], ['hips', ['Glute bridge', 'Pause for 2 seconds at the top.', 'f']]],
     press: [['shoulders', ['Wall slide', 'Back to the wall. Slide arms up as far as is comfortable.', '']]],
     carry: [['balance', ['Suitcase hold by a worktop', 'One hand on the worktop, weight in the other. Stand tall. Swap sides.', 'h']]]
   },
@@ -48,7 +49,25 @@ const CONTENT = {
     hinge: ['Chair hip hinge', 'Hands on a chair back. Push your hips back, then stand tall.', ''],
     lunge: ['Supported step-back', 'Hold a chair. Step one foot back, bend a little, return.', '']
   },
-  CARE: { knees: ['Knees', 'Gentler squats and steps'], back: ['Lower back', 'No loaded bending'], shoulders: ['Shoulders', 'No pressing overhead'], floor: ['Getting down to the floor', 'Everything standing or seated'], balance: ['Balance', 'A chair or worktop to hold'], none: ['Nothing to flag', 'All good'] },
+  CARE: { knees: ['Knees', 'Gentler squats and steps'], hips: ['Hips', 'Less bend, lighter load'], back: ['Lower back', 'No loaded bending'], shoulders: ['Shoulders', 'No pressing overhead'], wrists: ['Wrists or hands', 'No press-ups on your hands'], floor: ['Getting down to the floor', 'Everything standing or seated'], balance: ['Balance', 'A chair or worktop to hold'], seated: ['I need to stay seated', 'A fully seated programme'], other: ['Something else', 'Tell your coach'], none: ['Nothing to flag', 'All good'] },
+  /* Extra guidance shown in the plan and at the start of each session for these members. */
+  CARE_NOTES: {
+    wrists: ['Use wrist weights or a lighter weight for anything you hold, and keep your wrists straight.', 'Stop if your grip or wrist hurts. Easing off the weight is always allowed.'],
+    hips: ['Keep the bend at your hips small and the load light.', 'If you have had a hip replacement, your surgeon\'s or physio\'s movement rules come first.'],
+    seated: ['Use a sturdy chair that will not slide or tip. If you use a wheelchair, put the brakes on.', 'Sit tall, away from the chair back, unless the exercise says to use it.']
+  },
+  /* The fully seated programme: one seated exercise for every movement. */
+  SEATED: {
+    squat: ['Seated leg extension', 'Straighten one knee, squeeze, lower slowly.', ''],
+    push: ['Seated chest press', 'Press water bottles or light weights forward from your chest.', 'l'],
+    pull: ['Seated row', 'Pull your elbows back and squeeze your shoulder blades.', 'l'],
+    core: ['Seated knee lift', 'Sit tall on a chair. Lift one knee, hold, lower slowly.', 'h'],
+    hinge: ['Seated hip hinge', 'Lean forward from your hips with a long back, then sit tall.', ''],
+    lunge: ['Seated march', 'Lift one knee then the other, steady rhythm.', ''],
+    press: ['Seated overhead press', 'Press water bottles or light weights straight up.', 'l'],
+    carry: ['Seated suitcase hold', 'Weight in one hand by your side. Sit tall. Swap sides.', 'hl']
+  },
+  SEATED_SHOULDERS: ['Seated arm raise', 'Lift both arms forward to shoulder height, no higher.', 'l'],
 
   /* Shown once, before a member's very first session. */
   READY: ['A sturdy chair that will not slide. Put it against a wall if you can.', 'Clear floor space with no loose rugs.', 'Flat shoes or bare feet. No socks on a hard floor.', 'Water within reach.', 'Your phone within reach.', 'You have eaten in the last couple of hours.'],
@@ -87,9 +106,9 @@ const CONTENT = {
 
   /* Guided routines: steps are [instruction, seconds, breathe?]. */
   ROUTINES: {
-    move: { group: 'relief', title: 'Get things moving', mins: 5, blurb: 'Gentle movement for a sluggish gut', steps: [['Walk around the house or march on the spot at a comfortable pace.', 90], ['Lie on your back and hug both knees to your chest. Or stay seated and hug one knee at a time.', 45], ['On your back, let both knees fall slowly side to side. Or seated, turn gently to look over each shoulder.', 45], ['Hand on your belly. Breathe in so your hand rises, out so it falls.', 60, 1], ['Stand up slowly and walk again.', 60]] },
+    move: { group: 'relief', title: 'Get things moving', mins: 5, blurb: 'Gentle movement for a sluggish gut', steps: [['Walk around the house, march on the spot, or march your feet while seated.', 90], ['Lie on your back and hug both knees to your chest. Or stay seated and hug one knee at a time.', 45], ['On your back, let both knees fall slowly side to side. Or seated, turn gently to look over each shoulder.', 45], ['Hand on your belly. Breathe in so your hand rises, out so it falls.', 60, 1], ['Stand up slowly and walk again, or march seated.', 60]] },
     settle: { group: 'relief', title: 'Settle a queasy stomach', mins: 4, blurb: 'Slow breathing and fresh air', steps: [['Sit tall, or stand by an open window. Loosen anything tight at your waist.', 30], ['Breathe in through your nose for 4, out through your mouth for 6.', 120, 1], ['Take a slow stroll. Stay upright, do not lie down.', 90]] },
-    lift: { group: 'relief', title: 'Five-minute energy lift', mins: 5, blurb: 'When a full session is too much', steps: [['March on the spot. Swing your arms.', 60], ['Roll your shoulders back, slow and big.', 30], ['Stand up from a chair and sit back down, unhurried.', 60], ['Hands on a wall, lean in and press away.', 60], ['March again, a little quicker.', 60], ['Stand still. Three slow breaths.', 30, 1]] },
+    lift: { group: 'relief', title: 'Five-minute energy lift', mins: 5, blurb: 'When a full session is too much', steps: [['March on the spot, or seated. Swing your arms.', 60], ['Roll your shoulders back, slow and big.', 30], ['Stand up from a chair and sit back down, unhurried. Or straighten each knee in turn.', 60], ['Hands on a wall, lean in and press away. Or press your palms together hard.', 60], ['March again, standing or seated, a little quicker.', 60], ['Stand still. Three slow breaths.', 30, 1]] },
     pause: { group: 'mind', title: 'Pause before you eat', mins: 2, blurb: 'Two minutes that change the meal', steps: [['Sit down with your food in front of you. Put your phone face down.', 20], ['Breathe in for 4, out for 6.', 40, 1], ['How hungry are you, from 0 to 10? Just notice the number.', 25], ['Decide your first few bites will be the protein on your plate.', 20], ['Eat slowly. Stop when you are comfortably full.', 15]] },
     crave: { group: 'mind', title: 'Ride out a craving', mins: 3, blurb: 'A craving is a wave, it passes', steps: [['Name it out loud: "I am having a craving for..."', 20], ['Where do you feel it? Mouth, stomach, chest? Stay curious about it.', 30], ['Breathe in for 4, out for 6. Picture the craving as a wave rising.', 60, 1], ['Keep breathing. Waves peak, then fall. You are watching it, not obeying it.', 50, 1], ['Now choose. Eating it is allowed. So is leaving it. Either way, you decided.', 20]] },
     kind: { group: 'mind', title: 'A kinder word with yourself', mins: 3, blurb: 'For the days the mirror is loud', steps: [['Put a hand on your chest. Feel it rise and fall.', 30, 1], ['Name one thing your body did for you today. Carried, climbed, hugged, lifted.', 40], ['Think of what you would say to a friend who is trying as hard as you are.', 40], ['Say that to yourself. Out loud if you can.', 40], ['One slow breath. Carry on with your day.', 20, 1]] },

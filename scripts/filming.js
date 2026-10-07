@@ -1,11 +1,12 @@
 /* Writes docs/FILMING.md from the app's own content, so titles always match. Run: node scripts/filming.js */
 const C = require('../js/content.js'), G = require('../js/guides.js'), fs = require('fs');
-const seen = new Set(), tiers = { none: [], adapted: [], bands: [], dumbbells: [], kettlebell: [], gym: [] };
+const seen = new Set(), tiers = { none: [], adapted: [], seated: [], bands: [], dumbbells: [], kettlebell: [], gym: [] };
 const add = (tier, e) => { if (!seen.has(e[0])) { seen.add(e[0]); tiers[tier].push(e); } };
 ['none', 'bands', 'dumbbells', 'kettlebell', 'gym'].forEach(k => Object.values(C.LIB).forEach(m => m[k] && add(k, m[k])));
 Object.values(C.ALT).forEach(l => l.forEach(a => add('adapted', a[1])));
 Object.values(C.FLOORFREE).forEach(e => add('adapted', e));
 add('dumbbells', C.BENCH_PRESS);
+Object.values(C.SEATED).forEach(e => add('seated', e)); add('seated', C.SEATED_SHOULDERS);
 const row = e => { const g = G[e[0]]; return `| ${e[0]} | ${g.s} ${g.m.join(' ')} | ${e[2].includes('h') ? 'Hold 10 sec' : '3 slow reps'} |`; };
 const table = list => '| Title (exact) | What to show | Film |\n|---|---|---|\n' + list.map(row).join('\n');
 const total = Object.values(tiers).reduce((a, l) => a + l.length, 0);
@@ -32,7 +33,7 @@ Generated from the app, so every title here matches the app exactly. ${total} ex
 
 Unlisted means anyone with the link can watch, but it does not appear in search. YouTube labels short upright clips as Shorts; that is fine, they still play in the app.
 
-## Day one: film these first (${tiers.none.length + tiers.adapted.length} clips)
+## Day one: film these first (${tiers.none.length + tiers.adapted.length + tiers.seated.length} clips)
 
 These cover every member with no equipment, including the floor-free and supported versions. The app is usable with only these.
 
@@ -44,11 +45,18 @@ ${table(tiers.none)}
 
 ${table(tiers.adapted)}
 
+### The fully seated programme
+
+Film every one of these sitting down the whole time, on a sturdy chair with no arms if you can.
+
+${table(tiers.seated)}
+
 ### Also day one
 
 | Title (exact) | What to show | Length |
 |---|---|---|
 | How to do the test | The 30-second sit to stand: arms crossed, full stand, full sit | 30 sec |
+| How to do the seated test | The 30-second arm curl: seated, weight in one hand, full curl up, all the way down | 30 sec |
 | See how Holdfast works | The home page film: who it is for and what it does | 60 sec |
 ${Object.keys(C.COACH).map(k => `| Coach note: ${k} | Say this in your own words: "${C.COACH[k]}" | 30 sec |`).join('\n')}
 
@@ -87,4 +95,4 @@ Talking to camera. These are where the nutrition guidance lives on video.
 ${C.LESSONS.map(l => `| ${l[0]} | ${l[1]} |`).join('\n')}
 `;
 fs.writeFileSync(__dirname + '/../docs/FILMING.md', out);
-console.log('clips', total, '| day one', tiers.none.length + tiers.adapted.length + 2 + Object.keys(C.COACH).length);
+console.log('clips', total, '| day one', tiers.none.length + tiers.adapted.length + tiers.seated.length + 3 + Object.keys(C.COACH).length);
