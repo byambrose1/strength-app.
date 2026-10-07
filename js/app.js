@@ -31,8 +31,18 @@ const app = document.getElementById('app'), hd = document.getElementById('hd'), 
 const on = (cur, val) => Array.isArray(cur) ? cur.includes(val) : String(cur) === String(val);
 const chip = (act, val, cur, text) => `<button class="chip" data-act="${act}" data-val="${val}" aria-pressed="${on(cur, val)}">${text}</button>`;
 const tile = (act, val, cur, text, sub) => `<button class="tile" data-act="${act}" data-val="${val}" aria-pressed="${on(cur, val)}">${text}<small>${sub}</small></button>`;
-const video = (title, sub, cls) => `<div class="video ${cls || ''}" role="img" aria-label="Video placeholder: ${title}"><span class="play"></span>${cls ? '' : `<strong>${title}</strong><small>${sub}</small>`}</div>`;
+/* A video is a real player once its link is in js/videos.js. Until then it is a labelled placeholder. */
+function videoId(title) { const v = (typeof VIDEOS !== 'undefined' && VIDEOS[title]) || ''; const m = String(v).match(/(?:youtu\.be\/|v=|shorts\/|embed\/)([\w-]{6,})/); return m ? m[1] : /^[\w-]{6,}$/.test(v) ? v : ''; }
+const hasVideo = title => !!videoId(title);
+function video(title, sub, cls) {
+  const id = videoId(title);
+  if (id) return `<div class="video real"><iframe src="https://www.youtube-nocookie.com/embed/${id}?rel=0&playsinline=1" title="${esc(title)}" allow="accelerometer; encrypted-media; picture-in-picture; fullscreen" allowfullscreen loading="lazy"></iframe></div>`;
+  return `<div class="video ${cls || ''}" role="img" aria-label="Video coming soon: ${title}"><span class="play"></span>${cls ? '' : `<strong>${title}</strong><small>${sub}</small>`}</div>`;
+}
+/* A row with a small video tile; becomes a full player above the text once the video exists. */
+const mediaRow = (title, body) => hasVideo(title) ? `<div class="stack">${video(title, '')}${body}</div>` : `<div class="lesson">${video(title, '', 'thumb')}${body}</div>`;
 const proto = t => `<p class="proto"><b>Prototype note</b> ${t}</p>`;
+const mail = (subject, body) => { location.href = 'mailto:' + C.LAUNCH.coachEmail + '?subject=' + encodeURIComponent(subject) + '&body=' + encodeURIComponent(body); };
 
 /* ---------- derived ---------- */
 const wk = () => weekNo(S.profile.start, TODAY);
@@ -75,33 +85,26 @@ function phoneMock() {
 }
 
 function viewWelcome() {
-  const join = C.LAUNCH.joinUrl ? `<a class="btn ghost" href="${C.LAUNCH.joinUrl}" target="_blank" rel="noopener">Join the founding members</a>` : '';
-  const feats = [['g1', 'Strength sessions that teach you', '15 to 35 minutes, at home or the gym. Every move shown step by step, counted with you, and made easier at a tap.'], ['g2', 'A week that fits your medication', 'Weekly injection, daily tablet, or coming off it. Your plan bends around how you actually feel.'], ['g3', 'Help on the rough days', 'Feeling sick, bunged up or wiped out? Tell us, and today changes to match, with a short routine to help.'], ['g1', 'A calmer head around food', 'Two-minute guided moments for cravings and mealtimes. Simple food ideas for low-appetite days.'], ['g2', 'Proof it is working', 'A strength score you re-test every four weeks. Watch it hold, or climb, while the scales drop.'], ['g3', 'Real people', 'A qualified coach who answers you, and a small circle of members who started when you did.']];
-  const faqs = [['I have never done strength training. Is this for me?', 'Yes. It is built for beginners. You get a safety check before you start, a written guide and a video for every exercise, and a button to make any move easier.'], ['Which medication does it work with?', 'Any of them. We only ask whether you take it weekly, daily, or have stopped. We never ask for the name or the dose, and we never give advice about your medication.'], ['Do I need a gym or equipment?', 'No. A sturdy chair and a stair is enough. If you have bands, dumbbells, a kettlebell or a gym membership, your plan uses them.'], ['I cannot get down on the floor. Can I still do it?', 'Yes. Tell us at the start and every exercise will be standing or seated.'], ['What if I feel too rough to train?', 'Then you do not train. Tell the app how you feel and it swaps the session for something gentler, or for rest. That is the plan working, not you failing.'], ['What does it cost?', 'Building your plan is free. Founding member pricing will be confirmed at launch, and you will always see the price before you pay anything.'], ['Is this medical advice?', 'No. Holdfast gives exercise and general wellbeing guidance. Your prescriber, pharmacist or GP is the right person for anything about your medication or your health.']];
-  return `<nav class="topnav" aria-label="Page"><a href="#inside">What you get</a><a href="#how">How it works</a><a href="#questions">Questions</a><button class="btn small" data-act="start">Build my plan</button></nav>
-  <section class="lhero"><div class="lcopy"><p class="eyebrow">For anyone on weight-loss medication</p><h1>Lose the weight.<br>Keep your strength.</h1>
-    <p class="lead">The medication takes the weight off. We make sure it is fat you lose and not muscle, and we look after you on the days it is hard going.</p>
-    <div class="row"><button class="btn" data-act="start">Build my plan</button>${join}</div><p class="small muted">Takes two minutes. No card needed.</p>
-    <button class="link" data-act="example">Or look around an example member's plan first</button></div>${phoneMock()}</section>
+  const mine = S.profile && !S.profile.example;
+  const cta = mine ? `<button class="btn" data-go="today">Open my plan</button>` : `<button class="btn" data-act="start">Start my plan</button>`;
+  const join = C.LAUNCH.joinUrl ? `<a class="btn ghost" href="${C.LAUNCH.joinUrl}" target="_blank" rel="noopener">Join now</a>` : '';
+  const faqs = [['I have never done strength training. Is this for me?', 'Yes. It is made for beginners. Every exercise is shown on video and explained step by step, and you can make any of them easier with one tap.'], ['Which medication does it work with?', 'All of them: weekly injections, daily tablets, or if you have stopped. We never ask for the name or the dose.'], ['Do I need a gym or equipment?', 'No. A sturdy chair is enough. If you cannot get down on the floor, tell us and everything will be standing or seated.'], ['What does it cost?', 'Setting up your plan is free. You will always see the price before you pay anything.']];
+  return `<section class="lhero"><div class="lcopy"><h1>Lose the weight.<br>Keep your strength.</h1>
+    <p class="lead">Holdfast is the strength and nutrition app for people on weight-loss medication. Short workouts, simple food guidance, and help on the days you feel rough.</p>
+    <div class="row">${cta}${join}</div><p class="small muted">Two minutes to set up. No card needed.</p></div>${hasVideo('See how Holdfast works') ? video('See how Holdfast works', '') : phoneMock()}</section>
 
-  <section class="facts"><div><b>10 years</b><p class="small">Without strength training, the muscle lost on these medications can be comparable to a decade of ageing.<sup>1</sup></p></div><div><b>0.8 kg a month</b><p class="small">How fast weight came back, on average, after people stopped the injections.<sup>2</sup></p></div><div><b>"Concentrate on strength"</b><p class="small">England's Chief Medical Officer, on what people taking these medicines should do.<sup>3</sup></p></div></section>
+  <section class="lsec"><h2>What you do with it</h2><div class="plain">
+    <div><h3>Move</h3><p>Two or three short strength sessions a week. Every exercise is shown on video and explained step by step. No gym needed.</p></div>
+    <div><h3>Eat</h3><p>Simple guidance on protein, fluids and what to eat when you are not hungry. No calorie counting.</p></div>
+    <div><h3>Feel better</h3><p>Tell the app how you feel each day. If you are sick, tired or sore, it gives you something gentler.</p></div></div></section>
 
-  <section id="inside" class="lsec"><h2>Everything you need, nothing you do not</h2><div class="feats">${feats.map(f => `<div class="card"><span class="glyph ${f[0]}"></span><h3>${f[1]}</h3><p class="small muted">${f[2]}</p></div>`).join('')}</div></section>
+  <section class="lsec"><h2>How to start</h2><div class="steps">
+    <div class="step"><b>1</b><div><strong>Answer a few questions</strong><p class="small muted">About your medication, your body and what you have at home.</p></div></div>
+    <div class="step"><b>2</b><div><strong>Get your plan</strong><p class="small muted">Built for you, on the days that suit you.</p></div></div>
+    <div class="step"><b>3</b><div><strong>Press start</strong><p class="small muted">We show you each move and count with you.</p></div></div></div><div>${cta}</div></section>
 
-  <section id="how" class="lsec split"><div><h2>How it works</h2><div class="steps">
-    <div class="step"><b>1</b><div><strong>Answer nine quick questions</strong><p class="small muted">Your medication rhythm, your kit, your body. Two minutes.</p></div></div>
-    <div class="step"><b>2</b><div><strong>Get a plan that is actually yours</strong><p class="small muted">Sessions on your best days, built from what you own and what your body can do.</p></div></div>
-    <div class="step"><b>3</b><div><strong>Follow along, a little at a time</strong><p class="small muted">We count your reps, time your rests, and adjust every week.</p></div></div></div></div>
-    <div class="card"><h3>The Holdfast standard</h3><ul class="ticks">
-    <li><span><strong>Health-screened before you start.</strong> The same kind of check used in GP exercise referral.</span></li>
-    <li><span><strong>Built for real bodies.</strong> For people living with obesity, type 2 diabetes, high blood pressure and sore joints.</span></li>
-    <li><span><strong>People, not chatbots.</strong> Every message is answered by a qualified coach.</span></li>
-    <li><span><strong>Exercise only.</strong> We never advise on your medication or dose.</span></li></ul></div></section>
-
-  <section id="questions" class="lsec narrow"><h2>Questions people ask us</h2>${faqs.map(f => `<details class="card faq"><summary>${f[0]}</summary><p>${f[1]}</p></details>`).join('')}</section>
-
-  <section class="hero lcta"><h2>Two minutes from now, you could have your plan.</h2><p>No card. No gym. No judgement.</p><button class="btn white" data-act="start">Build my plan</button></section>
-  <p class="small muted sources"><sup>1</sup> <a href="https://ukactive.com/news/report-warns-of-weight-loss-jabs-impact-on-muscle-mass-as-authors-call-for-strength-training-support-for-all-users/" target="_blank" rel="noopener">ukactive and Les Mills evidence review, 2025</a>. <sup>2</sup> <a href="https://www.nationalhealthexecutive.com/articles/study-finds-rapid-weight-regain-after-stopping-weight-loss-injections" target="_blank" rel="noopener">University of Oxford analysis in the BMJ</a>. <sup>3</sup> <a href="https://www.paf-media.co.uk/whitty-backs-weights-for-glp-1-users" target="_blank" rel="noopener">Chief Medical Officer's physical activity guidance</a>.</p>`;
+  <section class="lsec narrow"><h2>Good questions</h2>${faqs.map(f => `<details class="card faq"><summary>${f[0]}</summary><p>${f[1]}</p></details>`).join('')}</section>
+  ${mine ? '' : `<button class="link" data-act="example">Look around an example plan first</button>`}`;
 }
 
 /* ---------- sign-up questionnaire: one question at a time, single answers move on by themselves ---------- */
@@ -195,7 +198,7 @@ function viewToday() {
     <fieldset><legend>Protein portions <span class="muted small">(aim for 3, each the size of your palm)</span></legend><div class="dots">${[1, 2, 3, 4].map(n => `<button class="dot${(l.protein || 0) >= n ? ' on' : ''}" data-act="protein" data-val="${n}" aria-label="${n} protein portions">${n}</button>`).join('')}</div></fieldset>
     <fieldset><legend>Drinks <span class="muted small">(aim for 6 to 8)</span></legend><div class="stepper"><button data-act="waterdown" aria-label="One fewer drink">−</button><b>${l.water || 0}</b><button data-act="waterup" aria-label="One more drink">+</button></div></fieldset></div>
 
-  <div class="card coachnote"><p class="eyebrow">This week from your coach</p><div class="lesson">${video('Coach note', '', 'thumb')}<p>"${C.COACH[ph]}"</p></div></div>
+  <div class="card coachnote"><p class="eyebrow">This week from your coach</p>${mediaRow('Coach note: ' + ph, `<p>"${C.COACH[ph]}"</p>`)}</div>
   <div class="insight"><p class="eyebrow">Today's insight</p><h3>${C.INSIGHT[pl.type][0]}</h3><p class="small">${C.INSIGHT[pl.type][1]}</p></div>
   <details class="note stop"><summary>When to stop and get help</summary><ul class="small"><li>Chest pain, fainting or severe breathlessness: stop and call 999.</li><li>Severe stomach pain that will not settle, pain spreading to your back, or being sick repeatedly: call 111.</li><li>Dizzy or shaky during a session: stop, sit down, eat or drink something.</li><li>Changes in your eyesight if you have diabetes: contact your GP.</li><li>New joint or back pain that lasts past the session: rest it and message your coach.</li></ul></details>`;
   return h;
@@ -237,11 +240,11 @@ function viewSession() {
   else if (X.hurt === 'sharp') help = `<div class="resp stop"><strong>Stop this exercise.</strong><p class="small">Sharp pain is your body saying no, and you should listen. We have noted it for your coach. Move on to the next exercise, or stop here for today.</p><button class="btn" data-act="skipex">Skip this exercise</button></div>`;
   else if (X.hurt === 'work') help = `<div class="resp info"><strong>That sounds like muscles working.</strong><p class="small">Warm, tired or a bit shaky is normal and it passes within a minute of stopping. If you want it gentler: ${(g.e || 'do fewer reps.').charAt(0).toLowerCase() + (g.e || 'do fewer reps.').slice(1)}</p></div>`;
   else if (X.help === 'form') help = `<div class="resp info"><strong>Let a coach look</strong><p class="small">Prop your phone up, film two or three reps from the side, and a coach will tell you what to keep and what to change.</p><button class="btn" data-act="formcheck">Ask for a form check</button></div>`;
-  else if (X.help === 'formsent') help = `<div class="resp info"><strong>Form check requested for ${name}.</strong>${proto('Saved on this device. Once accounts are live, this opens your camera and sends the clip to the coach inbox.')}</div>`;
+  else if (X.help === 'formsent') help = `<div class="resp info"><strong>Form check requested for ${name}.</strong>${C.LAUNCH.coachEmail ? `<p class="small">Your email app opens. Attach your clip and press send. Your coach replies by email.</p>` : proto('Saved on this device. Add a coach email in js/content.js to send requests by email.')}</div>`;
 
   return `<div><p class="eyebrow muted">Exercise ${pos + 1} of ${n}</p>${bar}</div>
     ${safety.length ? `<div class="note"><p class="small"><strong>Before you start.</strong> ${safety.join(' ')}</p></div>` : ''}
-    ${video(name, 'Demo video goes here')}
+    ${video(name, 'Video coming soon')}
     <div><h2>${name}</h2><p class="muted">${e[1]}</p></div>
     <div class="card">${guideHtml(name, p.level === 'new' || !everDone)}</div>
     <div class="card guided">${set}</div>
@@ -253,7 +256,7 @@ function viewSession() {
 function viewMoves() {
   const p = S.profile;
   return `<div><p class="eyebrow muted">My plan</p><h2>Learn your exercises</h2><p class="muted">Read them through, or try one with no weight, before your first session. Nothing here is timed.</p></div>` +
-    ['A', 'B'].map(w => `<h3>Session ${w}</h3>` + sessionList(p, w).map(e => `<div class="card"><div class="lesson">${video(e[0], '', 'thumb')}<div><strong>${e[0]}</strong><p class="small muted">${e[1]}</p></div></div>${guideHtml(e[0], false)}<p class="small"><strong>To make it easier:</strong> ${(GUIDES[e[0]] || {}).e || ''}</p></div>`).join('')).join('') +
+    ['A', 'B'].map(w => `<h3>Session ${w}</h3>` + sessionList(p, w).map(e => `<div class="card">${mediaRow(e[0], `<div><strong>${e[0]}</strong><p class="small muted">${e[1]}</p></div>`)}${guideHtml(e[0], false)}<p class="small"><strong>To make it easier:</strong> ${(GUIDES[e[0]] || {}).e || ''}</p></div>`).join('')).join('') +
     `<button class="btn ghost" data-go="plan">Back to my plan</button>`;
 }
 
@@ -262,7 +265,7 @@ function viewTest() {
     : T.state === 'run' ? `<p class="big" id="clock">${T.left}</p><p class="muted">Stand up and sit down. Count each stand.</p>`
     : `<p class="muted">Time. How many full stands did you do?</p><div class="stepper" style="justify-content:center"><button data-act="cdown" aria-label="One fewer">−</button><b>${T.count}</b><button data-act="cup" aria-label="One more">+</button></div><button class="btn" data-act="savetest" ${T.count ? '' : 'disabled'}>Save my score</button>`;
   return `<div><p class="eyebrow muted">Strength score</p><h2>The 30-second sit to stand</h2><p class="muted">Sit on a sturdy chair, arms crossed over your chest. Stand fully up and sit back down as many times as you can in 30 seconds.</p></div>
-    ${video('How to do the test', 'Demo video goes here')}
+    ${video('How to do the test', 'Video coming soon')}
     <div class="card" style="text-align:center;align-items:center">${body}</div>
     <button class="link" data-act="exittest">Not now</button>`;
 }
@@ -272,7 +275,7 @@ function viewRoutine() {
   if (R.i >= r.steps.length) return `<div class="card" style="text-align:center;align-items:center"><span class="glyph g2">✓</span><h2>Done</h2><p class="muted">${r.group === 'mind' ? 'That was time for you. It counts as much as a session.' : 'Notice how you feel now compared with five minutes ago.'}</p><button class="btn" data-act="endroutine">Back</button></div>`;
   const s = r.steps[R.i];
   return `<div><p class="eyebrow muted">${r.title} · step ${R.i + 1} of ${r.steps.length}</p><div class="bar" style="grid-template-columns:repeat(${r.steps.length},1fr)">${r.steps.map((_, i) => `<i class="${i <= R.i ? 'on' : ''}"></i>`).join('')}</div></div>
-    <div class="card guided">${s[2] ? `<div class="breath${R.paused ? ' still' : ''}" aria-hidden="true"></div>` : ''}<p class="guide">${s[0]}</p><p class="big" id="rclock">${R.left}</p></div>
+    ${R.i === 0 && hasVideo(r.title) ? video(r.title, '') : ''}<div class="card guided">${s[2] ? `<div class="breath${R.paused ? ' still' : ''}" aria-hidden="true"></div>` : ''}<p class="guide">${s[0]}</p><p class="big" id="rclock">${R.left}</p></div>
     <div class="row"><button class="btn ghost" data-act="rpause">${R.paused ? 'Resume' : 'Pause'}</button><button class="btn" data-act="rskip">Next step</button></div>
     <button class="link" data-act="endroutine">Stop</button>`;
 }
@@ -299,7 +302,7 @@ function viewToolkit() {
   <div class="card"><div><h3>Feel better</h3><p class="small muted">Gentle movement for common side effects.</p></div>${group('relief')}</div>
   <div class="card"><div><h3>Mind moments</h3><p class="small muted">Short guided pauses for cravings, mealtimes and hard days.</p></div>${group('mind')}</div>
   <div class="card"><div><h3>Eating well on less</h3><p class="small muted">Simple ideas, not a diet plan.</p></div><button class="btn ghost" data-go="food">Open food ideas</button></div>
-  <div class="card"><div><h3>Understand your body</h3><p class="small muted">Short lessons. A new one unlocks each week.</p></div>${C.LESSONS.map((x, i) => `<div class="lesson">${video(x[0], '', 'thumb')}<div><strong>${x[0]}</strong><p class="small muted">Lesson ${i + 1} · ${x[1]} · video goes here</p></div></div>`).join('')}</div>`;
+  <div class="card"><div><h3>Understand your body</h3><p class="small muted">Short lessons. A new one unlocks each week.</p></div>${C.LESSONS.map((x, i) => mediaRow(x[0], `<div><strong>${x[0]}</strong><p class="small muted">Lesson ${i + 1} · ${x[1]}${hasVideo(x[0]) ? '' : ' · coming soon'}</p></div>`)).join('')}</div>`;
 }
 
 function viewFood() {
@@ -335,11 +338,11 @@ function viewProgress() {
 function viewCircle() {
   const p = S.profile, month = parseDay(p.start).toLocaleDateString('en-GB', { month: 'long' });
   let h = exNote() + `<div><p class="eyebrow muted">Circle</p><h2>You are not doing this on your own</h2></div>
-  <div class="card"><h3>Your coach</h3><p class="small muted">A qualified exercise referral coach reads every message. You get a reply from a person within one working day.</p>
+  <div class="card"><h3>Your coach</h3><p class="small muted">A qualified coach reads every message. You get a reply from a person within one working day.</p>
     <label for="coachmsg" class="small"><strong>Ask anything about your training</strong></label><textarea id="coachmsg" rows="3" maxlength="600" placeholder="My knee aches on the step-ups. What should I do instead?"></textarea>
     <button class="btn" data-act="sendmsg">Send to my coach</button>
     ${S.msgs.length ? `<div class="list">${S.msgs.slice(-3).reverse().map(m => `<div class="item" style="grid-template-columns:1fr"><span class="small">${esc(m.t)}</span></div>`).join('')}</div>` : ''}
-    ${proto('Messages are saved on this device only. Once accounts are live they go to the coach inbox.')}</div>
+    ${C.LAUNCH.coachEmail ? `<p class="small muted">Your email app opens with your message ready. Press send and it reaches your coach. Or write to <strong>${C.LAUNCH.coachEmail}</strong>.</p>` : proto('Messages are saved on this device only. Add a coach email in js/content.js to send them by email.')}</div>
   <div class="card"><h3>The ${month} circle</h3><p class="small muted">Up to 12 members who started the same month as you. Small enough that people notice when you go quiet.</p>
     <div class="resp info"><strong>This week's question</strong><p class="small">${C.CIRCLE_PROMPT}</p></div>
     <label for="circlepost" class="small"><strong>Your answer</strong></label><textarea id="circlepost" rows="2" maxlength="300" placeholder="Getting up off the sofa without using my hands."></textarea>
@@ -351,14 +354,35 @@ function viewCircle() {
   return h;
 }
 
-const VIEWS = { welcome: viewWelcome, setup: viewSetup, today: viewToday, session: viewSession, test: viewTest, routine: viewRoutine, reveal: viewReveal, moves: viewMoves, plan: viewPlan, toolkit: viewToolkit, food: viewFood, progress: viewProgress, circle: viewCircle };
+function viewPrivacy() {
+  const L = C.LAUNCH;
+  return `<div><h2>Privacy</h2><p class="muted">Plain English. Last updated ${L.updated}.</p></div>
+  <div class="card"><h3>What you tell us stays with you</h3><p>Everything you enter in Holdfast, including your name, your health check answers, how you feel and your sessions, is saved in the browser on your own phone or computer. It is not sent to us and we cannot see it.</p><p>You can delete it at any time: open Progress and choose "Erase my plan and start again".</p></div>
+  <div class="card"><h3>When you contact your coach</h3><p>If you send a message or a form check, it goes by email to our coaching team. We use it only to reply to you, and we delete it within 12 months.</p></div>
+  <div class="card"><h3>Videos and fonts</h3><p>Videos are played from YouTube in privacy-enhanced mode, and fonts are loaded from Google. Both are run by Google, which may record that your device requested them.</p></div>
+  <div class="card"><h3>Payments</h3><p>Payments are handled by Stripe. We never see or store your card details.</p></div>
+  <div class="card"><h3>Who we are and your rights</h3><p>Holdfast is run by ${L.business}. To ask what we hold about you, or to have it corrected or deleted, write to ${L.contact}. You can also complain to the Information Commissioner's Office at ico.org.uk.</p></div>
+  <button class="btn ghost" data-act="home">Back</button>`;
+}
+function viewTerms() {
+  const L = C.LAUNCH;
+  return `<div><h2>Terms</h2><p class="muted">Plain English. Last updated ${L.updated}.</p></div>
+  <div class="card"><h3>What Holdfast is</h3><p>Holdfast gives exercise, nutrition and wellbeing guidance for adults aged 18 and over who are taking, or have taken, weight-loss medication. It is run by ${L.business}.</p></div>
+  <div class="card"><h3>What it is not</h3><p>Holdfast is not medical advice and does not replace your GP, prescriber, pharmacist or dietitian. We never advise on your medication or dose. In an emergency call 999.</p></div>
+  <div class="card"><h3>Your part</h3><ul><li>Answer the health check honestly, and tell us if anything changes.</li><li>If the health check asks you to speak to your GP or prescriber first, do that before you start.</li><li>Stop if you feel unwell or have pain, and get medical advice if it does not settle.</li><li>Exercise in a safe, clear space.</li></ul></div>
+  <div class="card"><h3>Paying and cancelling</h3><p>${L.payTerms}</p></div>
+  <div class="card"><h3>Our responsibility</h3><p>We take care that our guidance is safe and accurate. Nothing in these terms limits our liability for death or personal injury caused by our negligence, or any liability that cannot be limited by law. Beyond that, we are not responsible for loss caused by guidance not being followed or by information you did not give us.</p></div>
+  <div class="card"><h3>Contact</h3><p>${L.contact}. These terms are governed by the law of England and Wales.</p></div>
+  <button class="btn ghost" data-act="home">Back</button>`;
+}
+const VIEWS = { privacy: viewPrivacy, terms: viewTerms, welcome: viewWelcome, setup: viewSetup, today: viewToday, session: viewSession, test: viewTest, routine: viewRoutine, reveal: viewReveal, moves: viewMoves, plan: viewPlan, toolkit: viewToolkit, food: viewFood, progress: viewProgress, circle: viewCircle };
 const TABBED = ['today', 'plan', 'toolkit', 'progress', 'circle'];
 function render() {
   const inApp = S.profile && (TABBED.includes(view) || view === 'food' || view === 'moves');
   tabs.hidden = !inApp;
   document.body.className = view === 'welcome' ? 'landing' : inApp ? 'inapp' : 'focus';
   tabs.querySelectorAll('button').forEach(b => b.setAttribute('aria-current', b.dataset.go === (view === 'food' ? 'toolkit' : view === 'moves' ? 'plan' : view)));
-  hd.innerHTML = `<span class="brand"><span class="mark"></span>Holdfast</span>`;
+  hd.innerHTML = `<button class="brand" data-act="home" aria-label="Holdfast home"><span class="mark"></span>Holdfast</button>${view === 'welcome' && !(S.profile && !S.profile.example) ? '<button class="btn small" data-act="start">Start my plan</button>' : ''}`;
   app.innerHTML = VIEWS[view]();
 }
 function go(v) { view = v; msg = ''; render(); window.scrollTo(0, 0); }
@@ -400,6 +424,7 @@ document.addEventListener('click', e => {
   const b = e.target.closest('button[data-act]'); if (!b) return;
   const a = b.dataset.act, val = b.dataset.val, d = S.draft;
 
+  if (a === 'home') { clearInterval(timer); go(S.profile && view !== 'today' ? 'today' : 'welcome'); return; }
   if (a === 'start') { if (S.profile && S.profile.example) S = blank(); S.draft = {}; step = 0; go('setup'); return; }
   if (a === 'example') { S = example(); go('today'); return; }
   if (a === 'edit') { const p = S.profile; S.draft = { name: p.name, goal: p.goal, med: p.med, jab: p.jab, equip: p.equip.slice(), care: p.care.slice(), cond: p.cond.slice(), sessions: p.sessions, len: p.len, level: p.level, editing: true }; S.draft.screen = ['none']; step = 0; go('setup'); return; }
@@ -429,13 +454,13 @@ document.addEventListener('click', e => {
   if (a === 'gskip') { clearInterval(timer); G.mode = 'idle'; G.set++; render(); return; }
   if (a === 'help') { X.help = X.help === val ? null : val; X.hurt = null; if (val === 'easier' && X.help) { const l = log(); l.eased = (l.eased || 0) + 1; save(); } render(); return; }
   if (a === 'hurt') { X.hurt = val; if (val === 'sharp') { const l = log(); l.pain = (l.pain || 0) + 1; S.msgs.push({ d: TODAY, t: 'Sharp pain reported during a session' }); save(); } render(); return; }
-  if (a === 'formcheck') { const p = S.profile, l = log(), e = sessionList(p, dayPlan(p, NOW.getDay()).session)[l.pos || 0]; S.msgs.push({ d: TODAY, t: 'Form check requested: ' + e[0] }); save(); X.help = 'formsent'; render(); return; }
+  if (a === 'formcheck') { const p = S.profile, l = log(), e = sessionList(p, dayPlan(p, NOW.getDay()).session)[l.pos || 0]; S.msgs.push({ d: TODAY, t: 'Form check requested: ' + e[0] }); save(); X.help = 'formsent'; render(); if (C.LAUNCH.coachEmail) mail('Form check: ' + e[0], 'Hello, please could you check my form on ' + e[0] + '? I have attached a short clip.\n\n' + S.profile.name); return; }
   if (a === 'ready') { log().ready = true; save(); go('session'); return; }
   if (a === 'skipex') { const l = log(); l.pos = (l.pos || 0) + 1; resetEx(); save(); go('session'); return; }
   if (a === 'loadup' || a === 'loaddown') { S.loads[val] = Math.max(0, (S.loads[val] || 0) + (a === 'loadup' ? 1 : -1)); save(); render(); return; }
   if (a === 'win') { S.wins.push({ d: TODAY, t: val }); save(); render(); return; }
   if (a === 'postwin') { const t = document.getElementById('circlepost').value.trim(); if (t) { S.wins.push({ d: TODAY, t }); save(); msg = 'Saved to your wins.'; } render(); return; }
-  if (a === 'sendmsg') { const t = document.getElementById('coachmsg').value.trim(); if (t) { S.msgs.push({ d: TODAY, t }); save(); msg = 'Message saved.'; } render(); return; }
+  if (a === 'sendmsg') { const t = document.getElementById('coachmsg').value.trim(); if (t) { S.msgs.push({ d: TODAY, t }); save(); msg = 'Message saved.'; if (C.LAUNCH.coachEmail) { msg = 'Your email app should have opened. Press send there.'; mail('A question for my coach', t + '\n\n' + S.profile.name); } } render(); return; }
   if (a === 'copy') { const ta = document.getElementById('sharetext'); const done = () => { msg = 'Copied. Paste it into a message to a friend.'; render(); };
     const fallback = () => { ta.focus(); ta.select(); msg = 'Select the text above and copy it.'; };
     try { navigator.clipboard.writeText(ta.value).then(done, fallback); } catch (err) { fallback(); } return; }

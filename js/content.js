@@ -122,8 +122,18 @@ const CONTENT = {
     'For life': 'The programme does not end, it settles in. Two or three sessions a week, for good, is what keeps the weight off and the strength on.'
   },
 
-  /* Launch settings. Put the founding-member payment link here to show a Join button on the landing page. */
-  LAUNCH: { joinUrl: '' },
+  /* Launch settings. Fill these in before going live.
+     joinUrl: payment link, shows a Join button on the home page.
+     coachEmail: where coach messages and form checks are sent.
+     business, contact, payTerms: shown on the Privacy and Terms pages. */
+  LAUNCH: {
+    joinUrl: '',
+    coachEmail: '',
+    business: '[your business name and address]',
+    contact: '[your contact email]',
+    payTerms: '[Price, how often it is charged, how to cancel, and your refund policy. By law, people who buy online usually have 14 days to change their mind.]',
+    updated: 'October 2026'
+  },
 
   WINS: ['Stairs felt easier', 'Carried the shopping', 'Clothes fit differently', 'Slept better', 'Trained when I did not feel like it', 'Got up off the floor easily'],
   CIRCLE_PROMPT: 'What felt easier this week than it did a month ago?'

@@ -208,7 +208,7 @@ a.btn{text-decoration:none;display:inline-block}
 @media (min-width: 900px){
   body.landing .wrap{max-width:1080px;gap:56px;padding-block:20px 60px}
   body.landing header{position:static}
-  body.landing .topnav{display:flex;gap:26px;align-items:center;justify-content:flex-end;margin-top:-98px}
+  body.landing .topnav{display:none}
   body.landing .topnav a{color:var(--ink);text-decoration:none;font-weight:600}
   body.landing .lhero{flex-direction:row;align-items:center;justify-content:space-between;gap:48px}
   body.landing h1{font-size:4.2rem}
@@ -231,3 +231,21 @@ a.btn{text-decoration:none;display:inline-block}
 .step{display:grid;grid-template-columns:40px 1fr;gap:14px;align-items:start}
 .step>b{width:40px;height:40px;border-radius:50%;background:var(--sun);color:var(--plum);display:grid;place-items:center;font-family:var(--display);font-size:1.1rem}
 .step div{min-width:0}
+
+/* --- added: plain landing, real videos, footer links --- */
+button.brand{background:none;border:0;padding:0;color:var(--ink);cursor:pointer}
+.video.real{padding:0;overflow:hidden;background:var(--plum)}
+.video.real iframe{width:100%;height:100%;border:0;display:block}
+.plain{display:grid;gap:22px}
+.plain h3{font-size:1.5rem;margin-bottom:4px}
+.plain p{color:var(--muted);max-width:30rem}
+footer{display:flex;flex-direction:column;gap:8px}
+footer .link{color:var(--muted);font-size:inherit}
+@media (min-width: 900px){
+  body.landing .wrap{gap:72px}
+  body.landing .plain{grid-template-columns:repeat(3,1fr);gap:40px}
+  body.landing .plain h3{font-size:1.9rem}
+  body.landing .lhero .video{flex:0 0 46%}
+}
+body.landing #app{gap:44px}
+@media (min-width: 900px){ body.landing #app{gap:80px} }

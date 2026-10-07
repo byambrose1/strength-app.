@@ -1,5 +1,7 @@
 # Holdfast: where everything stands
 
+**Launching this week?** Start with `docs/LAUNCH_THIS_WEEK.md`.
+
 Last updated 6 October 2026. Holdfast is a working name.
 
 ## 1. Built and working

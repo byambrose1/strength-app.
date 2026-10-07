@@ -12,6 +12,7 @@ FILES = {
     "/index.html": ("index.html", "text/html; charset=utf-8"),
     "/css/styles.css": ("css/styles.css", "text/css; charset=utf-8"),
     "/js/content.js": ("js/content.js", "text/javascript; charset=utf-8"),
+    "/js/videos.js": ("js/videos.js", "text/javascript; charset=utf-8"),
     "/js/guides.js": ("js/guides.js", "text/javascript; charset=utf-8"),
     "/js/logic.js": ("js/logic.js", "text/javascript; charset=utf-8"),
     "/js/app.js": ("js/app.js", "text/javascript; charset=utf-8"),

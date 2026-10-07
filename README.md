@@ -23,4 +23,4 @@ Prototype. Member data is saved only in the browser on that device. There are no
 
 The exercise library, sets and reps, injury swaps, safety notes, guided routines, food guidance and health screening questions are drafts. They need review by a qualified exercise professional, and the food and side-effect guidance by a suitable clinician, before real members use them.
 
-Holdfast gives exercise and general wellbeing guidance only. It never advises on medication, dose or diagnosis.
+Holdfast gives exercise, nutrition and wellbeing guidance. It never advises on medication, dose or diagnosis.

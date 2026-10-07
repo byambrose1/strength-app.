@@ -9,7 +9,7 @@ python3 server.py
 ```
 
 The server binds to `0.0.0.0:5000` for the Replit web preview. It serves only
-the page and the files it loads: `index.html`, `css/styles.css` and the four
+the page and the files it loads: `index.html`, `css/styles.css` and the
 scripts in `js/`. Docs, tests and config are never served. If a new file is
 added that the page needs, add it to `FILES` in `server.py`.
 
