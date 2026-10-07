@@ -79,4 +79,9 @@ assert.strictEqual(L.phase(4), 'Foundations');
 assert.strictEqual(L.phase(9), 'Strong');
 assert.strictEqual(L.phase(30), 'For life');
 
+// Access codes: same code gives the same scramble, different codes differ.
+assert.strictEqual(L.codeHash('STRONG26'), L.codeHash('STRONG26'));
+assert.notStrictEqual(L.codeHash('STRONG26'), L.codeHash('STRONG27'));
+assert.notStrictEqual(L.codeHash('STRONG26'), 'STRONG26');
+
 console.log('All logic tests passed');

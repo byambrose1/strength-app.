@@ -249,3 +249,12 @@ footer .link{color:var(--muted);font-size:inherit}
 }
 body.landing #app{gap:44px}
 @media (min-width: 900px){ body.landing #app{gap:80px} }
+
+/* --- added: quiz facts, paywall, who-built-it --- */
+.factcard{background:var(--plum);color:#FFFFFF;border-radius:26px;padding:28px 22px;display:flex;flex-direction:column;gap:12px}
+.factcard .eyebrow{color:var(--sun)}
+.factcard h2{font-size:1.8rem}
+.factcard .source{color:var(--on-plum-soft)}
+.who{background:var(--surface);border-radius:26px;padding:28px 22px;display:flex;flex-direction:column;gap:12px}
+.who p{max-width:44rem;font-size:1.05rem}
+@media (min-width: 900px){ body.landing .who{padding:48px} body.landing .who h2{font-size:2.2rem} }

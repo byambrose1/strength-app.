@@ -16,6 +16,10 @@ FILES = {
     "/js/guides.js": ("js/guides.js", "text/javascript; charset=utf-8"),
     "/js/logic.js": ("js/logic.js", "text/javascript; charset=utf-8"),
     "/js/app.js": ("js/app.js", "text/javascript; charset=utf-8"),
+    "/manifest.json": ("manifest.json", "application/manifest+json"),
+    "/icons/icon-180.png": ("icons/icon-180.png", "image/png"),
+    "/icons/icon-192.png": ("icons/icon-192.png", "image/png"),
+    "/icons/icon-512.png": ("icons/icon-512.png", "image/png"),
 }
 
 

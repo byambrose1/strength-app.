@@ -82,7 +82,10 @@ function review(p, logs, dates) {
   return { done, easy, right, hard, fed, move: next - p.stage, next, why };
 }
 
+/* Scrambles an access code so the code itself is not written in the app. This keeps honest people honest; it is not strong security. */
+function codeHash(str) { let h = 2166136261; for (const ch of String(str)) { h ^= ch.codePointAt(0); h = Math.imul(h, 16777619) >>> 0; } return h.toString(36); }
+
 const weekNo = (start, today) => Math.max(1, Math.floor((parseDay(today) - parseDay(start)) / 6048e5) + 1);
 const phase = w => w <= 4 ? 'Foundations' : w <= 8 ? 'Build' : w <= 12 ? 'Strong' : 'For life';
 
-if (typeof module !== 'undefined') module.exports = { iso, addDays, parseDay, monday, pick, sessionList, dayPlan, prescription, dose, shouldEase, mustSkip, inEaseWeek, review, weekNo, phase };
+if (typeof module !== 'undefined') module.exports = { iso, addDays, parseDay, monday, pick, sessionList, dayPlan, prescription, dose, shouldEase, mustSkip, inEaseWeek, review, weekNo, phase, codeHash };

@@ -122,12 +122,24 @@ const CONTENT = {
     'For life': 'The programme does not end, it settles in. Two or three sessions a week, for good, is what keeps the weight off and the strength on.'
   },
 
+  /* Short facts shown between sign-up questions. Keep each one true and sourced. */
+  FACTS: {
+    fact1: { label: 'Worth knowing', head: 'Fast weight loss can take muscle with it.', body: 'Researchers reviewing the evidence warn that without strength training, the muscle lost on these medicines can be like ten years of ageing. Strength training is how you keep it.', source: 'Source: ukactive and Les Mills evidence review, 2025', button: 'Good to know' },
+    fact2: { label: 'You are in good company', head: '"Concentrate on strength as weight decreases."', body: 'That is the advice of England\'s Chief Medical Officer to people taking these medicines. It is exactly what your plan is built to do.', source: 'Source: Chief Medical Officer\'s physical activity guidance', button: 'Keep going' },
+    fact3: { label: 'About your plan', head: 'Two short sessions a week is enough.', body: 'You do not need a gym, an hour, or to be fit already. About 20 minutes, twice a week, with every move shown to you. We start where you are.', source: '', button: 'Nearly done' }
+  },
+
   /* Launch settings. Fill these in before going live.
-     joinUrl: payment link, shows a Join button on the home page.
+     joinUrl: payment link. Setting it turns the paywall on.
+     codeHash: the scrambled access code members get after paying. Make one with: node scripts/code.js YOURCODE
+     price, priceNote: shown on the paywall.
      coachEmail: where coach messages and form checks are sent.
      business, contact, payTerms: shown on the Privacy and Terms pages. */
   LAUNCH: {
     joinUrl: '',
+    codeHash: '',
+    price: '[£X a month]',
+    priceNote: '[What they get and how to cancel, in one sentence.]',
     coachEmail: '',
     business: '[your business name and address]',
     contact: '[your contact email]',
