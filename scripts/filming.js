@@ -15,11 +15,12 @@ Generated from the app, so every title here matches the app exactly. ${total} ex
 
 ## How to film
 
-- **Landscape**, phone on a tripod or propped at hip height.
-- **Whole body in frame** the whole time, with the chair or kit visible.
-- **Side-on view** for most moves. Add a front view if it helps.
+- **Upright (portrait)**, phone on a tripod or propped at hip height. Members watch on a phone held upright, and the app's player is that shape.
+- **Whole body in frame** the whole time, with the chair or kit visible. Leave a little space above your head and below your feet.
+- **Side-on view** for standing and seated moves.
+- **Lying-down moves** (dead bug, glute bridge, floor press): stay upright too. Raise the phone to about chest height and stand it at your feet-end corner, so your body runs away from the camera at an angle and fits the tall frame.
 - **15 to 30 seconds** per exercise. Slow reps.
-- Plain background, good light, no music.
+- Plain background, good light, no music. Back camera, rotation locked, normal speed.
 - Talking is optional. If you talk, say the cues in the "What to show" column.
 - Filming each one is also your review: if the written steps are wrong, change them in \`js/guides.js\` or tell the developer.
 
@@ -29,7 +30,7 @@ Generated from the app, so every title here matches the app exactly. ${total} ex
 2. Give it the exact title from the table.
 3. Paste the link next to that title in \`js/videos.js\`.
 
-Unlisted means anyone with the link can watch, but it does not appear in search.
+Unlisted means anyone with the link can watch, but it does not appear in search. YouTube labels short upright clips as Shorts; that is fine, they still play in the app.
 
 ## Day one: film these first (${tiers.none.length + tiers.adapted.length} clips)
 

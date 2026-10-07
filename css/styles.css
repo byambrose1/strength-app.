@@ -258,3 +258,7 @@ body.landing #app{gap:44px}
 .who{background:var(--surface);border-radius:26px;padding:28px 22px;display:flex;flex-direction:column;gap:12px}
 .who p{max-width:44rem;font-size:1.05rem}
 @media (min-width: 900px){ body.landing .who{padding:48px} body.landing .who h2{font-size:2.2rem} }
+
+/* --- real videos are filmed upright (9:16), so the player is phone-shaped; placeholders stay compact --- */
+.video.real{aspect-ratio:9/16;width:min(100%,280px);margin-inline:auto;border-radius:22px}
+@media (min-width: 900px){ body.landing .lhero .video.real{flex:0 0 300px;width:300px} }
