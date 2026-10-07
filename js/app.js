@@ -358,7 +358,8 @@ function render() {
   tabs.hidden = !inApp;
   document.body.className = view === 'welcome' ? 'landing' : inApp ? 'inapp' : 'focus';
   tabs.querySelectorAll('button').forEach(b => b.setAttribute('aria-current', b.dataset.go === (view === 'food' ? 'toolkit' : view === 'moves' ? 'plan' : view)));
-  hd.innerHTML = `<span class="brand"><span class="mark"></span>Holdfast</span>`;
+  const landingAction = view === 'welcome' ? '' : '<button class="link" type="button" data-act="landing" aria-label="Back to the Holdfast landing page">Back to landing</button>';
+  hd.innerHTML = `<span class="brand"><span class="mark"></span>Holdfast</span>${landingAction}`;
   app.innerHTML = VIEWS[view]();
 }
 function go(v) { view = v; msg = ''; render(); window.scrollTo(0, 0); }
@@ -400,6 +401,7 @@ document.addEventListener('click', e => {
   const b = e.target.closest('button[data-act]'); if (!b) return;
   const a = b.dataset.act, val = b.dataset.val, d = S.draft;
 
+  if (a === 'landing') { clearInterval(timer); timer = null; resetEx(); go('welcome'); return; }
   if (a === 'start') { if (S.profile && S.profile.example) S = blank(); S.draft = {}; step = 0; go('setup'); return; }
   if (a === 'example') { S = example(); go('today'); return; }
   if (a === 'edit') { const p = S.profile; S.draft = { name: p.name, goal: p.goal, med: p.med, jab: p.jab, equip: p.equip.slice(), care: p.care.slice(), cond: p.cond.slice(), sessions: p.sessions, len: p.len, level: p.level, editing: true }; S.draft.screen = ['none']; step = 0; go('setup'); return; }
