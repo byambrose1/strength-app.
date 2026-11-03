@@ -2,15 +2,15 @@
 const KEY = 'holdfast-v4';
 const NOW = new Date(), TODAY = iso(NOW);
 const esc = s => String(s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
-const blank = () => ({ profile: null, logs: {}, draft: {}, tests: [], loads: {}, wins: [], msgs: [], voice: false, unlocked: false });
+const blank = () => ({ profile: null, logs: {}, draft: {}, tests: [], loads: {}, wins: [], msgs: [], voice: false, unlocked: false, body: [], doses: [], units: 'metric' });
 
 function example() {
   const p = { name: 'Sam', goal: 'muscle', med: 'weekly', jab: (NOW.getDay() + 5) % 7, sessions: 3, len: 25, equip: ['dumbbells', 'bands'], care: [], cond: ['diabetes'], level: 'some', stage: 1, start: iso(addDays(NOW, -16)), example: true };
   const logs = {};
   for (let i = 1; i <= 16; i++) { const d = addDays(NOW, -i), pl = dayPlan(p, d.getDay());
-    logs[iso(d)] = { eaten: i % 5 === 3 ? 'bit' : 'yes', protein: i % 5 === 3 ? 2 : 3, water: 6, feel: ['good'], finished: pl.type === 'strength', felt: 'right' }; }
+    logs[iso(d)] = { eaten: i % 5 === 3 ? 'bit' : 'yes', protein: i % 5 === 3 ? 2 : 3, water: 6, feel: (d.getDay() - p.jab + 7) % 7 === 1 && i > 3 ? ['queasy'] : i === 12 ? ['bunged'] : ['good'], finished: pl.type === 'strength', felt: 'right' }; }
   return { profile: p, logs, draft: {}, tests: [{ d: iso(addDays(NOW, -16)), n: 11 }, { d: iso(addDays(NOW, -2)), n: 13 }], loads: { 'Goblet squat': 8, 'Floor press': 6, 'One-arm row': 8 },
-    wins: [{ d: iso(addDays(NOW, -9)), t: 'Stairs felt easier' }, { d: iso(addDays(NOW, -3)), t: 'Carried the shopping' }], msgs: [] };
+    wins: [{ d: iso(addDays(NOW, -9)), t: 'Stairs felt easier' }, { d: iso(addDays(NOW, -3)), t: 'Carried the shopping' }], msgs: [], body: [{ d: iso(addDays(NOW, -16)), kg: 96.4, cm: 108 }, { d: iso(addDays(NOW, -9)), kg: 95.3, cm: 107 }, { d: iso(addDays(NOW, -2)), kg: 94.1, cm: 106 }], doses: [iso(addDays(NOW, -12))], units: 'metric' };
 }
 
 let S; try { S = JSON.parse(localStorage.getItem(KEY)); } catch (e) {}
@@ -212,7 +212,7 @@ function viewToday() {
   const skip = mustSkip(l), easeWeek = inEaseWeek(p, TODAY), ease = shouldEase(l) || easeWeek, light = l.light === undefined ? easeWeek : l.light;
   let h = exNote() + `<section class="stage"><div class="stagehead"><div><span class="pill">Week ${w} · ${ph}</span><h2>Hi ${esc(p.name)}</h2><p class="soft small">${done >= p.sessions ? 'Week complete. That is how you ' + C.GOALS[p.goal] + '.' : (p.sessions - done) + ' more this week to ' + C.GOALS[p.goal] + '.'}${st > 1 ? ' ' + st + ' weeks in a row.' : ''}</p></div>${ring(done, p.sessions)}</div>${weekStrip()}</section>`;
 
-  h += `<div class="card"><div><h3>How are you feeling today?</h3><p class="small muted">Tap all that apply. Your day adjusts to match.</p></div><div class="chips">${C.FEEL.map(f => chip('feel', f.id, l.feel || [], f.label)).join('')}</div>`;
+  h += `<div class="card"><div><h3>How are you feeling today?</h3><p class="small muted">Tap all that apply. Your day adjusts to match, and it is saved to your side-effect diary.</p></div><div class="chips">${C.FEEL.map(f => chip('feel', f.id, l.feel || [], f.label)).join('')}</div>`;
   C.FEEL.filter(f => f.level && (l.feel || []).includes(f.id)).forEach(f => {
     h += `<div class="resp ${f.level}"><strong>${f.title}</strong><p class="small">${f.text}</p>${f.routine ? routineRow(f.routine) : ''}</div>`; });
   h += `</div>`;
@@ -330,6 +330,7 @@ function viewPlan() {
   for (let i = 0; i < 7; i++) { const dow = (p.jab + i) % 7, pl = dayPlan(p, dow);
     h += `<div class="item"><strong>${C.DAYS[dow]}</strong><div><span class="tag ${pl.type}">${pl.title}</span><p class="small muted">${pl.type === 'strength' ? sessionList(p, pl.session).map(e => e[0]).join(', ') : pl.text}</p></div></div>`; }
   h += `</div><button class="btn ghost" data-go="moves">Learn your exercises</button></div>`;
+  if (!p.example) h += `<div class="card"><div><h3>Add your week to your phone calendar</h3><p class="small muted">Your strength sessions${p.med === 'weekly' ? ' and injection day' : ''} repeat every week, with a reminder 15 minutes before each session.</p></div><fieldset><legend>What time suits you to train?</legend><div class="chips">${[['07:30', 'Morning, 7:30'], ['12:30', 'Lunchtime, 12:30'], ['18:00', 'Evening, 6pm']].map(x => chip('caltime', x[0], S.calTime || '18:00', x[1])).join('')}</div></fieldset><button class="btn" data-act="calendar">Add to my calendar</button><p class="small muted">If you change your plan, add it again and delete the old events.</p>${view === 'plan' && msg ? `<p role="status"><strong>${msg}</strong></p>` : ''}</div>`;
   const notes = (p.cond || []).filter(c => C.SAFETY[c]);
   if (notes.length) h += `<div class="card"><h3>Your safety notes</h3>${notes.map(c => `<div><p class="small"><strong>${C.CONDITIONS[c][0]}</strong></p><ul class="small">${C.SAFETY[c].map(x => `<li>${x}</li>`).join('')}</ul></div>`).join('')}</div>`;
   const cn = (p.care || []).filter(c => C.CARE_NOTES[c]);
@@ -356,10 +357,101 @@ function viewFood() {
   <p class="small muted">${C.FOOD_NOTE}</p><button class="btn ghost" data-go="toolkit">Back to toolkit</button>`;
 }
 
+let bodyMsg = '';
+const fmtDate = d => parseDay(d).toLocaleDateString('en-GB', { day: 'numeric', month: 'short' });
+const metric = () => S.units !== 'imperial';
+const fmtKg = kg => { if (metric()) return (Math.round(kg * 10) / 10) + ' kg'; const x = kgToSt(kg); return x[0] + ' st ' + x[1] + ' lb'; };
+const fmtCm = cm => metric() ? Math.round(cm) + ' cm' : Math.round(cm / 2.54) + ' in';
+const AFTER = ['on injection day', 'the day after your injection', '2 days after your injection', '3 days after your injection', '4 days after your injection', '5 days after your injection', '6 days after your injection'];
+const symLabel = k => (C.FEEL.find(f => f.id === k) || {}).label;
+
+/* Weight and strength score on one chart, both as percent change from the first reading. */
+function storyChart(w, st) {
+  const all = w.concat(st); if (!all.length) return '';
+  const xs = all.map(x => parseDay(x.d).getTime()), x0 = Math.min(...xs), x1 = Math.max(...xs, x0 + 864e5 * 7);
+  const vs = all.map(x => x.v), top = Math.max(10, ...vs), bot = Math.min(-10, ...vs);
+  const W = 320, H = 170, L = 36, R = 56, T = 12, B = 22;
+  const X = d => L + (W - L - R) * (parseDay(d).getTime() - x0) / (x1 - x0), Y = v => T + (H - T - B) * (top - v) / (top - bot);
+  const line = (pts, cls) => pts.length ? `<polyline class="${cls}" points="${pts.map(q => X(q.d).toFixed(1) + ',' + Y(q.v).toFixed(1)).join(' ')}"/>` + pts.map(q => `<circle class="${cls}" cx="${X(q.d).toFixed(1)}" cy="${Y(q.v).toFixed(1)}" r="3.5"/>`).join('') : '';
+  const end = (pts, cls) => { if (!pts.length) return ''; const q = pts[pts.length - 1]; return `<text class="${cls}" x="${(X(q.d) + 7).toFixed(1)}" y="${(Y(q.v) + 4).toFixed(1)}">${q.v > 0 ? '+' : ''}${q.v}%</text>`; };
+  const ticks = [top, 0, bot].map(v => `<line class="grid${v === 0 ? ' zero' : ''}" x1="${L}" x2="${W - R}" y1="${Y(v).toFixed(1)}" y2="${Y(v).toFixed(1)}"/><text class="axis" x="${L - 6}" y="${(Y(v) + 4).toFixed(1)}" text-anchor="end">${v > 0 ? '+' : ''}${Math.round(v)}%</text>`).join('');
+  return `<svg class="story" viewBox="0 0 ${W} ${H}" role="img" aria-label="Change in weight and strength score since you started">${ticks}
+    <text class="axis" x="${L}" y="${H - 6}">${fmtDate(iso(new Date(x0)))}</text><text class="axis" x="${W - R}" y="${H - 6}" text-anchor="end">${fmtDate(iso(new Date(x1)))}</text>
+    ${line(w, 'sw')}${line(st, 'ss')}${end(w, 'sw')}${end(st, 'ss')}</svg>
+    <div class="legend small"><span><i class="sw"></i>Weight</span><span><i class="ss"></i>Strength score</span></div>`;
+}
+
+function storyCard() {
+  const b = S.body, t = myTests(), wp = b.filter(x => x.kg).map(x => ({ d: x.d, v: x.kg })), cp = b.filter(x => x.cm);
+  const w = pctSeries(wp), st = pctSeries(t.map(x => ({ d: x.d, v: x.n })));
+  let words = '';
+  if (wp.length > 1 || t.length > 1) {
+    const parts = [];
+    if (wp.length > 1) { const dk = Math.round(10 * (wp[wp.length - 1].v - wp[0].v)) / 10; parts.push(dk < 0 ? 'your weight is down ' + fmtKg(-dk) : dk > 0 ? 'your weight is up ' + fmtKg(dk) : 'your weight is the same'); }
+    if (cp.length > 1) { const dc = cp[cp.length - 1].cm - cp[0].cm; if (dc) parts.push('your waist is ' + (dc < 0 ? 'down ' : 'up ') + fmtCm(Math.abs(dc))); }
+    if (t.length > 1) { const dn = t[t.length - 1].n - t[0].n; parts.push(dn > 0 ? 'your strength score is up ' + dn : dn < 0 ? 'your strength score is down ' + (-dn) : 'your strength score has held'); }
+    const first = [wp[0], t[0], cp[0]].filter(Boolean).map(x => x.d).sort()[0];
+    const keeping = t.length > 1 && t[t.length - 1].n >= t[0].n;
+    words = `<p><strong>Since ${fmtDate(first)}, ${parts.join(', ')}.</strong> ${keeping ? (wp.length > 1 && wp[wp.length - 1].v < wp[0].v ? 'Weight coming down while strength holds or rises: that is what keeping your muscle looks like.' : 'Your strength is holding. Keep going.') : t.length > 1 ? 'A dip in strength usually means not enough food or protein, or a rough few weeks. Check your fuel and tell your coach.' : 'Take the strength test to see the other half of the story.'}</p>`;
+  }
+  const chart = (wp.length > 1 || t.length > 1) ? storyChart(w, st) : `<p class="small muted">Log your weight or waist once a week, and take the strength test every four weeks. Your chart starts after the second reading.</p>`;
+  const inputs = metric()
+    ? `<div class="field"><label for="bkg" class="small">Weight (kg)</label><input id="bkg" type="number" inputmode="decimal" step="0.1" min="30" max="350"></div>`
+    : `<div class="field"><label for="bst" class="small">Stone</label><input id="bst" type="number" inputmode="numeric" min="4" max="50"></div><div class="field"><label for="blb" class="small">Pounds</label><input id="blb" type="number" inputmode="numeric" min="0" max="13"></div>`;
+  const last = b[b.length - 1];
+  return `<div class="card"><div><h3>Your muscle story</h3><p class="small muted">The scales only tell half of it. This shows whether the weight you lose is fat, with your muscle kept.</p></div>
+    ${chart}${words}
+    <div class="fields">${inputs}<div class="field"><label for="bcm" class="small">Waist (${metric() ? 'cm' : 'in'}), optional</label><input id="bcm" type="number" inputmode="decimal" step="0.5" min="40" max="250"></div></div>
+    <div class="row"><button class="btn" data-act="savebody">Save today's reading</button><div class="chips">${chip('units', 'metric', S.units || 'metric', 'kg, cm')}${chip('units', 'imperial', S.units, 'st, in')}</div></div>
+    ${last ? `<p class="small muted">Last reading ${fmtDate(last.d)}: ${[last.kg ? fmtKg(last.kg) : '', last.cm ? 'waist ' + fmtCm(last.cm) : ''].filter(Boolean).join(', ')}. <button class="link inline" data-act="undobody">Remove it</button></p>` : ''}
+    ${bodyMsg ? `<p role="status"><strong>${bodyMsg}</strong></p>` : ''}
+    <p class="small muted">Weighing yourself is optional. If the scales upset you, log your waist instead, or leave this and use your strength score.</p></div>`;
+}
+
+function diaryCard() {
+  const p = S.profile, ds = diarySummary(p, S.logs, iso(addDays(NOW, -27)), TODAY);
+  const rows = SYMPTOMS.filter(k => ds.sym[k]).map(k => { const pk = peakDay(ds.after[k]);
+    return `<div class="item" style="grid-template-columns:1fr auto"><span>${symLabel(k)}${p.med === 'weekly' && pk >= 0 && ds.sym[k] > 1 ? `<br><span class="small muted">Most often ${AFTER[pk]}</span>` : ''}</span><strong>${ds.sym[k]} ${ds.sym[k] === 1 ? 'day' : 'days'}</strong></div>`; }).join('');
+  return `<div class="card"><div><h3>Side-effect diary</h3><p class="small muted">Built from your daily "How are you feeling?" taps. Last 4 weeks, ${ds.logged} of ${ds.days} days logged.</p></div>
+    ${rows ? `<div class="list">${rows}</div>` : `<p class="small">No side effects logged in the last 4 weeks.${ds.logged < 7 ? ' Tap how you feel on the Today screen each day and it builds up here.' : ''}</p>`}
+    <button class="btn ghost" data-go="report">Make a report for my GP</button></div>`;
+}
+
+/* A one-page summary of the member's own diary to show their GP, nurse or prescriber. */
+function reportData(weeks) {
+  const p = S.profile, from = iso(addDays(NOW, -(weeks * 7 - 1))), ds = diarySummary(p, S.logs, from, TODAY);
+  const inRange = x => x.d >= from && x.d <= TODAY, b = S.body.filter(inRange), t = myTests().filter(inRange), doses = (S.doses || []).filter(d => d >= from);
+  const sec = [];
+  sec.push(['Medication', [['Rhythm', p.med === 'weekly' ? 'Weekly injection, on ' + C.FULL[p.jab] + 's' : p.med === 'daily' ? 'Daily dose' : 'Coming off, or stopped'], ['Dose changes logged', doses.length ? doses.map(fmtDate).join(', ') : 'None in this period']]]);
+  const sy = SYMPTOMS.map(k => { const pk = peakDay(ds.after[k]); return [symLabel(k), ds.sym[k] + ' of ' + ds.days + ' days' + (p.med === 'weekly' && ds.sym[k] > 1 && pk >= 0 ? ', most often ' + AFTER[pk] : '')]; });
+  sy.push(['Days logged as feeling good', ds.good + ' of ' + ds.days]);
+  sec.push(['Side effects', sy]);
+  sec.push(['Eating and drinking', [['Ate enough', ds.eaten.yes + ' days'], ['Ate a bit', ds.eaten.bit + ' days'], ['Hardly ate', ds.eaten.no + ' days'], ['Protein portions a day (average of days logged)', ds.protein.length ? String(avg(ds.protein)) : 'Not logged'], ['Drinks a day (average of days logged)', ds.water.length ? String(avg(ds.water)) : 'Not logged']]]);
+  sec.push(['Activity', [['Strength sessions completed', ds.sessions + (ds.light ? ' (' + ds.light + ' lighter)' : '')], ['Sessions skipped because of feeling unwell', String(ds.skipped)], ['Sharp pain reported during exercise', ds.pain ? ds.pain + ' times' : 'None']]]);
+  const body = [];
+  const bw = b.filter(x => x.kg), bc = b.filter(x => x.cm);
+  body.push(['Weight', bw.length ? (bw.length > 1 ? fmtKg(bw[0].kg) + ' on ' + fmtDate(bw[0].d) + ' to ' + fmtKg(bw[bw.length - 1].kg) + ' on ' + fmtDate(bw[bw.length - 1].d) : fmtKg(bw[0].kg) + ' on ' + fmtDate(bw[0].d)) : 'Not logged']);
+  if (bc.length) body.push(['Waist', bc.length > 1 ? fmtCm(bc[0].cm) + ' to ' + fmtCm(bc[bc.length - 1].cm) : fmtCm(bc[0].cm)]);
+  body.push(['Strength score (' + (seated() ? '30-second arm curl' : '30-second sit to stand') + ')', t.length ? t.map(x => x.n + ' on ' + fmtDate(x.d)).join(', ') : 'Not tested in this period']);
+  sec.push(['Body and strength', body]);
+  return { from, sec };
+}
+function viewReport() {
+  const p = S.profile, weeks = +(S.draft.rweeks || 4), r = reportData(weeks);
+  return `<div class="noprint"><button class="link" data-go="progress">Back to progress</button></div>
+    <div><p class="eyebrow muted">For your GP, nurse or prescriber</p><h2>${esc(p.name)}'s diary, ${fmtDate(r.from)} to ${fmtDate(TODAY)}</h2>
+    <p class="small muted">A summary of what ${esc(p.name)} logged in a strength and nutrition app. It is self-reported and is not a medical record.</p></div>
+    <div class="chips noprint">${[4, 8, 12].map(n => chip('rweeks', n, weeks, n + ' weeks')).join('')}</div>
+    ${r.sec.map(s => `<div class="card report"><h3>${s[0]}</h3><table>${s[1].map(x => `<tr><th scope="row">${x[0]}</th><td>${esc(x[1])}</td></tr>`).join('')}</table></div>`).join('')}
+    <div class="row noprint"><button class="btn" data-act="print">Print or save as PDF</button><button class="btn ghost" data-act="copyreport">Copy as text</button></div>
+    ${msg ? `<p role="status" class="noprint"><strong>${msg}</strong></p>` : ''}
+    <p class="small muted noprint">Show it on your phone at your appointment, or print it. Nothing is sent anywhere unless you send it.</p>`;
+}
+
 function viewProgress() {
   const p = S.profile, dates = [...Array(7)].map((_, i) => iso(addDays(NOW, -i))), r = review(p, S.logs, dates), d = S.draft;
   const t = myTests(), first = t[0], last = t[t.length - 1], max = Math.max(1, ...t.map(x => x.n));
-  let h = exNote() + `<div><p class="eyebrow muted">Progress</p><h2>Proof you are holding strong</h2></div><div class="card"><h3>Strength score</h3>`;
+  let h = exNote() + `<div><p class="eyebrow muted">Progress</p><h2>Proof you are holding strong</h2></div>` + storyCard() + diaryCard() + `<div class="card"><h3>Strength score</h3>`;
   h += t.length ? `<div class="row" style="align-items:flex-end"><p class="big">${last.n}</p><p class="small muted">${seated() ? 'curls' : 'stands'} in 30 seconds${t.length > 1 ? '<br><strong>' + (last.n - first.n >= 0 ? '+' : '') + (last.n - first.n) + ' since you started</strong>' : ''}</p></div><div class="tests">${t.slice(-6).map(x => `<div style="height:${Math.round(30 + 60 * x.n / max)}%">${x.n}</div>`).join('')}</div><button class="btn ghost" data-act="test">Re-test now</button>`
     : `<p class="small muted">Take the 30-second test to set your starting score. Re-test every 4 weeks.</p><button class="btn" data-act="test">Take the test</button>`;
   h += `</div><div class="stats"><div class="stat"><b>${r.done}/${p.sessions}</b><span class="small muted">sessions, 7 days</span></div><div class="stat"><b>${r.fed}/7</b><span class="small muted">days well fed</span></div><div class="stat"><b>${streak()}</b><span class="small muted">weeks in a row</span></div></div>`;
@@ -420,17 +512,17 @@ function viewTerms() {
   <div class="card"><h3>Contact</h3><p>${L.contact}. These terms are governed by the law of England and Wales.</p></div>
   <button class="btn ghost" data-act="home">Back</button>`;
 }
-const VIEWS = { paywall: viewPaywall, privacy: viewPrivacy, terms: viewTerms, welcome: viewWelcome, setup: viewSetup, today: viewToday, session: viewSession, test: viewTest, routine: viewRoutine, reveal: viewReveal, moves: viewMoves, plan: viewPlan, toolkit: viewToolkit, food: viewFood, progress: viewProgress, circle: viewCircle };
+const VIEWS = { paywall: viewPaywall, privacy: viewPrivacy, terms: viewTerms, welcome: viewWelcome, setup: viewSetup, today: viewToday, session: viewSession, test: viewTest, routine: viewRoutine, reveal: viewReveal, moves: viewMoves, plan: viewPlan, toolkit: viewToolkit, food: viewFood, progress: viewProgress, circle: viewCircle, report: viewReport };
 const TABBED = ['today', 'plan', 'toolkit', 'progress', 'circle'];
 function render() {
-  const inApp = S.profile && (TABBED.includes(view) || view === 'food' || view === 'moves');
+  const inApp = S.profile && (TABBED.includes(view) || view === 'food' || view === 'moves' || view === 'report');
   tabs.hidden = !inApp;
   document.body.className = view === 'welcome' ? 'landing' : inApp ? 'inapp' : 'focus';
-  tabs.querySelectorAll('button').forEach(b => b.setAttribute('aria-current', b.dataset.go === (view === 'food' ? 'toolkit' : view === 'moves' ? 'plan' : view)));
+  tabs.querySelectorAll('button').forEach(b => b.setAttribute('aria-current', b.dataset.go === (view === 'food' ? 'toolkit' : view === 'moves' ? 'plan' : view === 'report' ? 'progress' : view)));
   hd.innerHTML = `<button class="brand" data-act="home" aria-label="Holdfast home"><span class="mark"></span>Holdfast</button>${view === 'welcome' && !(S.profile && !S.profile.example) ? '<button class="btn small" data-act="start">Start my plan</button>' : ''}`;
   app.innerHTML = VIEWS[view]();
 }
-const GATED = ['today', 'session', 'test', 'routine', 'plan', 'moves', 'toolkit', 'food', 'progress', 'circle'];
+const GATED = ['today', 'session', 'test', 'routine', 'plan', 'moves', 'toolkit', 'food', 'progress', 'circle', 'report'];
 function go(v, keep) { view = GATED.includes(v) && !paid() ? 'paywall' : v; if (!keep) msg = ''; render(); window.scrollTo(0, 0); }
 function toggle(arr, val, solo) { arr = arr || []; if (val === solo) return arr.includes(val) ? [] : [val]; arr = arr.filter(x => x !== solo); return arr.includes(val) ? arr.filter(x => x !== val) : arr.concat(val); }
 
@@ -512,6 +604,23 @@ document.addEventListener('click', e => {
   if (a === 'sendnote') { msg = tellCoach('Something to look after', 'Something to look after: ' + S.profile.careNote); S.msgs.pop(); save(); render(); return; }
   if (a === 'install') { if (installEvt) { installEvt.prompt(); installEvt.userChoice.finally(() => { installEvt = null; render(); }); } return; }
   if (a === 'installhide') { S.installHide = true; save(); render(); return; }
+  if (a === 'units') { S.units = val; save(); render(); return; }
+  if (a === 'savebody') { const num = id => { const el = document.getElementById(id); return el && el.value !== '' ? +el.value : null; };
+    const kg = metric() ? num('bkg') : (num('bst') !== null ? stToKg(num('bst'), num('blb') || 0) : null), w = num('bcm'), cm = w === null ? null : metric() ? w : Math.round(w * 2.54 * 10) / 10;
+    if (kg === null && cm === null) { bodyMsg = 'Type your weight, your waist, or both.'; render(); return; }
+    if ((kg !== null && (kg < 30 || kg > 350)) || (cm !== null && (cm < 40 || cm > 250))) { bodyMsg = 'That number looks wrong. Check it and try again.'; render(); return; }
+    bodyMsg = '';
+    S.body = S.body.filter(x => x.d !== TODAY).concat({ d: TODAY, kg, cm }).sort((x, y) => x.d < y.d ? -1 : 1); save(); render(); return; }
+  if (a === 'undobody') { S.body.pop(); save(); render(); return; }
+  if (a === 'rweeks' || a === 'caltime') { if (a === 'rweeks') S.draft.rweeks = val; else { S.calTime = val; save(); } render(); return; }
+  if (a === 'print') { window.print(); return; }
+  if (a === 'copyreport') { const r = reportData(+(S.draft.rweeks || 4)), text = S.profile.name + "'s diary, " + fmtDate(r.from) + ' to ' + fmtDate(TODAY) + ' (self-reported, not a medical record)\n\n' + r.sec.map(s => s[0].toUpperCase() + '\n' + s[1].map(x => x[0] + ': ' + x[1]).join('\n')).join('\n\n');
+    const done = () => { msg = 'Copied. Paste it into an email or message.'; render(); };
+    try { navigator.clipboard.writeText(text).then(done, () => { msg = 'Your phone would not let me copy. Use Print or save as PDF instead.'; render(); }); } catch (err) { msg = 'Your phone would not let me copy. Use Print or save as PDF instead.'; render(); } return; }
+  if (a === 'calendar') { const ics = calendar(S.profile, S.calTime || '18:00', TODAY);
+    if (isIOS()) location.href = 'data:text/calendar;charset=utf-8,' + encodeURIComponent(ics);
+    else { const link = document.createElement('a'); link.href = URL.createObjectURL(new Blob([ics], { type: 'text/calendar' })); link.download = 'my-training-week.ics'; document.body.appendChild(link); link.click(); link.remove(); }
+    msg = isIOS() ? 'Your phone should offer to add the events. Tap Add All.' : 'A calendar file has downloaded. Open it to add the events to your calendar.'; render(); return; }
   if (a === 'checkok') { S.profile.checked = TODAY; save(); msg = 'Good. Your plan carries on as it is.'; render(); return; }
   if (a === 'skipex') { const l = log(); l.pos = (l.pos || 0) + 1; resetEx(); save(); go('session'); return; }
   if (a === 'loadup' || a === 'loaddown') { S.loads[val] = Math.max(0, (S.loads[val] || 0) + (a === 'loadup' ? 1 : -1)); save(); render(); return; }
@@ -521,7 +630,7 @@ document.addEventListener('click', e => {
   if (a === 'copy') { const ta = document.getElementById('sharetext'); const done = () => { msg = 'Copied. Paste it into a message to a friend.'; render(); };
     const fallback = () => { ta.focus(); ta.select(); msg = 'Select the text above and copy it.'; };
     try { navigator.clipboard.writeText(ta.value).then(done, fallback); } catch (err) { fallback(); } return; }
-  if (a === 'easeweek') { S.profile.easeUntil = iso(addDays(NOW, 7)); S.draft.dosechg = undefined; save(); msg = 'Easy week set. Sessions are lighter for the next 7 days.'; render(); return; }
+  if (a === 'easeweek') { if (!(S.doses || []).includes(TODAY)) S.doses = (S.doses || []).concat(TODAY); S.profile.easeUntil = iso(addDays(NOW, 7)); S.draft.dosechg = undefined; save(); msg = 'Easy week set. Sessions are lighter for the next 7 days.'; render(); return; }
 
   if (['goal', 'level', 'pain', 'med', 'dosechg'].includes(a)) { d[a] = val; if (a === 'med' && !d.editing) delete d.jab; }
   else if (a === 'screen') { d.screen = toggle(d.screen, val, 'none'); if (d.screen.includes('none')) d.cleared = false; }

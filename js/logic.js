@@ -92,4 +92,49 @@ function codeHash(str) { let h = 2166136261; for (const ch of String(str)) { h ^
 const weekNo = (start, today) => Math.max(1, Math.floor((parseDay(today) - parseDay(start)) / 6048e5) + 1);
 const phase = w => w <= 4 ? 'Foundations' : w <= 8 ? 'Build' : w <= 12 ? 'Strong' : 'For life';
 
-if (typeof module !== 'undefined') module.exports = { iso, addDays, parseDay, monday, pick, sessionList, dayPlan, prescription, dose, shouldEase, mustSkip, inEaseWeek, review, weekNo, phase, codeHash };
+/* ---------- side-effect diary, body trend and calendar ---------- */
+const SYMPTOMS = ['queasy', 'bunged', 'tired', 'dizzy', 'pain'];
+/* Everything the member logged between two dates (inclusive), counted up for the diary and the GP report. */
+function diarySummary(p, logs, from, to) {
+  const out = { days: 0, logged: 0, good: 0, sym: {}, after: {}, eaten: { yes: 0, bit: 0, no: 0 }, protein: [], water: [], sessions: 0, light: 0, skipped: 0, pain: 0 };
+  SYMPTOMS.forEach(k => { out.sym[k] = 0; out.after[k] = [0, 0, 0, 0, 0, 0, 0]; });
+  for (let d = parseDay(from); iso(d) <= to; d = addDays(d, 1)) {
+    out.days++; const l = logs[iso(d)]; if (!l) continue;
+    const feel = l.feel || [];
+    if (feel.length || l.eaten || l.protein || l.water || l.finished) out.logged++;
+    if (feel.includes('good')) out.good++;
+    SYMPTOMS.forEach(k => { if (feel.includes(k)) { out.sym[k]++; out.after[k][(d.getDay() - p.jab + 7) % 7]++; } });
+    if (l.eaten) out.eaten[l.eaten]++;
+    if (l.protein) out.protein.push(l.protein);
+    if (l.water) out.water.push(l.water);
+    if (l.finished) { out.sessions++; if (l.light) out.light++; }
+    if (dayPlan(p, d.getDay()).type === 'strength' && !l.finished && mustSkip(l)) out.skipped++;
+    out.pain += l.pain || 0;
+  }
+  return out;
+}
+/* The day after injection when a symptom shows up most, or -1. */
+function peakDay(after) { let best = -1, n = 0; after.forEach((v, i) => { if (v > n) { n = v; best = i; } }); return best; }
+const avg = a => a.length ? Math.round(10 * a.reduce((x, y) => x + y, 0) / a.length) / 10 : 0;
+
+/* Percent change from the first value, for drawing weight and strength on one chart. */
+function pctSeries(points) { if (!points.length) return []; const b = points[0].v || 1; return points.map(x => ({ d: x.d, v: Math.round(1000 * (x.v - b) / b) / 10 })); }
+const kgToSt = kg => { const lb = Math.round(kg * 2.20462); return [Math.floor(lb / 14), lb % 14]; };
+const stToKg = (st, lb) => Math.round(((+st || 0) * 14 + (+lb || 0)) / 2.20462 * 10) / 10;
+
+/* A calendar file with the member's weekly strength sessions and injection day as repeating events. */
+const ICSDAY = ['SU', 'MO', 'TU', 'WE', 'TH', 'FR', 'SA'];
+function calendar(p, time, today) {
+  const t = String(time).replace(':', '') + '00', stamp = today.replace(/-/g, '') + 'T000000';
+  const days = [0, 1, 2, 3, 4, 5, 6].filter(d => dayPlan(p, d).type === 'strength');
+  const next = dow => { const d = parseDay(today); while (d.getDay() !== dow) d.setDate(d.getDate() + 1); return iso(d).replace(/-/g, ''); };
+  const ev = [];
+  if (days.length) ev.push(['BEGIN:VEVENT', 'UID:strength-' + stamp + '@app', 'DTSTAMP:' + stamp, 'DTSTART:' + days.map(next).sort()[0] + 'T' + t, 'DURATION:PT' + p.len + 'M',
+    'RRULE:FREQ=WEEKLY;BYDAY=' + days.map(d => ICSDAY[d]).join(','), 'SUMMARY:Strength session', 'DESCRIPTION:Open the app and press Start session. Eat something with protein afterwards.',
+    'BEGIN:VALARM', 'ACTION:DISPLAY', 'DESCRIPTION:Strength session in 15 minutes', 'TRIGGER:-PT15M', 'END:VALARM', 'END:VEVENT'].join('\r\n'));
+  if (p.med === 'weekly') ev.push(['BEGIN:VEVENT', 'UID:injection-' + stamp + '@app', 'DTSTAMP:' + stamp, 'DTSTART;VALUE=DATE:' + next(p.jab), 'RRULE:FREQ=WEEKLY',
+    'SUMMARY:Injection day', 'DESCRIPTION:No strength today. Eat what you can and keep sipping water.', 'TRANSP:TRANSPARENT', 'END:VEVENT'].join('\r\n'));
+  return ['BEGIN:VCALENDAR', 'VERSION:2.0', 'PRODID:-//Strength app//EN', 'CALSCALE:GREGORIAN'].concat(ev, 'END:VCALENDAR').join('\r\n') + '\r\n';
+}
+
+if (typeof module !== 'undefined') module.exports = { iso, addDays, parseDay, monday, pick, sessionList, dayPlan, prescription, dose, shouldEase, mustSkip, inEaseWeek, review, weekNo, phase, codeHash, SYMPTOMS, diarySummary, peakDay, avg, pctSeries, kgToSt, stToKg, calendar };

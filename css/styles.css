@@ -262,3 +262,30 @@ body.landing #app{gap:44px}
 /* --- real videos are filmed upright (9:16), so the player is phone-shaped; placeholders stay compact --- */
 .video.real{aspect-ratio:9/16;width:min(100%,280px);margin-inline:auto;border-radius:22px}
 @media (min-width: 900px){ body.landing .lhero .video.real{flex:0 0 300px;width:300px} }
+
+/* Muscle story chart, body readings, GP report */
+.story{width:100%;max-width:520px;height:auto;display:block}
+.story .grid{stroke:var(--line);stroke-width:1}
+.story .grid.zero{stroke:var(--muted);stroke-dasharray:3 3}
+.story .axis{fill:var(--muted);font:500 10px var(--body)}
+.story polyline{fill:none;stroke-width:2.5;stroke-linejoin:round;stroke-linecap:round}
+.story polyline.sw{stroke:var(--lilac)} .story polyline.ss{stroke:var(--berry)}
+.story circle.sw{fill:var(--lilac)} .story circle.ss{fill:var(--berry)}
+.story text.sw{fill:var(--lilac);font:700 11px var(--body)} .story text.ss{fill:var(--berry);font:700 11px var(--body)}
+.legend{display:flex;gap:16px;flex-wrap:wrap}
+.legend span{display:inline-flex;align-items:center;gap:6px}
+.legend i{width:14px;height:4px;border-radius:2px;display:inline-block}
+.legend i.sw{background:var(--lilac)} .legend i.ss{background:var(--berry)}
+.fields{display:flex;flex-wrap:wrap;gap:10px}
+.field{display:flex;flex-direction:column;gap:4px;flex:1 1 120px;min-width:0}
+.field input{width:100%;font:600 1.05rem var(--body);padding:12px;border:2px solid var(--line);border-radius:14px;background:var(--surface);color:var(--ink)}
+.report table{width:100%;border-collapse:collapse;font-size:.92rem}
+.report th,.report td{text-align:left;padding:8px 6px;border-bottom:1px solid var(--line);vertical-align:top}
+.report th{font-weight:600;color:var(--muted);width:55%}
+@media print{
+  #hd,#tabs,footer,.noprint{display:none !important}
+  body,main{background:#FFFFFF !important;color:#000000 !important}
+  .card{box-shadow:none;border:1px solid #BBBBBB;break-inside:avoid}
+  .report th{color:#333333}
+}
+.field input:focus-visible{outline:3px solid var(--sun);outline-offset:2px}

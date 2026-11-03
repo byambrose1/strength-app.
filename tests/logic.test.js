@@ -98,4 +98,18 @@ assert.strictEqual(L.codeHash('STRONG26'), L.codeHash('STRONG26'));
 assert.notStrictEqual(L.codeHash('STRONG26'), L.codeHash('STRONG27'));
 assert.notStrictEqual(L.codeHash('STRONG26'), 'STRONG26');
 
+// Side-effect diary: counts symptom days, and which day after injection they fall on.
+const dlogs = { '2026-10-05': { feel: ['queasy'], eaten: 'bit', protein: 2, water: 5 }, '2026-10-06': { feel: ['queasy', 'tired'], eaten: 'no' }, '2026-10-08': { feel: ['good'], eaten: 'yes', protein: 3, finished: true } };
+const ds = L.diarySummary({ ...base, jab: 0 }, dlogs, '2026-10-04', '2026-10-10');
+assert.strictEqual(ds.days, 7); assert.strictEqual(ds.logged, 3); assert.strictEqual(ds.sym.queasy, 2); assert.strictEqual(ds.sym.tired, 1);
+assert.strictEqual(L.peakDay(ds.after.queasy), 1); // 4 Oct 2026 is a Sunday, so the 5th is the day after a Sunday injection
+assert.strictEqual(ds.sessions, 1); assert.strictEqual(L.avg(ds.protein), 2.5); assert.strictEqual(ds.eaten.no, 1);
+// Body trend and units.
+assert.deepStrictEqual(L.pctSeries([{ d: 'a', v: 100 }, { d: 'b', v: 95 }]).map(x => x.v), [0, -5]);
+assert.deepStrictEqual(L.kgToSt(80), [12, 8]); assert.strictEqual(L.stToKg(12, 8), 79.8);
+// Calendar file: weekly strength events on the right days, injection day as an all-day event.
+const ics = L.calendar({ ...base, jab: 0 }, '18:00', '2026-10-07');
+assert.ok(ics.includes('RRULE:FREQ=WEEKLY;BYDAY=TU,TH,SA')); assert.ok(ics.includes('DTSTART:20261008T180000')); assert.ok(ics.includes('DTSTART;VALUE=DATE:20261011'));
+assert.ok(!L.calendar({ ...base, med: 'daily', jab: 1 }, '07:30', '2026-10-07').includes('Injection day'));
+
 console.log('All logic tests passed');
