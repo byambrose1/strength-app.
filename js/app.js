@@ -29,7 +29,18 @@ let view = S.profile ? 'today' : 'welcome', step = 0, msg = '', timer = null;
 let T = { left: 30, count: 0, state: 'idle' };          // strength test
 let R = { id: null, i: 0, left: 0, paused: false };     // guided routine
 let G = { mode: 'idle', set: 1, t: 0, left: 0 };        // guided set: idle, rep, rest, done
-let X = { help: null, hurt: null };                     // help open on the current exercise
+let X = { help: null, hurt: null };
+let installEvt = null;                                   // Android install prompt, when the browser offers one
+window.addEventListener('beforeinstallprompt', e => { e.preventDefault(); installEvt = e; if (view === 'today') render(); });
+const installed = () => (window.matchMedia && matchMedia('(display-mode: standalone)').matches) || navigator.standalone === true;
+const isIOS = () => /iphone|ipad|ipod/i.test(navigator.userAgent) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+function installCard() {
+  if (installed() || S.installHide || (S.profile && S.profile.example)) return '';
+  const how = installEvt ? `<button class="btn" data-act="install">Add to my home screen</button>`
+    : isIOS() ? `<ol class="small"><li>Open this page in <strong>Safari</strong>.</li><li>Tap the <strong>Share</strong> button (the square with an arrow pointing up).</li><li>Scroll down and tap <strong>Add to Home Screen</strong>, then <strong>Add</strong>.</li></ol>`
+    : `<ol class="small"><li>Open this page in <strong>Chrome</strong>.</li><li>Tap the <strong>three dots</strong> at the top right.</li><li>Tap <strong>Add to Home screen</strong> or <strong>Install app</strong>.</li></ol>`;
+  return `<div class="card"><div><h3>Put the app on your home screen</h3><p class="small muted">It gets its own icon and opens full screen, like any other app. Takes ten seconds.</p></div>${how}<button class="link" data-act="installhide">${installEvt || isIOS() ? 'Not now' : 'I have done this, or not now'}</button></div>`;
+}                     // help open on the current exercise
 function resetEx() { clearInterval(timer); G = { mode: 'idle', set: 1, t: 0, left: 0 }; X = { help: null, hurt: null }; }
 
 const app = document.getElementById('app'), hd = document.getElementById('hd'), tabs = document.getElementById('tabs');
@@ -219,6 +230,7 @@ function viewToday() {
   if (!p.example && (parseDay(TODAY) - parseDay(p.checked || p.start)) / 864e5 >= 28) h += `<div class="card"><h3>Has anything changed?</h3><p class="small muted">A quick check every four weeks. Any new aches, injuries, a change in your health, or different kit?</p><div class="row"><button class="btn ghost" data-act="checkok">Nothing has changed</button><button class="btn" data-act="edit">Yes, update my plan</button></div><button class="link" data-go="plan">It is something else. Tell my coach</button></div>`;
   if (due && !skip) h += `<div class="card"><h3>${last ? 'Time to re-test your strength score' : 'Set your strength score'}</h3><p class="small muted">${last ? 'It has been 4 weeks. See what has changed.' : 'A 30-second test from a chair. It is how you will see your strength holding while the weight comes off.'}</p><button class="btn ghost" data-act="test">Take the 30-second test</button></div>`;
 
+  h += installCard();
   h += `<div class="card"><div><h3>Fuel check</h3><p class="small muted">Muscle is built from what you eat. Three taps.</p></div>
     <fieldset><legend>Have you eaten enough today?</legend><div class="chips">${chip('eaten', 'yes', l.eaten, 'Yes')}${chip('eaten', 'bit', l.eaten, 'A bit')}${chip('eaten', 'no', l.eaten, 'Hardly anything')}</div></fieldset>
     ${l.eaten === 'no' ? '<p class="small"><strong>Small and often works better than big meals.</strong> <button class="link inline" data-go="food">See what to eat when you cannot face food</button></p>' : ''}
@@ -498,6 +510,8 @@ document.addEventListener('click', e => {
   if (a === 'putback') { const p = S.profile; p.skip = (p.skip || []).filter(x => x !== val); save(); render(); return; }
   if (a === 'sendchange') { const t = document.getElementById('changemsg').value.trim(); if (t) { S.profile.checked = TODAY; msg = tellCoach('Something has changed', 'Something has changed: ' + t); } render(); return; }
   if (a === 'sendnote') { msg = tellCoach('Something to look after', 'Something to look after: ' + S.profile.careNote); S.msgs.pop(); save(); render(); return; }
+  if (a === 'install') { if (installEvt) { installEvt.prompt(); installEvt.userChoice.finally(() => { installEvt = null; render(); }); } return; }
+  if (a === 'installhide') { S.installHide = true; save(); render(); return; }
   if (a === 'checkok') { S.profile.checked = TODAY; save(); msg = 'Good. Your plan carries on as it is.'; render(); return; }
   if (a === 'skipex') { const l = log(); l.pos = (l.pos || 0) + 1; resetEx(); save(); go('session'); return; }
   if (a === 'loadup' || a === 'loaddown') { S.loads[val] = Math.max(0, (S.loads[val] || 0) + (a === 'loadup' ? 1 : -1)); save(); render(); return; }
