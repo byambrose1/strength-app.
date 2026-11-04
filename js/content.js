@@ -6,6 +6,9 @@ const CONTENT = {
   FULL: ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'],
 
   /* Six levels: [sets, reps]. Timed holds use reps x 3 seconds. */
+  /* Harder versions for members training with no kit, who cannot add weight.
+     [first stage it appears at (0 = level 1), exercise]. Not used when the easier one was chosen to protect an area. */
+  PROGRESS: { 'Glute bridge': [3, ['Single-leg glute bridge', 'One foot down, the other knee lifted. Lift, pause, lower.', 'f']] },
   STAGES: [[2, 8], [2, 10], [2, 12], [3, 8], [3, 10], [3, 12]],
   START: { new: 0, some: 1, regular: 3 },
 

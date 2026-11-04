@@ -44,6 +44,11 @@ assert.strictEqual(L.pick('hinge', { ...base, care: ['hips', 'floor'] })[0], 'Ch
 // An exercise the member has left out does not come back.
 assert.ok(!L.sessionList({ ...base, skip: ['Goblet squat'] }, 'A').some(e => e[0] === 'Goblet squat'));
 assert.strictEqual(L.sessionList({ ...base, skip: ['Goblet squat'] }, 'A').length, 3);
+// No-kit members move on to a single-leg bridge from level 4, unless the bridge was chosen to protect the back or hips.
+assert.strictEqual(L.pick('hinge', { ...base, equip: ['none'], stage: 2 })[0], 'Glute bridge');
+assert.strictEqual(L.pick('hinge', { ...base, equip: ['none'], stage: 3 })[0], 'Single-leg glute bridge');
+assert.strictEqual(L.pick('hinge', { ...base, care: ['back'], stage: 5 })[0], 'Glute bridge');
+assert.strictEqual(L.pick('hinge', { ...base, equip: ['none'], care: ['floor'], stage: 5 })[0], 'Chair hip hinge');
 // Balance support.
 assert.strictEqual(L.pick('lunge', { ...base, care: ['balance'] })[0], 'Supported step-back');
 assert.strictEqual(L.pick('carry', { ...base, care: ['balance'] })[0], 'Suitcase hold by a worktop');
@@ -53,7 +58,7 @@ const all = new Set([CN.BENCH_PRESS[0]]);
 Object.values(CN.LIB).forEach(m => Object.values(m).forEach(e => all.add(e[0])));
 Object.values(CN.ALT).forEach(l => l.forEach(a => all.add(a[1][0])));
 Object.values(CN.FLOORFREE).forEach(e => all.add(e[0]));
-Object.values(CN.SEATED).forEach(e => all.add(e[0])); all.add(CN.SEATED_SHOULDERS[0]);
+Object.values(CN.SEATED).forEach(e => all.add(e[0])); Object.values(CN.PROGRESS).forEach(x => all.add(x[1][0])); all.add(CN.SEATED_SHOULDERS[0]);
 all.forEach(n => assert.ok(G[n] && G[n].s && G[n].m.length >= 2 && G[n].f && G[n].e, 'No complete guide for ' + n));
 
 // Session length changes the number of exercises.

@@ -16,6 +16,8 @@ function pick(slot, p) {
   for (const a of (C.ALT[slot] || [])) if (care.includes(a[0])) { e = a[1]; break; }
   if (!e && slot === 'push' && p.equip.includes('dumbbells') && p.equip.includes('bench') && !p.equip.includes('gym')) e = C.BENCH_PRESS;
   if (!e) for (const k of C.ORDER) if ((k === 'none' || p.equip.includes(k)) && C.LIB[slot][k]) { e = C.LIB[slot][k]; break; }
+  const up = C.PROGRESS && C.PROGRESS[e[0]];
+  if (up && (p.stage || 0) >= up[0] && !(C.ALT[slot] || []).some(a => care.includes(a[0]) && a[1][0] === e[0])) e = up[1];
   if (care.includes('floor') && e[2].includes('f') && C.FLOORFREE[slot]) e = C.FLOORFREE[slot];
   return e;
 }

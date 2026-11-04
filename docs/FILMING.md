@@ -1,6 +1,6 @@
 # Filming list
 
-Generated from the app, so every title here matches the app exactly. 52 exercise clips, plus 7 routines, 8 lessons, 4 coach notes, a test demo and a short film for the home page.
+Generated from the app, so every title here matches the app exactly. 53 exercise clips, plus 7 routines, 8 lessons, 4 coach notes, a test demo and a short film for the home page.
 
 ## How to film
 
@@ -21,7 +21,7 @@ Generated from the app, so every title here matches the app exactly. 52 exercise
 
 Unlisted means anyone with the link can watch, but it does not appear in search. YouTube labels short upright clips as Shorts; that is fine, they still play in the app.
 
-## Day one: film these first (24 clips)
+## Day one: film these first (25 clips)
 
 These cover every member with no equipment, including the floor-free and supported versions. The app is usable with only these.
 
@@ -37,6 +37,7 @@ These cover every member with no equipment, including the floor-free and support
 | Step-up | Stand facing the bottom stair. Hold the banister. Place your whole foot on the step. Push through that foot and stand up onto the step. Step back down slowly. Do all your reps, then swap legs. | 3 slow reps |
 | Bag press overhead | Sit or stand tall. Hold a filled bag or a water bottle in each hand at your shoulders. Tuck your ribs down, do not lean back. Press your hands straight up until your arms are nearly straight. Lower slowly to your shoulders. | 3 slow reps |
 | Suitcase hold | Stand tall beside something steady. Hold a heavy bag in one hand, like a suitcase. Stand as if the bag were not there. Do not lean. Hold for the time. Put it down and swap hands. | Hold 10 sec |
+| Single-leg glute bridge | Lie on your back, knees bent, feet flat. Lift one foot and bring that knee up over your hip, or straighten the leg if that feels better. Push through the heel that is still on the floor. Lift your hips until your body is a straight line from knee to shoulder, keeping your hips level. Pause for two seconds, lower slowly. Do all your reps, then swap legs. | 3 slow reps |
 
 ### Gentler, floor-free and supported versions
 
