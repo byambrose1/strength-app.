@@ -16,7 +16,7 @@ assert.strictEqual(week({ ...base, med: 'none', jab: 1, sessions: 2 }), 'Rest Li
 assert.strictEqual(L.pick('squat', base)[0], 'Goblet squat');
 assert.strictEqual(L.pick('squat', { ...base, equip: ['gym', 'dumbbells'] })[0], 'Leg press');
 assert.strictEqual(L.pick('push', { ...base, equip: ['dumbbells', 'bench'] })[0], 'Dumbbell bench press');
-assert.strictEqual(L.pick('pull', { ...base, equip: ['none'] })[0], 'Loaded bag row');
+assert.strictEqual(L.pick('pull', { ...base, equip: ['none'] })[0], 'Chair-supported row');
 // Areas to look after swap in gentler movements.
 assert.strictEqual(L.pick('squat', { ...base, care: ['knees'] })[0], 'Sit to stand, high seat');
 assert.strictEqual(L.pick('press', { ...base, care: ['shoulders'] })[0], 'Wall slide');
