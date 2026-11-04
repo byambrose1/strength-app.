@@ -10,6 +10,7 @@ const VIDEOS = {
   'Chair-supported row': 'https://youtube.com/shorts/hyoxqVR7Be8',
   'Dead bug': 'https://youtube.com/shorts/uqOL677KoRM',
   'Glute bridge': 'https://youtube.com/shorts/tGVxWlbPp7o',
+  'Sit to stand, high seat': 'https://youtube.com/shorts/XD_qLTg3Xas',
   'Single-leg glute bridge': 'https://youtube.com/shorts/p7xeNkuDp2I',
   'Wall press-up': 'https://youtube.com/shorts/WC31X5JfTMk',
 };
