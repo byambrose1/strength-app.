@@ -8,6 +8,7 @@
 const VIDEOS = {
   'Sit to stand': 'https://youtube.com/shorts/Mqk40fPEND0',
   'Chair-supported row': 'https://youtube.com/shorts/hyoxqVR7Be8',
+  'Glute bridge': 'https://youtube.com/shorts/tGVxWlbPp7o',
   'Wall press-up': 'https://youtube.com/shorts/WC31X5JfTMk',
 };
 if (typeof module !== 'undefined') module.exports = VIDEOS;
