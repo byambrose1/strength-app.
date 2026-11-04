@@ -6,5 +6,6 @@
      'Sit to stand': 'https://youtu.be/abc123XYZ00',
 */
 const VIDEOS = {
+  'Sit to stand': 'https://youtube.com/shorts/Mqk40fPEND0',
 };
 if (typeof module !== 'undefined') module.exports = VIDEOS;
