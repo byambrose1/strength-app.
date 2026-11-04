@@ -7,6 +7,7 @@
 */
 const VIDEOS = {
   'Sit to stand': 'https://youtube.com/shorts/Mqk40fPEND0',
+  'Chair hip hinge': 'https://youtube.com/shorts/fzBlHVi1ukk',
   'Chair-supported row': 'https://youtube.com/shorts/hyoxqVR7Be8',
   'Dead bug': 'https://youtube.com/shorts/uqOL677KoRM',
   'Glute bridge': 'https://youtube.com/shorts/tGVxWlbPp7o',
