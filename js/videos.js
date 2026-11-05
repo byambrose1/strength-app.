@@ -10,6 +10,7 @@ const VIDEOS = {
   'Chair hip hinge': 'https://youtube.com/shorts/fzBlHVi1ukk',
   'Chair-supported row': 'https://youtube.com/shorts/hyoxqVR7Be8',
   'Dead bug': 'https://youtube.com/shorts/uqOL677KoRM',
+  'Glute bridge march': 'https://youtube.com/shorts/lqEqcZL-_fA',
   'Glute bridge': 'https://youtube.com/shorts/tGVxWlbPp7o',
   'Sit to stand, high seat': 'https://youtube.com/shorts/XD_qLTg3Xas',
   'Seated knee lift': 'https://youtube.com/shorts/NAUjVqGeUbM',
