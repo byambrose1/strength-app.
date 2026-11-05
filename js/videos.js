@@ -13,6 +13,7 @@ const VIDEOS = {
   'Glute bridge march': 'https://youtube.com/shorts/lqEqcZL-_fA',
   'Glute bridge': 'https://youtube.com/shorts/tGVxWlbPp7o',
   'Sit to stand, high seat': 'https://youtube.com/shorts/XD_qLTg3Xas',
+  'Seated march': 'https://youtube.com/shorts/Iux0pQVMx-Y',
   'Seated knee lift': 'https://youtube.com/shorts/NAUjVqGeUbM',
   'Single-leg glute bridge': 'https://youtube.com/shorts/p7xeNkuDp2I',
   'Wall slide': 'https://youtube.com/shorts/R9TB6P5Aw0c',
