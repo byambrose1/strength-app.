@@ -15,6 +15,7 @@ const VIDEOS = {
   'Sit to stand, high seat': 'https://youtube.com/shorts/XD_qLTg3Xas',
   'Seated leg extension': 'https://youtube.com/shorts/7abOcwJFtkc',
   'Seated march': 'https://youtube.com/shorts/Iux0pQVMx-Y',
+  'How to do the seated test': 'https://youtube.com/shorts/bhMDCSCqTZo',  // seated bicep curls: the 30-second arm curl test
   'Seated knee lift': 'https://youtube.com/shorts/NAUjVqGeUbM',
   'Single-leg glute bridge': 'https://youtube.com/shorts/p7xeNkuDp2I',
   'Wall slide': 'https://youtube.com/shorts/R9TB6P5Aw0c',
