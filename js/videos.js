@@ -14,6 +14,7 @@ const VIDEOS = {
   'Glute bridge': 'https://youtube.com/shorts/tGVxWlbPp7o',
   'Sit to stand, high seat': 'https://youtube.com/shorts/XD_qLTg3Xas',
   'Seated leg extension': 'https://youtube.com/shorts/7abOcwJFtkc',
+  'Single-arm seated row': 'https://youtube.com/shorts/cpvD4Dk48UE',
   'Seated row': 'https://youtube.com/shorts/91YU84_mwzc',
   'Seated march': 'https://youtube.com/shorts/Iux0pQVMx-Y',
   'How to do the seated test': 'https://youtube.com/shorts/bhMDCSCqTZo',  // seated bicep curls: the 30-second arm curl test

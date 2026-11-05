@@ -11,7 +11,11 @@ const monday = d => iso(addDays(d, -((d.getDay() + 6) % 7)));
    Otherwise, in order: a gentler swap for a flagged area, then the best kit they own, then a floor-free version if they cannot get down to the floor. */
 function pick(slot, p) {
   const care = p.care || [];
-  if (care.includes('seated')) return slot === 'press' && care.includes('shoulders') ? C.SEATED_SHOULDERS : C.SEATED[slot];
+  if (care.includes('seated')) {
+    if (slot === 'press' && care.includes('shoulders')) return C.SEATED_SHOULDERS;
+    const s = C.SEATED[slot], up = C.PROGRESS && C.PROGRESS[s[0]];
+    return up && (p.stage || 0) >= up[0] ? up[1] : s;
+  }
   let e = null;
   for (const a of (C.ALT[slot] || [])) if (care.includes(a[0])) { e = a[1]; break; }
   if (!e && slot === 'push' && p.equip.includes('dumbbells') && p.equip.includes('bench') && !p.equip.includes('gym')) e = C.BENCH_PRESS;
