@@ -35,6 +35,10 @@ assert.strictEqual(L.pick('hinge', { ...base, care: ['back', 'floor'] })[0], 'Ch
 ['A', 'B'].forEach(w => [15, 25, 35].forEach(len => ['none', 'gym', 'dumbbells'].forEach(k =>
   L.sessionList({ ...base, equip: [k], care: ['seated', 'knees'], len }, w).forEach(e => assert.ok(/^Seated/.test(e[0]), e[0] + ' is not seated')))));
 assert.strictEqual(L.pick('press', { ...base, care: ['seated', 'shoulders'] })[0], 'Seated arm raise');
+// Seated session B has curls; the seated hold moves to the longer session A.
+assert.deepStrictEqual(L.sessionList({ ...base, care: ['seated'] }, 'B').map(e => e[0]), ['Seated hip hinge', 'Seated march', 'Seated overhead press', 'Seated bicep curl']);
+assert.ok(L.sessionList({ ...base, care: ['seated'], len: 35 }, 'A').some(e => e[0] === 'Seated suitcase hold'));
+assert.ok(!L.sessionList(base, 'B').some(e => /curl/.test(e[0])));
 assert.strictEqual(L.dayPlan({ ...base, med: 'daily', jab: 1, care: ['seated'] }, 2).title, 'Move day');
 // Wrists and hips.
 assert.strictEqual(L.pick('push', { ...base, care: ['wrists'] })[0], 'Wall press-up');

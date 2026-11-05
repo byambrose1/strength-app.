@@ -1,6 +1,6 @@
 # Filming list
 
-Generated from the app, so every title here matches the app exactly. 53 exercise clips, plus 7 routines, 8 lessons, 4 coach notes, a test demo and a short film for the home page.
+Generated from the app, so every title here matches the app exactly. 54 exercise clips, plus 7 routines, 8 lessons, 4 coach notes, a test demo and a short film for the home page.
 
 ## How to film
 
@@ -21,7 +21,7 @@ Generated from the app, so every title here matches the app exactly. 53 exercise
 
 Unlisted means anyone with the link can watch, but it does not appear in search. YouTube labels short upright clips as Shorts; that is fine, they still play in the app.
 
-## Day one: film these first (25 clips)
+## Day one: film these first (26 clips)
 
 These cover every member with no equipment, including the floor-free and supported versions. The app is usable with only these.
 
@@ -47,7 +47,7 @@ These cover every member with no equipment, including the floor-free and support
 | Wall press-up | Stand an arm's length from a wall. Hands flat on it at chest height. Bend your elbows and lean your chest towards the wall. Keep your heels down and body straight. Press yourself back to standing. | 3 slow reps |
 | Glute bridge march | Lie on your back, knees bent, feet flat. Lift your hips into a bridge. Keep your hips level. Lift one foot an inch off the floor. Put it down and lift the other. Keep going. | 3 slow reps |
 | Supported step-back | Stand side-on to a sturdy chair or worktop, one hand holding it. Step one foot back about a stride. Bend both knees a little, as far as feels steady. Push through your front foot and step back together. Swap legs halfway. | 3 slow reps |
-| Wall slide | Stand with your back, head and bottom against a wall. Arms up in a goalpost shape, backs of your hands near the wall. Slide your arms up the wall. Go only as far as is comfortable. Slide back down slowly. | 3 slow reps |
+| Wall slide | Stand with your back, head and bottom against a wall. Arms up in a goalpost shape, backs of your hands near the wall. Slide your arms up the wall above your head, only as far as is comfortable. Bring them back down and out to the sides, like making a snow angel. Keep the backs of your hands close to the wall the whole time, and move slowly. | 3 slow reps |
 | Suitcase hold by a worktop | Stand beside a worktop with one hand resting on it. Hold a weight in the other hand, like a suitcase. Stand tall. Do not lean towards the weight. Hold for the time. Put it down, turn round and swap hands. | Hold 10 sec |
 | Seated knee lift | Sit tall on the front of a sturdy chair. Hold the sides of the seat. Brace your tummy as if about to cough. Lift one knee a few inches and hold it. Lower slowly and swap legs. Keep going for the time. | Hold 10 sec |
 | Chair hip hinge | Stand behind a sturdy chair, hands resting on its back, feet hip-width apart. Soften your knees. Push your hips straight back as if closing a drawer with your bottom. Back stays long. Squeeze your bottom and stand tall. | 3 slow reps |
@@ -65,6 +65,7 @@ Film every one of these sitting down the whole time, on a sturdy chair with no a
 | Seated march | Sit tall towards the front of the chair. Hold the sides of the seat. Lift one knee, then lower it. Lift the other. Keep a steady rhythm. Count each lift as one rep. | 3 slow reps |
 | Seated overhead press | Sit tall with your back supported. A water bottle or light weight in each hand at your shoulders. Tuck your ribs down. Press your hands straight up until your arms are nearly straight. Lower slowly to your shoulders. | 3 slow reps |
 | Seated suitcase hold | Sit tall, away from the chair back. Hold a weight in one hand, arm hanging by your side. Sit as if the weight were not there. Do not lean. Hold for the time. Put it down and swap hands. | Hold 10 sec |
+| Seated bicep curl | Sit tall on a sturdy chair, feet flat. Hold a full water bottle or light weight in each hand, arms straight down by your sides, palms facing forward. Keep your elbows tucked in at your sides. Curl the weights up towards your shoulders. Lower them slowly, all the way down. | 3 slow reps |
 | Seated arm raise | Sit tall with your back supported. Arms by your sides, a water bottle or light weight in each hand if comfortable. Lift both arms forward to shoulder height, no higher. Pause for a moment. Lower slowly. | 3 slow reps |
 
 ### Also day one

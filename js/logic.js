@@ -25,8 +25,9 @@ function pick(slot, p) {
 /* Session A or B, sized to the minutes the member has. */
 function sessionList(p, which) {
   let s = which === 'A' ? ['squat', 'push', 'pull', 'core'] : ['hinge', 'lunge', 'press', 'carry'];
+  if (which === 'B' && (p.care || []).includes('seated')) s = ['hinge', 'lunge', 'press', 'arms'];  // seated: curls in place of the hold, which moves to the longer session
   if (p.len === 15) s = s.slice(0, 3);
-  if (p.len === 35) s = s.concat(which === 'A' ? 'carry' : 'core');
+  if (p.len === 35) s = s.concat(which === 'A' ? 'carry' : 'core');  // for seated members, A's extra is the seated suitcase hold
   return s.map(k => pick(k, p)).filter(e => !(p.skip || []).includes(e[0]));  // p.skip: exercises the member has left out
 }
 
