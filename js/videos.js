@@ -14,6 +14,7 @@ const VIDEOS = {
   'Sit to stand, high seat': 'https://youtube.com/shorts/XD_qLTg3Xas',
   'Seated knee lift': 'https://youtube.com/shorts/NAUjVqGeUbM',
   'Single-leg glute bridge': 'https://youtube.com/shorts/p7xeNkuDp2I',
+  'Wall slide': 'https://youtube.com/shorts/R9TB6P5Aw0c',
   'Wall press-up': 'https://youtube.com/shorts/WC31X5JfTMk',
 };
 if (typeof module !== 'undefined') module.exports = VIDEOS;
