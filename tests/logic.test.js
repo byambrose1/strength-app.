@@ -58,6 +58,8 @@ assert.strictEqual(L.pick('hinge', { ...base, equip: ['none'], care: ['floor'], 
 assert.strictEqual(L.pick('pull', { ...base, care: ['seated'], stage: 2 })[0], 'Seated row');
 assert.strictEqual(L.pick('pull', { ...base, care: ['seated'], stage: 3 })[0], 'Single-arm seated row');
 assert.strictEqual(L.pick('lunge', { ...base, care: ['seated'], stage: 3 })[0], 'Weighted seated march');
+assert.strictEqual(L.pick('core', { ...base, care: ['seated'], stage: 3 })[0], 'Seated weighted bicycle');
+assert.strictEqual(L.pick('core', { ...base, equip: ['none'], care: ['floor'], stage: 5 })[0], 'Seated knee lift');
 // Balance support.
 assert.strictEqual(L.pick('lunge', { ...base, care: ['balance'] })[0], 'Supported step-back');
 assert.strictEqual(L.pick('carry', { ...base, care: ['balance'] })[0], 'Suitcase hold by a worktop');
