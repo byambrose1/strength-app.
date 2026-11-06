@@ -1,6 +1,6 @@
 # Filming list
 
-Generated from the app, so every title here matches the app exactly. 55 exercise clips, plus 7 routines, 8 lessons, 4 coach notes, a test demo and a short film for the home page.
+Generated from the app, so every title here matches the app exactly. 56 exercise clips, plus 7 routines, 8 lessons, 4 coach notes, a test demo and a short film for the home page.
 
 ## How to film
 
@@ -21,7 +21,7 @@ Generated from the app, so every title here matches the app exactly. 55 exercise
 
 Unlisted means anyone with the link can watch, but it does not appear in search. YouTube labels short upright clips as Shorts; that is fine, they still play in the app.
 
-## Day one: film these first (27 clips)
+## Day one: film these first (28 clips)
 
 These cover every member with no equipment, including the floor-free and supported versions. The app is usable with only these.
 
@@ -67,6 +67,7 @@ Film every one of these sitting down the whole time, on a sturdy chair with no a
 | Seated overhead press | Sit tall with your back supported. A water bottle or light weight in each hand at your shoulders. Tuck your ribs down. Press your hands straight up until your arms are nearly straight. Lower slowly to your shoulders. | 3 slow reps |
 | Seated suitcase hold | Sit tall, away from the chair back. Hold a weight in one hand, arm hanging by your side. Sit as if the weight were not there. Do not lean. Hold for the time. Put it down and swap hands. | Hold 10 sec |
 | Seated bicep curl | Sit tall on a sturdy chair, feet flat. Hold a full water bottle or light weight in each hand, arms straight down by your sides, palms facing forward. Keep your elbows tucked in at your sides. Curl the weights up towards your shoulders. Lower them slowly, all the way down. | 3 slow reps |
+| Seated reverse fly | Sit at the front of a sturdy chair, feet flat and wide. Hold a small bottle or light weight in each hand. Lean forward from your hips with a flat back, arms hanging down, palms facing each other. With a slight bend in your elbows, lift your arms out to the sides up to shoulder height. Squeeze your shoulder blades together at the top. Lower slowly. | 3 slow reps |
 | Seated arm raise | Sit tall with your back supported. Arms by your sides, a water bottle or light weight in each hand if comfortable. Lift both arms forward to shoulder height, no higher. Pause for a moment. Lower slowly. | 3 slow reps |
 
 ### Also day one

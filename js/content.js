@@ -72,7 +72,8 @@ const CONTENT = {
     lunge: ['Seated march', 'Lift one knee then the other, steady rhythm.', ''],
     press: ['Seated overhead press', 'Press water bottles or light weights straight up.', 'l'],
     carry: ['Seated suitcase hold', 'Weight in one hand by your side. Sit tall. Swap sides.', 'hl'],
-    arms: ['Seated bicep curl', 'Curl a bottle or light weight to your shoulder, lower slowly.', 'l']
+    arms: ['Seated bicep curl', 'Curl a bottle or light weight to your shoulder, lower slowly.', 'l'],
+    fly: ['Seated reverse fly', 'Lean forward, arms hanging. Open them out to the sides, squeeze, lower.', 'l']
   },
   SEATED_SHOULDERS: ['Seated arm raise', 'Lift both arms forward to shoulder height, no higher.', 'l'],
 

@@ -39,6 +39,8 @@ assert.strictEqual(L.pick('press', { ...base, care: ['seated', 'shoulders'] })[0
 assert.deepStrictEqual(L.sessionList({ ...base, care: ['seated'] }, 'B').map(e => e[0]), ['Seated hip hinge', 'Seated march', 'Seated overhead press', 'Seated bicep curl']);
 assert.ok(L.sessionList({ ...base, care: ['seated'], len: 35 }, 'A').some(e => e[0] === 'Seated suitcase hold'));
 assert.ok(!L.sessionList(base, 'B').some(e => /curl/.test(e[0])));
+assert.strictEqual(L.sessionList({ ...base, care: ['seated'], len: 35 }, 'B').slice(-1)[0][0], 'Seated reverse fly');
+assert.strictEqual(L.sessionList({ ...base, len: 35 }, 'B').slice(-1)[0][0], 'Dead bug');
 assert.strictEqual(L.dayPlan({ ...base, med: 'daily', jab: 1, care: ['seated'] }, 2).title, 'Move day');
 // Wrists and hips.
 assert.strictEqual(L.pick('push', { ...base, care: ['wrists'] })[0], 'Wall press-up');
