@@ -35,6 +35,7 @@ const VIDEOS = {
   'Standing side reach': 'https://youtube.com/shorts/ubRX-toxEgs',
   'Bent-over row': 'https://youtube.com/shorts/fwKAgxKuglE',
   'Reverse lunge': 'https://youtube.com/shorts/LtoEbbkynQo',
+  'Lateral raise': 'https://youtube.com/shorts/a0jA9dUQFko',
   'Overhead press': 'https://youtube.com/shorts/ZVlMA-BJ-q8',
   'Seated arm raise': 'https://youtube.com/shorts/LtN_K734ves',
   'Seated bicep curl': 'https://youtube.com/shorts/bhMDCSCqTZo',

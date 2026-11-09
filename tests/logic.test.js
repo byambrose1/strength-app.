@@ -78,6 +78,8 @@ assert.strictEqual(L.pick('carry', { ...base, equip: ['none'], care: ['shoulders
 assert.strictEqual(L.pick('pull', base, 1)[0], 'Bent-over row');
 assert.strictEqual(L.pick('pull', { ...base, care: ['back'] }, 1)[0], 'One-arm row');
 assert.strictEqual(L.pick('lunge', base, 1)[0], 'Reverse lunge');
+assert.strictEqual(L.pick('press', base, 1)[0], 'Lateral raise');
+assert.strictEqual(L.pick('press', { ...base, care: ['shoulders'] }, 1)[0], 'Wall slide');
 assert.strictEqual(L.blockNo({ start: '2026-10-01' }, '2026-10-28'), 0); assert.strictEqual(L.blockNo({ start: '2026-10-01' }, '2026-10-29'), 1);
 assert.ok(L.sessionList({ ...base, care: ['seated'], start: '2026-10-01' }, 'B', '2026-11-05').some(e => e[0] === 'Seated side taps'));
 // Balance support.
