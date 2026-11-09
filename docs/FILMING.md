@@ -1,6 +1,6 @@
 # Filming list
 
-Generated from the app, so every title here matches the app exactly. 66 exercise clips, plus 7 routines, 8 lessons, 4 coach notes, a test demo and a short film for the home page.
+Generated from the app, so every title here matches the app exactly. 67 exercise clips, plus 7 routines, 8 lessons, 4 coach notes, a test demo and a short film for the home page.
 
 ## How to film
 
@@ -21,7 +21,7 @@ Generated from the app, so every title here matches the app exactly. 66 exercise
 
 Unlisted means anyone with the link can watch, but it does not appear in search. YouTube labels short upright clips as Shorts; that is fine, they still play in the app.
 
-## Day one: film these first (38 clips)
+## Day one: film these first (39 clips)
 
 These cover every member with no equipment, including the floor-free and supported versions. The app is usable with only these.
 
@@ -49,6 +49,7 @@ These cover every member with no equipment, including the floor-free and support
 | Bent-over row | Stand with feet hip-width apart, a hand weight in each hand. Soften your knees and lean forward from your hips with a long, flat back, arms hanging down. Pull both elbows back past your ribs, squeezing your shoulder blades together. Pause for a moment. Lower the weights slowly until your arms are straight. | 3 slow reps |
 | Reverse lunge | Stand tall, feet hip-width apart, a hand weight in each hand by your sides. Take a big step back with one foot, landing on the ball of that foot. Bend both knees and lower until your back knee is just above the floor. Keep your chest up. Push through your front foot to step back up to standing. Swap legs each rep, or do all your reps on one side first. | 3 slow reps |
 | Lateral raise | Stand tall, feet hip-width apart, knees soft. A light hand weight in each hand by your sides, palms facing in. With a slight bend in your elbows, lift your arms out to the sides. Stop at shoulder height, no higher, without shrugging. Lower slowly, taking longer to come down than to go up. | 3 slow reps |
+| Weighted march | Stand tall, feet hip-width apart, a hand weight in each hand by your sides. March on the spot, lifting each knee towards hip height. Keep your shoulders down and back, and your chest up. Do not let the weights swing. Keep a steady rhythm for the time shown. | Hold 10 sec |
 | Seated side taps | Sit tall towards the front of a sturdy chair, feet together. Rest a dumbbell, or a full water bottle, on top of each thigh and hold it in place. Lift one foot slightly and take that leg out to the side, then tap the foot down. Bring it back in to the middle. Repeat with the other leg. Keep sitting tall the whole time. | 3 slow reps |
 
 ### Gentler, floor-free and supported versions

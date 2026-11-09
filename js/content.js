@@ -25,6 +25,7 @@ const CONTENT = {
     'One-arm row': [['Bent-over row', 'Lean forward from your hips, back flat. Pull both weights to your ribs, lower slowly.', 'l', ['back']]],
     'Split squat': [['Reverse lunge', 'Weights by your sides. Step one foot back, lower, push back up to standing. Swap legs.', 'l', ['knees', 'hips', 'balance']]],
     'Overhead press': [['Lateral raise', 'Weights by your sides. Lift your arms out to shoulder height, no higher. Lower slowly.', 'l', ['shoulders']]],
+    'Suitcase carry': [['Weighted march', 'Hand weights by your sides. March on the spot, standing tall.', 'hl', ['balance']]],
     'Seated march': [['Seated side taps', 'Weights on your thighs. Take one leg out to the side and back. Swap.', '', []]]
   },
   STAGES: [[2, 8], [2, 10], [2, 12], [3, 8], [3, 10], [3, 12]],
@@ -94,6 +95,7 @@ const CONTENT = {
 
   /* Shown once, before a member's very first session. */
   READY: ['A sturdy chair that will not slide. Put it against a wall if you can.', 'Clear floor space with no loose rugs.', 'Flat shoes or bare feet. No socks on a hard floor.', 'Water within reach.', 'Your phone within reach.', 'You have eaten in the last couple of hours.'],
+  HAND_WEIGHTS: 'Hand weights means anything you can hold with some weight in each hand: dumbbells, weight plates, tins or full water bottles.',
   BREATHE: 'Breathe out on the effort, in on the way back. Never hold your breath.',
   EFFORT: 'Finish each set feeling you could have done 2 or 3 more. If you could not, that was too much. If you could have done 10 more, add a little next time.',
 

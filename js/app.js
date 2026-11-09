@@ -252,7 +252,7 @@ function viewToday() {
 function guideHtml(name, open) {
   const g = GUIDES[name]; if (!g) return '';
   return `<details class="guidebox" ${open ? 'open' : ''}><summary>How to do it, step by step</summary>
-    <p class="small"><strong>Set up.</strong> ${g.s}</p><ol class="small">${g.m.map(x => `<li>${x}</li>`).join('')}</ol>
+    <p class="small"><strong>Set up.</strong> ${g.s}</p>${/hand weight|dumbbell/i.test(g.s) ? `<p class="small muted">${C.HAND_WEIGHTS}</p>` : ''}<ol class="small">${g.m.map(x => `<li>${x}</li>`).join('')}</ol>
     <p class="small"><strong>You should feel it in:</strong> ${g.f.charAt(0).toLowerCase() + g.f.slice(1)}.</p>
     <p class="small"><strong>Breathing.</strong> ${C.BREATHE}</p></details>`;
 }
