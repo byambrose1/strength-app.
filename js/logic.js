@@ -9,30 +9,42 @@ const monday = d => iso(addDays(d, -((d.getDay() + 6) % 7)));
 /* Choose the exercise for one movement, from the member's kit and what they asked us to look after.
    A member who needs to stay seated always gets the seated programme.
    Otherwise, in order: a gentler swap for a flagged area, then the best kit they own, then a floor-free version if they cannot get down to the floor. */
-function pick(slot, p) {
+/* Every four weeks a member moves to a new block. Where the library has more than one suitable exercise
+   for a movement, the block decides which one they get, so the plan changes month to month and nothing is lost. */
+function rotate(e, p, block) {
+  const alts = ((C.ROTATE || {})[e[0]] || []).filter(a => !(a[3] || []).some(x => (p.care || []).includes(x)));
+  const opts = [e].concat(alts).filter(x => !(p.skip || []).includes(x[0]));
+  return opts.length ? opts[(block || 0) % opts.length] : e;
+}
+const levelUp = (e, p) => { const up = C.PROGRESS && C.PROGRESS[e[0]]; return up && (p.stage || 0) >= up[0] ? up[1] : e; };
+function blockNo(p, today) { return today && p.start ? Math.floor((weekNo(p.start, today) - 1) / 4) : 0; }
+
+function pick(slot, p, block) {
   const care = p.care || [];
   if (care.includes('seated')) {
     if (slot === 'press' && care.includes('shoulders')) return C.SEATED_SHOULDERS;
-    const s = C.SEATED[slot], up = C.PROGRESS && C.PROGRESS[s[0]];
-    return up && (p.stage || 0) >= up[0] ? up[1] : s;
+    return levelUp(rotate(C.SEATED[slot], p, block), p);
   }
   let e = null;
   for (const a of (C.ALT[slot] || [])) if (care.includes(a[0])) { e = a[1]; break; }
   if (!e && slot === 'push' && p.equip.includes('dumbbells') && p.equip.includes('bench') && !p.equip.includes('gym')) e = C.BENCH_PRESS;
   if (!e) for (const k of C.ORDER) if ((k === 'none' || p.equip.includes(k)) && C.LIB[slot][k]) { e = C.LIB[slot][k]; break; }
-  const up = C.PROGRESS && C.PROGRESS[e[0]];
-  if (up && (p.stage || 0) >= up[0] && !(C.ALT[slot] || []).some(a => care.includes(a[0]) && a[1][0] === e[0])) e = up[1];
+  const protect = (C.ALT[slot] || []).some(a => care.includes(a[0]) && a[1][0] === e[0]);
+  e = rotate(e, p, block);
+  if (!protect) e = levelUp(e, p);
   if (care.includes('floor') && e[2].includes('f') && C.FLOORFREE[slot]) e = C.FLOORFREE[slot];
   return e;
 }
 
 /* Session A or B, sized to the minutes the member has. */
-function sessionList(p, which) {
+function sessionList(p, which, today) {
+  if (today === undefined && typeof TODAY !== 'undefined') today = TODAY;  // the app passes nothing; tests pass a date
+  const block = blockNo(p, today);
   let s = which === 'A' ? ['squat', 'push', 'pull', 'core'] : ['hinge', 'lunge', 'press', 'carry'];
   if (which === 'B' && (p.care || []).includes('seated')) s = ['hinge', 'lunge', 'press', 'arms'];  // seated: curls in place of the hold, which moves to the longer session
   if (p.len === 15) s = s.slice(0, 3);
   if (p.len === 35) s = s.concat(which === 'A' ? 'carry' : (p.care || []).includes('seated') ? 'fly' : 'core');  // for seated members, A's extra is the seated suitcase hold
-  return s.map(k => pick(k, p)).filter(e => !(p.skip || []).includes(e[0]));  // p.skip: exercises the member has left out
+  return s.map(k => pick(k, p, block)).filter(e => !(p.skip || []).includes(e[0]));  // p.skip: exercises the member has left out
 }
 
 /* What a given weekday holds.
@@ -144,4 +156,4 @@ function calendar(p, time, today) {
   return ['BEGIN:VCALENDAR', 'VERSION:2.0', 'PRODID:-//Strength app//EN', 'CALSCALE:GREGORIAN'].concat(ev, 'END:VCALENDAR').join('\r\n') + '\r\n';
 }
 
-if (typeof module !== 'undefined') module.exports = { iso, addDays, parseDay, monday, pick, sessionList, dayPlan, prescription, dose, shouldEase, mustSkip, inEaseWeek, review, weekNo, phase, codeHash, SYMPTOMS, diarySummary, peakDay, avg, pctSeries, kgToSt, stToKg, calendar };
+if (typeof module !== 'undefined') module.exports = { iso, addDays, parseDay, monday, pick, sessionList, dayPlan, prescription, dose, shouldEase, mustSkip, inEaseWeek, review, weekNo, phase, codeHash, blockNo, rotate, SYMPTOMS, diarySummary, peakDay, avg, pctSeries, kgToSt, stToKg, calendar };

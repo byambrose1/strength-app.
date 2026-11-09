@@ -227,6 +227,12 @@ function viewToday() {
     ? `<div class="note"><p><strong>Lighter session switched on.</strong> ${easeWeek ? 'Your dose changed this week, so every session is lighter until it settles. ' : ''}One set fewer and about half your usual weight.</p><button class="link" data-act="unlight">Switch back to the full session</button></div>`
     : `<div class="note"><p><strong>Drop the weights today.</strong> A lighter session will do you more good than a heavy one.</p><button class="btn" data-act="light">Switch to the lighter session</button></div>`;
 
+  const blk = blockNo(p, TODAY);
+  if (!p.example && blk > 0 && p.seenBlock !== blk) {
+    const before = new Set(['A', 'B'].reduce((a, w) => a.concat(sessionList(p, w, iso(addDays(NOW, -28))).map(e => e[0])), []));
+    const fresh = ['A', 'B'].reduce((a, w) => a.concat(sessionList(p, w).map(e => e[0])), []).filter(n => !before.has(n));
+    if (fresh.length) h += `<div class="card"><div><h3>New month, fresh exercises</h3><p class="small muted">Your plan has moved on to a new four-week block. New for you this month:</p></div><ul>${fresh.map(n => `<li>${n}</li>`).join('')}</ul><div class="row"><button class="btn" data-go="moves">See how to do them</button><button class="btn ghost" data-act="seenblock">Got it</button></div></div>`;
+  }
   if (!p.example && (parseDay(TODAY) - parseDay(p.checked || p.start)) / 864e5 >= 28) h += `<div class="card"><h3>Has anything changed?</h3><p class="small muted">A quick check every four weeks. Any new aches, injuries, a change in your health, or different kit?</p><div class="row"><button class="btn ghost" data-act="checkok">Nothing has changed</button><button class="btn" data-act="edit">Yes, update my plan</button></div><button class="link" data-go="plan">It is something else. Tell my coach</button></div>`;
   if (due && !skip) h += `<div class="card"><h3>${last ? 'Time to re-test your strength score' : 'Set your strength score'}</h3><p class="small muted">${last ? 'It has been 4 weeks. See what has changed.' : 'A 30-second test from a chair. It is how you will see your strength holding while the weight comes off.'}</p><button class="btn ghost" data-act="test">Take the 30-second test</button></div>`;
 
@@ -621,6 +627,7 @@ document.addEventListener('click', e => {
     if (isIOS()) location.href = 'data:text/calendar;charset=utf-8,' + encodeURIComponent(ics);
     else { const link = document.createElement('a'); link.href = URL.createObjectURL(new Blob([ics], { type: 'text/calendar' })); link.download = 'my-training-week.ics'; document.body.appendChild(link); link.click(); link.remove(); }
     msg = isIOS() ? 'Your phone should offer to add the events. Tap Add All.' : 'A calendar file has downloaded. Open it to add the events to your calendar.'; render(); return; }
+  if (a === 'seenblock') { S.profile.seenBlock = blockNo(S.profile, TODAY); save(); render(); return; }
   if (a === 'checkok') { S.profile.checked = TODAY; save(); msg = 'Good. Your plan carries on as it is.'; render(); return; }
   if (a === 'skipex') { const l = log(); l.pos = (l.pos || 0) + 1; resetEx(); save(); go('session'); return; }
   if (a === 'loadup' || a === 'loaddown') { S.loads[val] = Math.max(0, (S.loads[val] || 0) + (a === 'loadup' ? 1 : -1)); save(); render(); return; }

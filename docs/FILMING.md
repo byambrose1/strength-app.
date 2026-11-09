@@ -1,6 +1,6 @@
 # Filming list
 
-Generated from the app, so every title here matches the app exactly. 60 exercise clips, plus 7 routines, 8 lessons, 4 coach notes, a test demo and a short film for the home page.
+Generated from the app, so every title here matches the app exactly. 61 exercise clips, plus 7 routines, 8 lessons, 4 coach notes, a test demo and a short film for the home page.
 
 ## How to film
 
@@ -21,7 +21,7 @@ Generated from the app, so every title here matches the app exactly. 60 exercise
 
 Unlisted means anyone with the link can watch, but it does not appear in search. YouTube labels short upright clips as Shorts; that is fine, they still play in the app.
 
-## Day one: film these first (32 clips)
+## Day one: film these first (33 clips)
 
 These cover every member with no equipment, including the floor-free and supported versions. The app is usable with only these.
 
@@ -44,6 +44,7 @@ These cover every member with no equipment, including the floor-free and support
 | Seated weighted bicycle | Sit tall towards the front of a sturdy chair, feet flat. Hold one dumbbell or a full water bottle against your chest with both hands. Lift your right knee and turn your chest towards it. Lower the foot and come back to the middle. Lift your left knee and turn the other way. That is one rep each side. | 3 slow reps |
 | Weighted seated march | Sit tall towards the front of a sturdy chair, feet flat. Rest a dumbbell, or a full water bottle, on top of each thigh just above the knee and hold it in place. Lift one knee, carrying the weight up with it. Lower it with control, then lift the other knee. Keep sitting tall and do not lean back. | 3 slow reps |
 | Single-arm seated row | Sit tall at the front of the chair. Hold one heavier bottle or weight, such as a full 2-litre bottle, in one hand. Rest your other hand on your thigh to brace. Reach the weight forward, arm straight. Pull your elbow back past your ribs and squeeze your shoulder blade. Reach forward again slowly. Do all your reps, then swap arms. | 3 slow reps |
+| Seated side taps | Sit tall towards the front of a sturdy chair, feet together. Rest a dumbbell, or a full water bottle, on top of each thigh and hold it in place. Lift one foot slightly and take that leg out to the side, then tap the foot down. Bring it back in to the middle. Repeat with the other leg. Keep sitting tall the whole time. | 3 slow reps |
 
 ### Gentler, floor-free and supported versions
 
@@ -64,15 +65,15 @@ Film every one of these sitting down the whole time, on a sturdy chair with no a
 | Title (exact) | What to show | Film |
 |---|---|---|
 | Seated leg extension | Sit tall towards the front of a sturdy chair, feet flat. Hold the sides of the seat. Straighten one knee until your leg is out in front of you. Squeeze the front of your thigh and hold for two seconds. Lower slowly. Do all your reps, then swap legs. | 3 slow reps |
-| Seated chest press | Sit tall, away from the chair back. A water bottle or light weight in each hand at chest height, elbows out. Press both hands straight forward until your arms are nearly straight. Pause for a moment. Bring them back slowly to your chest. | 3 slow reps |
+| Seated chest press | Sit tall, away from the chair back. A light dumbbell or a water bottle in each hand at chest height, elbows out. Press both hands straight forward until your arms are nearly straight. Pause for a moment. Bring them back slowly to your chest. | 3 slow reps |
 | Seated row | Sit tall at the front of the chair. A water bottle or light weight in each hand, arms straight out in front. Pull your elbows back past your ribs. Squeeze your shoulder blades together. Reach forward again slowly. | 3 slow reps |
 | Seated hip hinge | Sit tall at the front of the chair, feet flat and wide, hands on your thighs. Keeping your back long, lean forward from your hips. Go only as far as is comfortable. Push through your feet and sit tall again, squeezing your bottom. | 3 slow reps |
 | Seated march | Sit tall towards the front of the chair. Hold the sides of the seat. Lift one knee, then lower it. Lift the other. Keep a steady rhythm. Count each lift as one rep. | 3 slow reps |
-| Seated overhead press | Sit tall with your back supported. A water bottle or light weight in each hand at your shoulders. Tuck your ribs down. Press your hands straight up until your arms are nearly straight. Lower slowly to your shoulders. | 3 slow reps |
+| Seated overhead press | Sit tall with your back supported. A light dumbbell or a water bottle in each hand at your shoulders. Tuck your ribs down. Press your hands straight up until your arms are nearly straight. Lower slowly to your shoulders. | 3 slow reps |
 | Seated suitcase hold | Sit tall, away from the chair back. Hold a weight in one hand, arm hanging by your side. Sit as if the weight were not there. Do not lean. Hold for the time. Put it down and swap hands. | Hold 10 sec |
 | Seated bicep curl | Sit tall on a sturdy chair, feet flat. Hold a full water bottle or light weight in each hand, arms straight down by your sides, palms facing forward. Keep your elbows tucked in at your sides. Curl the weights up towards your shoulders. Lower them slowly, all the way down. | 3 slow reps |
 | Seated reverse fly | Sit at the front of a sturdy chair, feet flat and wide. Hold a small bottle or light weight in each hand. Lean forward from your hips with a flat back, arms hanging down, palms facing each other. With a slight bend in your elbows, lift your arms out to the sides up to shoulder height. Squeeze your shoulder blades together at the top. Lower slowly. | 3 slow reps |
-| Seated arm raise | Sit tall with your back supported. Arms by your sides, a water bottle or light weight in each hand if comfortable. Lift both arms forward to shoulder height, no higher. Pause for a moment. Lower slowly. | 3 slow reps |
+| Seated arm raise | Sit tall with your back supported. Arms by your sides, a light dumbbell or water bottle in each hand if comfortable, palms facing in. Lift one arm forward to shoulder height, no higher. Pause for a moment, then lower slowly. Now lift the other arm. Keep going, one arm at a time. | 3 slow reps |
 
 ### Also day one
 

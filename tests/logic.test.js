@@ -66,6 +66,13 @@ assert.strictEqual(L.pick('core', { ...base, care: ['seated'], stage: 3 })[0], '
 assert.strictEqual(L.pick('squat', { ...base, care: ['seated'], stage: 3 })[0], 'Seated double leg extension');
 assert.strictEqual(L.pick('carry', { ...base, care: ['seated'], stage: 3 })[0], 'Seated weighted side bend');
 assert.strictEqual(L.pick('core', { ...base, equip: ['none'], care: ['floor'], stage: 5 })[0], 'Seated knee lift');
+// Every four weeks the plan moves to a new block; where there is more than one suitable exercise, members swap between them.
+const seatB = (blk, extra) => L.pick('lunge', { ...base, care: ['seated'], ...extra }, blk)[0];
+assert.strictEqual(seatB(0), 'Seated march'); assert.strictEqual(seatB(1), 'Seated side taps'); assert.strictEqual(seatB(2), 'Seated march');
+assert.strictEqual(seatB(0, { stage: 3 }), 'Weighted seated march'); assert.strictEqual(seatB(1, { stage: 3 }), 'Seated side taps');
+assert.strictEqual(seatB(1, { skip: ['Seated side taps'] }), 'Seated march');
+assert.strictEqual(L.blockNo({ start: '2026-10-01' }, '2026-10-28'), 0); assert.strictEqual(L.blockNo({ start: '2026-10-01' }, '2026-10-29'), 1);
+assert.ok(L.sessionList({ ...base, care: ['seated'], start: '2026-10-01' }, 'B', '2026-11-05').some(e => e[0] === 'Seated side taps'));
 // Balance support.
 assert.strictEqual(L.pick('lunge', { ...base, care: ['balance'] })[0], 'Supported step-back');
 assert.strictEqual(L.pick('carry', { ...base, care: ['balance'] })[0], 'Suitcase hold by a worktop');
@@ -75,7 +82,7 @@ const all = new Set([CN.BENCH_PRESS[0]]);
 Object.values(CN.LIB).forEach(m => Object.values(m).forEach(e => all.add(e[0])));
 Object.values(CN.ALT).forEach(l => l.forEach(a => all.add(a[1][0])));
 Object.values(CN.FLOORFREE).forEach(e => all.add(e[0]));
-Object.values(CN.SEATED).forEach(e => all.add(e[0])); Object.values(CN.PROGRESS).forEach(x => all.add(x[1][0])); all.add(CN.SEATED_SHOULDERS[0]);
+Object.values(CN.SEATED).forEach(e => all.add(e[0])); Object.values(CN.PROGRESS).forEach(x => all.add(x[1][0])); Object.values(CN.ROTATE).forEach(l => l.forEach(a => all.add(a[0]))); all.add(CN.SEATED_SHOULDERS[0]);
 all.forEach(n => assert.ok(G[n] && G[n].s && G[n].m.length >= 2 && G[n].f && G[n].e, 'No complete guide for ' + n));
 
 // Session length changes the number of exercises.

@@ -7,6 +7,7 @@ Object.values(C.ALT).forEach(l => l.forEach(a => add('adapted', a[1])));
 Object.values(C.FLOORFREE).forEach(e => add('adapted', e));
 add('dumbbells', C.BENCH_PRESS);
 Object.values(C.PROGRESS || {}).forEach(x => add('none', x[1]));
+Object.values(C.ROTATE || {}).forEach(l => l.forEach(a => add('none', a)));
 Object.values(C.SEATED).forEach(e => add('seated', e)); add('seated', C.SEATED_SHOULDERS);
 const row = e => { const g = G[e[0]]; return `| ${e[0]} | ${g.s} ${g.m.join(' ')} | ${e[2].includes('h') ? 'Hold 10 sec' : '3 slow reps'} |`; };
 const table = list => '| Title (exact) | What to show | Film |\n|---|---|---|\n' + list.map(row).join('\n');
