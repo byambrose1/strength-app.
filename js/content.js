@@ -11,6 +11,7 @@ const CONTENT = {
   PROGRESS: {
     'Glute bridge': [3, ['Single-leg glute bridge', 'One foot down, the other knee lifted. Lift, pause, lower.', 'f']],
     'Seated leg extension': [3, ['Seated double leg extension', 'Hold the seat. Straighten both legs together, squeeze, lower slowly.', '']],
+    'Seated suitcase hold': [3, ['Seated weighted side bend', 'Weight in one hand. Lean slowly to that side, come back up tall. Swap sides.', '']],
     'Seated knee lift': [3, ['Seated weighted bicycle', 'Weight held at your chest. Lift one knee and turn towards it. Swap sides.', '']],
     'Seated march': [3, ['Weighted seated march', 'A weight resting on each thigh. Lift and lower each knee in turn.', '']],
     'Seated row': [3, ['Single-arm seated row', 'One heavier bottle or weight. Brace with your free hand, pull, lower slowly.', '']]

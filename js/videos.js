@@ -19,6 +19,7 @@ const VIDEOS = {
   'Weighted seated march': 'https://youtube.com/shorts/JMo8rpI6CQY',
   'Seated weighted bicycle': 'https://youtube.com/shorts/sW8L5sahY5g',
   'Seated double leg extension': 'https://youtube.com/shorts/OgMu2Rdl80M',
+  'Seated weighted side bend': 'https://youtube.com/shorts/11ePHu42zzI',
   'Seated row': 'https://youtube.com/shorts/91YU84_mwzc',
   'Seated march': 'https://youtube.com/shorts/Iux0pQVMx-Y',
   'How to do the test': 'https://youtube.com/shorts/Mqk40fPEND0',  // same clip as Sit to stand
