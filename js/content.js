@@ -85,9 +85,12 @@ const CONTENT = {
     hinge: ['Chair hip hinge', 'Hands on a chair back. Push your hips back, then stand tall.', ''],
     lunge: ['Supported step-back', 'Hold a chair. Step one foot back, bend a little, return.', '']
   },
-  CARE: { knees: ['Knees', 'Gentler squats and steps'], hips: ['Hips', 'Less bend, lighter load'], back: ['Lower back', 'No loaded bending'], shoulders: ['Shoulders', 'No pressing overhead'], wrists: ['Wrists or hands', 'No press-ups on your hands'], floor: ['Getting down to the floor', 'Everything standing or seated'], balance: ['Balance', 'A chair or worktop to hold'], seated: ['I need to stay seated', 'A fully seated programme'], other: ['Something else', 'Tell your coach'], none: ['Nothing to flag', 'All good'] },
+  CARE: { knees: ['Knees', 'Gentler squats and steps'], hips: ['Hips', 'Less bend, lighter load'], back: ['Lower back', 'No loaded bending'], shoulders: ['Shoulders', 'No pressing overhead'], wrists: ['Wrists or hands', 'No press-ups on your hands'], floor: ['Getting down to the floor', 'Everything standing or seated'], balance: ['Balance', 'Seated or supported exercises'], seated: ['I need to stay seated', 'A fully seated programme'], other: ['Something else', 'Tell your coach'], none: ['Nothing to flag', 'All good'] },
+  /* Asked when a member says they cannot get down to the floor. Knees and dizziness or balance add those areas too. */
+  FLOOR_WHY: { knees: 'My knees', dizzy: 'Getting up and down makes me dizzy', balance: 'My balance', up: 'Getting back up is hard', other: 'Something else' },
   /* Extra guidance shown in the plan and at the start of each session for these members. */
   CARE_NOTES: {
+    balance: ['Stand up slowly and pause for a moment before you move off.', 'If you feel dizzy or faint, sit down straight away and stop for today.'],
     wrists: ['Use wrist weights or a lighter weight for anything you hold, and keep your wrists straight.', 'Stop if your grip or wrist hurts. Easing off the weight is always allowed.'],
     hips: ['Keep the bend at your hips small and the load light.', 'If you have had a hip replacement, your surgeon\'s or physio\'s movement rules come first.'],
     seated: ['Use a sturdy chair that will not slide or tip. If you use a wheelchair, put the brakes on.', 'Sit tall, away from the chair back, unless the exercise says to use it.']

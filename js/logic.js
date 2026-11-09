@@ -42,9 +42,10 @@ function pick(slot, p, block) {
   const protect = (C.ALT[slot] || []).some(a => care.includes(a[0]) && a[1][0] === e[0]);
   e = rotate(e, p, block);
   if (!protect) e = levelUp(e, p);
-  if (care.includes('floor') && e[2].includes('f') && C.FLOORFREE[slot]) e = C.FLOORFREE[slot];
+  const noFloor = care.includes('floor') || care.includes('balance');  // getting down and up again is a fall risk for unsteady members
+  if (noFloor && e[2].includes('f') && C.FLOORFREE[slot]) e = C.FLOORFREE[slot];
   e = fill(e);
-  if (care.includes('floor') && e[2].includes('f') && C.FLOORFREE[slot]) e = C.FLOORFREE[slot];
+  if (noFloor && e[2].includes('f') && C.FLOORFREE[slot]) e = C.FLOORFREE[slot];
   return e;
 }
 

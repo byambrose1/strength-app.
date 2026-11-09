@@ -165,7 +165,7 @@ function viewSetup() {
   } else if (key === 'equip') { ok = !!(d.equip && d.equip.length);
     body = `<h2>What can you train with?</h2><p class="muted">Pick everything you have.</p><div class="tiles">${(C.KIT_LIVE || Object.keys(C.KIT)).map(k => tile('equip', k, d.equip || [], C.KIT[k][0], C.KIT[k][1])).join('')}</div>`;
   } else if (key === 'care') { ok = !!(d.care && d.care.length);
-    body = `<h2>Anything you want me to look after?</h2><p class="muted">Pick all that apply. I will swap in exercises that suit you.</p><div class="tiles">${Object.keys(C.CARE).map(k => tile('care', k, d.care || [], C.CARE[k][0], C.CARE[k][1])).join('')}</div>${(d.care || []).includes('other') ? `<div class="card"><label for="carenote" class="small"><strong>Tell me about it</strong></label><textarea id="carenote" rows="3" maxlength="400" placeholder="A frozen shoulder on my left side. I had an ankle operation in March.">${esc(d.careNote || '')}</textarea><p class="small muted">A coach reads this and adjusts your plan by hand.</p></div>` : ''}`;
+    body = `<h2>Anything you want me to look after?</h2><p class="muted">Pick all that apply. I will swap in exercises that suit you.</p><div class="tiles">${Object.keys(C.CARE).map(k => tile('care', k, d.care || [], C.CARE[k][0], C.CARE[k][1])).join('')}</div>${(d.care || []).includes('floor') ? `<div class="card"><fieldset><legend>What makes the floor hard? Pick any.</legend><div class="chips">${Object.keys(C.FLOOR_WHY).map(k => chip('floorwhy', k, d.floorWhy || [], C.FLOOR_WHY[k])).join('')}</div></fieldset><p class="small muted">This tells me whether to keep you supported and seated, not just off the floor.</p></div>` : ''}${(d.care || []).includes('other') ? `<div class="card"><label for="carenote" class="small"><strong>Tell me about it</strong></label><textarea id="carenote" rows="3" maxlength="400" placeholder="A frozen shoulder on my left side. I had an ankle operation in March.">${esc(d.careNote || '')}</textarea><p class="small muted">A coach reads this and adjusts your plan by hand.</p></div>` : ''}`;
   } else { ok = !!(d.sessions && d.len && d.level);
     body = `<h2>Last one: shape your sessions</h2><div class="card"><fieldset><legend>How many a week?</legend><div class="chips">${chip('sessions', 2, d.sessions, '2')}${chip('sessions', 3, d.sessions, '3')}</div><p class="small muted">Two is plenty to start.</p></fieldset>
     <fieldset><legend>How long have you got?</legend><div class="chips">${chip('len', 15, d.len, '15 min')}${chip('len', 25, d.len, '25 min')}${chip('len', 35, d.len, '35 min')}</div></fieldset>
@@ -574,11 +574,15 @@ document.addEventListener('click', e => {
   if (a === 'home') { clearInterval(timer); go(S.profile && paid() && view !== 'today' ? 'today' : 'welcome'); return; }
   if (a === 'start') { if (S.profile && S.profile.example) { const u = S.unlocked; S = blank(); S.unlocked = u; } S.draft = {}; step = 0; go('setup'); return; }
   if (a === 'example') { const u = S.unlocked; S = example(); S.unlocked = u; go('today'); return; }
-  if (a === 'edit') { const p = S.profile; S.draft = { name: p.name, goal: p.goal, med: p.med, jab: p.jab, equip: p.equip.slice(), care: p.care.slice(), cond: p.cond.slice(), sessions: p.sessions, len: p.len, level: p.level, careNote: p.careNote || '', editing: true }; S.draft.screen = ['none']; step = 0; go('setup'); return; }
+  if (a === 'edit') { const p = S.profile; S.draft = { name: p.name, goal: p.goal, med: p.med, jab: p.jab, equip: p.equip.slice(), care: p.care.slice(), floorWhy: (p.floorWhy || []).slice(), cond: p.cond.slice(), sessions: p.sessions, len: p.len, level: p.level, careNote: p.careNote || '', editing: true }; S.draft.screen = ['none']; step = 0; go('setup'); return; }
   if (a === 'back') { if (step === 0) go(S.profile ? 'plan' : 'welcome'); else { step--; go('setup'); } return; }
   if (a === 'next') { if (step < seq().length - 1) { step++; go('setup'); return; }
     const old = S.profile, keep = d.editing && old;
-    S.profile = { name: d.name.trim(), goal: d.goal, med: d.med, jab: +d.jab, equip: d.equip, care: d.care, cond: d.cond, sessions: +d.sessions, len: +d.len, level: d.level, stage: keep && old.level === d.level ? old.stage : C.START[d.level], start: keep ? old.start : TODAY, careNote: d.care.includes('other') ? (d.careNote || '').trim() : '', skip: keep ? old.skip || [] : [], checked: TODAY };
+    const why = d.care.includes('floor') ? (d.floorWhy || []) : [];
+    let care = d.care.slice();
+    if (why.includes('knees') && !care.includes('knees')) care.push('knees');                         // sore knees: gentler squats and steps too
+    if ((why.includes('dizzy') || why.includes('balance')) && !care.includes('balance')) care.push('balance');  // dizzy or unsteady: seated or supported only
+    S.profile = { name: d.name.trim(), goal: d.goal, med: d.med, jab: +d.jab, equip: d.equip, care, floorWhy: why, cond: d.cond, sessions: +d.sessions, len: +d.len, level: d.level, stage: keep && old.level === d.level ? old.stage : C.START[d.level], start: keep ? old.start : TODAY, careNote: d.care.includes('other') ? (d.careNote || '').trim() : '', skip: keep ? old.skip || [] : [], checked: TODAY };
     if (S.profile.careNote && (!old || old.careNote !== S.profile.careNote)) S.msgs.push({ d: TODAY, t: 'Something to look after: ' + S.profile.careNote });
     const edited = d.editing; S.draft = {}; save(); go(edited ? 'plan' : 'reveal'); return; }
   if (a === 'reset') { if (d.resetArmed) { const u = S.unlocked; try { localStorage.removeItem(KEY); } catch (e) {} S = blank(); S.unlocked = u; save(); go('welcome'); return; } d.resetArmed = true; render(); return; }
@@ -644,6 +648,7 @@ document.addEventListener('click', e => {
   else if (['jab', 'sessions', 'len'].includes(a)) d[a] = +val;
   else if (a === 'equip') d.equip = toggle(d.equip, val);
   else if (a === 'care') d.care = toggle(d.care, val, 'none');
+  else if (a === 'floorwhy') d.floorWhy = toggle(d.floorWhy, val);
   else if (a === 'cond') d.cond = toggle(d.cond, val, 'none');
   else { const l = log();
     if (a === 'eaten' || a === 'felt') l[a] = val;

@@ -103,7 +103,8 @@ assert.strictEqual(L.pick('squat', { ...base, care: ['balance', 'knees'] })[0], 
 assert.strictEqual(L.pick('press', { ...base, care: ['balance'] })[0], 'Seated overhead press');
 assert.strictEqual(L.pick('press', { ...base, care: ['balance', 'shoulders'] })[0], 'Wall slide');
 assert.strictEqual(L.pick('pull', { ...base, care: ['balance'] }, 1)[0], 'Chair-supported row');
-assert.strictEqual(L.pick('hinge', { ...base, care: ['balance'] })[0], 'Glute bridge');
+assert.strictEqual(L.pick('hinge', { ...base, care: ['balance'] })[0], 'Chair hip hinge');
+assert.strictEqual(L.pick('core', { ...base, equip: ['none'], care: ['balance'] })[0], 'Seated knee lift');
 assert.strictEqual(L.dose(0, false, L.pick('core', { ...base, equip: ['none'] })[2]), '2 × 8');
 // Every exercise a member can be given has a step-by-step guide.
 const G = require('../js/guides.js'), CN = require('../js/content.js');
