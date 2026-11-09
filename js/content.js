@@ -23,6 +23,7 @@ const CONTENT = {
     'Step-up': [['Split squat with chop', 'Split stance. Lower the back knee as your hands chop across to the front hip. Swap sides.', '', ['knees', 'hips', 'balance']]],
     'Suitcase hold': [['Standing side reach', 'One arm up to the ceiling, eyes on your hand. Slide the other hand down your side and back up.', '', ['shoulders']]],
     'One-arm row': [['Bent-over row', 'Lean forward from your hips, back flat. Pull both weights to your ribs, lower slowly.', 'l', ['back']]],
+    'Split squat': [['Reverse lunge', 'Weights by your sides. Step one foot back, lower, push back up to standing. Swap legs.', 'l', ['knees', 'hips', 'balance']]],
     'Seated march': [['Seated side taps', 'Weights on your thighs. Take one leg out to the side and back. Swap.', '', []]]
   },
   STAGES: [[2, 8], [2, 10], [2, 12], [3, 8], [3, 10], [3, 12]],
