@@ -10,6 +10,7 @@ const CONTENT = {
      [first stage it appears at (0 = level 1), exercise]. Not used when the easier one was chosen to protect an area. */
   PROGRESS: {
     'Glute bridge': [3, ['Single-leg glute bridge', 'One foot down, the other knee lifted. Lift, pause, lower.', 'f']],
+    'Seated leg extension': [3, ['Seated double leg extension', 'Hold the seat. Straighten both legs together, squeeze, lower slowly.', '']],
     'Seated knee lift': [3, ['Seated weighted bicycle', 'Weight held at your chest. Lift one knee and turn towards it. Swap sides.', '']],
     'Seated march': [3, ['Weighted seated march', 'A weight resting on each thigh. Lift and lower each knee in turn.', '']],
     'Seated row': [3, ['Single-arm seated row', 'One heavier bottle or weight. Brace with your free hand, pull, lower slowly.', '']]
