@@ -1,6 +1,6 @@
 # Filming list
 
-Generated from the app, so every title here matches the app exactly. 62 exercise clips, plus 7 routines, 8 lessons, 4 coach notes, a test demo and a short film for the home page.
+Generated from the app, so every title here matches the app exactly. 63 exercise clips, plus 7 routines, 8 lessons, 4 coach notes, a test demo and a short film for the home page.
 
 ## How to film
 
@@ -21,7 +21,7 @@ Generated from the app, so every title here matches the app exactly. 62 exercise
 
 Unlisted means anyone with the link can watch, but it does not appear in search. YouTube labels short upright clips as Shorts; that is fine, they still play in the app.
 
-## Day one: film these first (34 clips)
+## Day one: film these first (35 clips)
 
 These cover every member with no equipment, including the floor-free and supported versions. The app is usable with only these.
 
@@ -45,6 +45,7 @@ These cover every member with no equipment, including the floor-free and support
 | Weighted seated march | Sit tall towards the front of a sturdy chair, feet flat. Rest a dumbbell, or a full water bottle, on top of each thigh just above the knee and hold it in place. Lift one knee, carrying the weight up with it. Lower it with control, then lift the other knee. Keep sitting tall and do not lean back. | 3 slow reps |
 | Single-arm seated row | Sit tall at the front of the chair. Hold one heavier bottle or weight, such as a full 2-litre bottle, in one hand. Rest your other hand on your thigh to brace. Reach the weight forward, arm straight. Pull your elbow back past your ribs and squeeze your shoulder blade. Reach forward again slowly. Do all your reps, then swap arms. | 3 slow reps |
 | Split squat with chop | Stand with one foot a big step in front of the other, back heel lifted. Clasp your hands together up by the shoulder on the back-leg side. Bend both knees and lower your back knee towards the floor. As you go down, chop your hands diagonally across your body to the outside of your front hip. Push up through your front foot and bring your hands back up. Do all your reps, then swap sides. | 3 slow reps |
+| Standing side reach | Stand tall, feet hip-width apart, knees soft. You can hold a light hand weight in each hand, or use none. Reach one arm straight up towards the ceiling and look up at your hand. Slowly slide your other hand down the side of your leg, bending sideways at the waist. Use the side of your waist to come back up tall. Do all your reps, then swap sides. | 3 slow reps |
 | Seated side taps | Sit tall towards the front of a sturdy chair, feet together. Rest a dumbbell, or a full water bottle, on top of each thigh and hold it in place. Lift one foot slightly and take that leg out to the side, then tap the foot down. Bring it back in to the middle. Repeat with the other leg. Keep sitting tall the whole time. | 3 slow reps |
 
 ### Gentler, floor-free and supported versions

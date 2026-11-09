@@ -73,6 +73,8 @@ assert.strictEqual(seatB(0, { stage: 3 }), 'Weighted seated march'); assert.stri
 assert.strictEqual(seatB(1, { skip: ['Seated side taps'] }), 'Seated march');
 assert.strictEqual(L.pick('lunge', { ...base, equip: ['none'] }, 1)[0], 'Split squat with chop');
 assert.strictEqual(L.pick('lunge', { ...base, equip: ['none'], care: ['knees'] }, 1)[0], 'Glute bridge march');
+assert.strictEqual(L.pick('carry', { ...base, equip: ['none'] }, 1)[0], 'Standing side reach');
+assert.strictEqual(L.pick('carry', { ...base, equip: ['none'], care: ['shoulders'] }, 1)[0], 'Suitcase hold');
 assert.strictEqual(L.blockNo({ start: '2026-10-01' }, '2026-10-28'), 0); assert.strictEqual(L.blockNo({ start: '2026-10-01' }, '2026-10-29'), 1);
 assert.ok(L.sessionList({ ...base, care: ['seated'], start: '2026-10-01' }, 'B', '2026-11-05').some(e => e[0] === 'Seated side taps'));
 // Balance support.

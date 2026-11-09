@@ -21,6 +21,7 @@ const CONTENT = {
      exercise -> list of [alternative, cue, flags, areas it is not suitable for]. Adding a new filmed exercise here never removes another. */
   ROTATE: {
     'Step-up': [['Split squat with chop', 'Split stance. Lower the back knee as your hands chop across to the front hip. Swap sides.', '', ['knees', 'hips', 'balance']]],
+    'Suitcase hold': [['Standing side reach', 'One arm up to the ceiling, eyes on your hand. Slide the other hand down your side and back up.', '', ['shoulders']]],
     'Seated march': [['Seated side taps', 'Weights on your thighs. Take one leg out to the side and back. Swap.', '', []]]
   },
   STAGES: [[2, 8], [2, 10], [2, 12], [3, 8], [3, 10], [3, 12]],

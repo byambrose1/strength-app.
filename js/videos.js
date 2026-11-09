@@ -32,6 +32,7 @@ const VIDEOS = {
   'Romanian deadlift': 'https://youtube.com/shorts/MLMgKMsk22c',
   'Dumbbell Romanian deadlift': 'https://youtube.com/shorts/MLMgKMsk22c',  // gym members do the same movement
   'Split squat with chop': 'https://youtube.com/shorts/r_CZ19Kvz8Y',
+  'Standing side reach': 'https://youtube.com/shorts/ubRX-toxEgs',
   'Overhead press': 'https://youtube.com/shorts/ZVlMA-BJ-q8',
   'Seated arm raise': 'https://youtube.com/shorts/LtN_K734ves',
   'Seated bicep curl': 'https://youtube.com/shorts/bhMDCSCqTZo',
