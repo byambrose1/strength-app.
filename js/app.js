@@ -163,7 +163,7 @@ function viewSetup() {
   } else if (key === 'cond') { ok = !!(d.cond && d.cond.length);
     body = `<h2>Are you living with any of these?</h2><p class="muted">No judgement. It just changes the safety notes I give you.</p><div class="tiles">${Object.keys(C.CONDITIONS).map(k => tile('cond', k, d.cond || [], C.CONDITIONS[k][0], C.CONDITIONS[k][1])).join('')}</div>`;
   } else if (key === 'equip') { ok = !!(d.equip && d.equip.length);
-    body = `<h2>What can you train with?</h2><p class="muted">Pick everything you have.</p><div class="tiles">${Object.keys(C.KIT).map(k => tile('equip', k, d.equip || [], C.KIT[k][0], C.KIT[k][1])).join('')}</div>`;
+    body = `<h2>What can you train with?</h2><p class="muted">Pick everything you have.</p><div class="tiles">${(C.KIT_LIVE || Object.keys(C.KIT)).map(k => tile('equip', k, d.equip || [], C.KIT[k][0], C.KIT[k][1])).join('')}</div>`;
   } else if (key === 'care') { ok = !!(d.care && d.care.length);
     body = `<h2>Anything you want me to look after?</h2><p class="muted">Pick all that apply. I will swap in exercises that suit you.</p><div class="tiles">${Object.keys(C.CARE).map(k => tile('care', k, d.care || [], C.CARE[k][0], C.CARE[k][1])).join('')}</div>${(d.care || []).includes('other') ? `<div class="card"><label for="carenote" class="small"><strong>Tell me about it</strong></label><textarea id="carenote" rows="3" maxlength="400" placeholder="A frozen shoulder on my left side. I had an ankle operation in March.">${esc(d.careNote || '')}</textarea><p class="small muted">A coach reads this and adjusts your plan by hand.</p></div>` : ''}`;
   } else { ok = !!(d.sessions && d.len && d.level);

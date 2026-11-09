@@ -85,6 +85,14 @@ assert.strictEqual(L.pick('press', { ...base, stage: 3 }, 0)[0], 'Push press');
 assert.strictEqual(L.pick('press', { ...base, stage: 3, care: ['knees'] }, 0)[0], 'Overhead press');
 assert.strictEqual(L.blockNo({ start: '2026-10-01' }, '2026-10-28'), 0); assert.strictEqual(L.blockNo({ start: '2026-10-01' }, '2026-10-29'), 1);
 assert.ok(L.sessionList({ ...base, care: ['seated'], start: '2026-10-01' }, 'B', '2026-11-05').some(e => e[0] === 'Seated side taps'));
+// While filming, members only get exercises with a video where a suitable one exists.
+global.VIDEOS = require('../js/videos.js');
+const gapsLeft = new Set();
+[['none'], ['dumbbells'], ['gym'], ['dumbbells', 'bench'], ['bands'], ['kettlebell']].forEach(equip => [[], ['knees'], ['back'], ['hips'], ['shoulders'], ['wrists'], ['floor'], ['balance'], ['seated'], ['seated', 'shoulders']].forEach(care =>
+  [0, 3, 5].forEach(stage => ['A', 'B'].forEach(w => ['2026-01-05', '2026-02-05'].forEach(today =>
+    L.sessionList({ ...base, len: 35, equip, care, stage, start: '2026-01-01' }, w, today).forEach(e => { if (!VIDEOS[e[0]]) gapsLeft.add(e[0]); }))))));
+assert.deepStrictEqual([...gapsLeft], ['Seated hip hinge']);
+delete global.VIDEOS;
 // Balance support.
 assert.strictEqual(L.pick('lunge', { ...base, care: ['balance'] })[0], 'Supported step-back');
 assert.strictEqual(L.pick('carry', { ...base, care: ['balance'] })[0], 'Suitcase hold by a worktop');

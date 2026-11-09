@@ -11,27 +11,39 @@ const monday = d => iso(addDays(d, -((d.getDay() + 6) % 7)));
    Otherwise, in order: a gentler swap for a flagged area, then the best kit they own, then a floor-free version if they cannot get down to the floor. */
 /* Every four weeks a member moves to a new block. Where the library has more than one suitable exercise
    for a movement, the block decides which one they get, so the plan changes month to month and nothing is lost. */
+/* While the video library is being filmed, members are given exercises that already have a video wherever one is suitable.
+   In the app VIDEOS is loaded; in the tests it is not, so the full library is used. Filming a new clip widens the choice automatically. */
+const filmed = n => typeof VIDEOS === 'undefined' || !!VIDEOS[n];
 function rotate(e, p, block) {
   const alts = ((C.ROTATE || {})[e[0]] || []).filter(a => !(a[3] || []).some(x => (p.care || []).includes(x)));
-  const opts = [e].concat(alts).filter(x => !(p.skip || []).includes(x[0]));
+  let opts = [e].concat(alts).filter(x => !(p.skip || []).includes(x[0]));
+  if (opts.some(x => filmed(x[0]))) opts = opts.filter(x => filmed(x[0]));
   return opts.length ? opts[(block || 0) % opts.length] : e;
 }
-const levelUp = (e, p) => { const up = C.PROGRESS && C.PROGRESS[e[0]]; return up && (p.stage || 0) >= up[0] && !(up[2] || []).some(x => (p.care || []).includes(x)) ? up[1] : e; };
+const levelUp = (e, p) => { const up = C.PROGRESS && C.PROGRESS[e[0]]; return up && (p.stage || 0) >= up[0] && !(up[2] || []).some(x => (p.care || []).includes(x)) && filmed(up[1][0]) ? up[1] : e; };
+/* Last resort while filming: a suitable filmed stand-in for an exercise with no video yet. */
+const fill = e => { const f = (C.FILL || {})[e[0]]; return !filmed(e[0]) && f && filmed(f[0]) ? f : e; };
+
 function blockNo(p, today) { return today && p.start ? Math.floor((weekNo(p.start, today) - 1) / 4) : 0; }
 
 function pick(slot, p, block) {
   const care = p.care || [];
   if (care.includes('seated')) {
     if (slot === 'press' && care.includes('shoulders')) return C.SEATED_SHOULDERS;
-    return levelUp(rotate(C.SEATED[slot], p, block), p);
+    return fill(levelUp(rotate(C.SEATED[slot], p, block), p));
   }
   let e = null;
   for (const a of (C.ALT[slot] || [])) if (care.includes(a[0])) { e = a[1]; break; }
   if (!e && slot === 'push' && p.equip.includes('dumbbells') && p.equip.includes('bench') && !p.equip.includes('gym')) e = C.BENCH_PRESS;
-  if (!e) for (const k of C.ORDER) if ((k === 'none' || p.equip.includes(k)) && C.LIB[slot][k]) { e = C.LIB[slot][k]; break; }
+  if (!e) { // the best kit they own, preferring a version that already has a video
+    const kits = C.ORDER.filter(k => (k === 'none' || p.equip.includes(k)) && C.LIB[slot][k]).map(k => C.LIB[slot][k]);
+    e = kits.find(x => filmed(x[0]) || ((C.ROTATE || {})[x[0]] || []).some(a => filmed(a[0])) || ((C.FILL || {})[x[0]] && filmed(C.FILL[x[0]][0]))) || kits[0];
+  }
   const protect = (C.ALT[slot] || []).some(a => care.includes(a[0]) && a[1][0] === e[0]);
   e = rotate(e, p, block);
   if (!protect) e = levelUp(e, p);
+  if (care.includes('floor') && e[2].includes('f') && C.FLOORFREE[slot]) e = C.FLOORFREE[slot];
+  e = fill(e);
   if (care.includes('floor') && e[2].includes('f') && C.FLOORFREE[slot]) e = C.FLOORFREE[slot];
   return e;
 }

@@ -29,6 +29,18 @@ const CONTENT = {
     'Suitcase carry': [['Weighted march', 'Hand weights by your sides. March on the spot, standing tall.', 'hl', ['balance']]],
     'Seated march': [['Seated side taps', 'Weights on your thighs. Take one leg out to the side and back. Swap.', '', []]]
   },
+  /* Stand-ins while a video is still to be filmed: exercise -> filmed exercise that does a similar job. Used only when the first has no video. */
+  FILL: {
+    'Bag press overhead': ['Overhead press', 'Tins or full bottles at your shoulders. Press straight up.', 'l'],
+    'Suitcase hold': ['Weighted march', 'Hand weights by your sides. March on the spot, standing tall.', 'hl'],
+    'Suitcase hold by a worktop': ['Standing side reach', 'One arm up to the ceiling, eyes on your hand. Slide the other hand down your side and back up.', ''],
+    'Seated suitcase hold': ['Seated weighted side bend', 'Weight in one hand. Lean slowly to that side, come back up tall. Swap sides.', ''],
+    'One-arm row': ['Chair-supported row', 'One hand on a chair. Pull a dumbbell or full bottle to your hip.', 'l'],
+    'Floor press': ['Wall press-up', 'Hands on a wall at chest height. Lean in, press away.', ''],
+    'Dumbbell bench press': ['Wall press-up', 'Hands on a wall at chest height. Lean in, press away.', '']
+  },
+  /* Kit shown in the quiz. Add bands, kettlebell back here once their videos are filmed. */
+  KIT_LIVE: ['none', 'dumbbells', 'bench', 'gym'],
   STAGES: [[2, 8], [2, 10], [2, 12], [3, 8], [3, 10], [3, 12]],
   START: { new: 0, some: 1, regular: 3 },
 
@@ -37,7 +49,7 @@ const CONTENT = {
   KIT: {
     none: ['Just my bodyweight', 'A chair and a stair'],
     bands: ['Resistance bands', 'Loop or tube'],
-    dumbbells: ['Dumbbells', 'Any weight'],
+    dumbbells: ['Hand weights', 'Dumbbells, plates, tins or bottles'],
     kettlebell: ['Kettlebell', 'One is enough'],
     bench: ['Bench or step', 'Sturdy and stable'],
     gym: ['Gym membership', 'Machines and weights']
