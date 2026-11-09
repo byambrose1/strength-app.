@@ -91,7 +91,8 @@ const gapsLeft = new Set();
 [['none'], ['dumbbells'], ['gym'], ['dumbbells', 'bench'], ['bands'], ['kettlebell']].forEach(equip => [[], ['knees'], ['back'], ['hips'], ['shoulders'], ['wrists'], ['floor'], ['balance'], ['seated'], ['seated', 'shoulders']].forEach(care =>
   [0, 3, 5].forEach(stage => ['A', 'B'].forEach(w => ['2026-01-05', '2026-02-05'].forEach(today =>
     L.sessionList({ ...base, len: 35, equip, care, stage, start: '2026-01-01' }, w, today).forEach(e => { if (!VIDEOS[e[0]]) gapsLeft.add(e[0]); }))))));
-assert.deepStrictEqual([...gapsLeft], ['Seated hip hinge']);
+assert.deepStrictEqual([...gapsLeft], []);
+assert.deepStrictEqual(L.sessionList({ ...base, care: ['seated'] }, 'B').map(e => e[0]), ['Seated march', 'Seated overhead press', 'Seated bicep curl', 'Seated reverse fly']);
 delete global.VIDEOS;
 // Balance support.
 assert.strictEqual(L.pick('lunge', { ...base, care: ['balance'] })[0], 'Supported step-back');
