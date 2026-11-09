@@ -1,6 +1,6 @@
 # Filming list
 
-Generated from the app, so every title here matches the app exactly. 61 exercise clips, plus 7 routines, 8 lessons, 4 coach notes, a test demo and a short film for the home page.
+Generated from the app, so every title here matches the app exactly. 62 exercise clips, plus 7 routines, 8 lessons, 4 coach notes, a test demo and a short film for the home page.
 
 ## How to film
 
@@ -21,7 +21,7 @@ Generated from the app, so every title here matches the app exactly. 61 exercise
 
 Unlisted means anyone with the link can watch, but it does not appear in search. YouTube labels short upright clips as Shorts; that is fine, they still play in the app.
 
-## Day one: film these first (33 clips)
+## Day one: film these first (34 clips)
 
 These cover every member with no equipment, including the floor-free and supported versions. The app is usable with only these.
 
@@ -44,6 +44,7 @@ These cover every member with no equipment, including the floor-free and support
 | Seated weighted bicycle | Sit tall towards the front of a sturdy chair, feet flat. Hold one dumbbell or a full water bottle against your chest with both hands. Lift your right knee and turn your chest towards it. Lower the foot and come back to the middle. Lift your left knee and turn the other way. That is one rep each side. | 3 slow reps |
 | Weighted seated march | Sit tall towards the front of a sturdy chair, feet flat. Rest a dumbbell, or a full water bottle, on top of each thigh just above the knee and hold it in place. Lift one knee, carrying the weight up with it. Lower it with control, then lift the other knee. Keep sitting tall and do not lean back. | 3 slow reps |
 | Single-arm seated row | Sit tall at the front of the chair. Hold one heavier bottle or weight, such as a full 2-litre bottle, in one hand. Rest your other hand on your thigh to brace. Reach the weight forward, arm straight. Pull your elbow back past your ribs and squeeze your shoulder blade. Reach forward again slowly. Do all your reps, then swap arms. | 3 slow reps |
+| Split squat with chop | Stand with one foot a big step in front of the other, back heel lifted. Clasp your hands together up by the shoulder on the back-leg side. Bend both knees and lower your back knee towards the floor. As you go down, chop your hands diagonally across your body to the outside of your front hip. Push up through your front foot and bring your hands back up. Do all your reps, then swap sides. | 3 slow reps |
 | Seated side taps | Sit tall towards the front of a sturdy chair, feet together. Rest a dumbbell, or a full water bottle, on top of each thigh and hold it in place. Lift one foot slightly and take that leg out to the side, then tap the foot down. Bring it back in to the middle. Repeat with the other leg. Keep sitting tall the whole time. | 3 slow reps |
 
 ### Gentler, floor-free and supported versions
@@ -106,7 +107,7 @@ Film every one of these sitting down the whole time, on a sturdy chair with no a
 
 | Title (exact) | What to show | Film |
 |---|---|---|
-| Goblet squat | Stand with feet a little wider than your hips. Hold one dumbbell upright against your chest. Sit your hips back and down as if to a chair behind you. Go as low as feels comfortable, chest up. Push the floor away and stand tall. | 3 slow reps |
+| Goblet squat | Stand with feet a little wider than your hips. Hold one weight close to your chest, hands near your shoulders. A dumbbell, kettlebell, weight plate or full bag all work. Sit your hips back and down as if to a chair behind you. Go as low as feels comfortable, chest up. Push the floor away and stand tall. | 3 slow reps |
 | Floor press | Lie on your back, knees bent, feet flat. Hold a dumbbell in each hand above your chest. Lower the weights until your elbows touch the floor softly. Pause for a moment. Press them back up above your chest. | 3 slow reps |
 | One-arm row | Put one hand on a chair seat, feet apart, back flat like a table. Dumbbell in the other hand. Let the weight hang straight down. Pull it up to your hip, elbow brushing your ribs. Lower it slowly. Do all your reps, then swap sides. | 3 slow reps |
 | Romanian deadlift | Stand tall, feet hip-width, a dumbbell in each hand in front of your thighs. Soften your knees. Push your hips back and slide the weights down your thighs to your knees. Back stays long. Squeeze your bottom and stand tall. | 3 slow reps |
