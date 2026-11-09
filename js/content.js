@@ -11,7 +11,7 @@ const CONTENT = {
   PROGRESS: {
     'Glute bridge': [3, ['Single-leg glute bridge', 'One foot down, the other knee lifted. Lift, pause, lower.', 'f']],
     'Seated leg extension': [3, ['Seated double leg extension', 'Hold the seat. Straighten both legs together, squeeze, lower slowly.', '']],
-    'Overhead press': [3, ['Push press', 'Weights at your shoulders. Small dip at the knees, then drive the weights up overhead.', 'l'], ['knees']],
+    'Overhead press': [3, ['Push press', 'Weights at your shoulders. Small dip at the knees, then drive the weights up overhead.', 'l'], ['knees', 'balance']],
     'Wall press-up': [3, ['Incline press-up', 'Hands on a worktop. Body in one straight line.', '']],
     'Seated suitcase hold': [3, ['Seated weighted side bend', 'Weight in one hand. Lean slowly to that side, come back up tall. Swap sides.', '']],
     'Seated knee lift': [3, ['Seated weighted bicycle', 'Weight held at your chest. Lift one knee and turn towards it. Swap sides.', '']],
@@ -22,10 +22,10 @@ const CONTENT = {
      exercise -> list of [alternative, cue, flags, areas it is not suitable for]. Adding a new filmed exercise here never removes another. */
   ROTATE: {
     'Step-up': [['Split squat with chop', 'Split stance. Lower the back knee as your hands chop across to the front hip. Swap sides.', '', ['knees', 'hips', 'balance']]],
-    'Suitcase hold': [['Standing side reach', 'One arm up to the ceiling, eyes on your hand. Slide the other hand down your side and back up.', '', ['shoulders']]],
-    'One-arm row': [['Bent-over row', 'Lean forward from your hips, back flat. Pull both weights to your ribs, lower slowly.', 'l', ['back']]],
+    'Suitcase hold': [['Standing side reach', 'One arm up to the ceiling, eyes on your hand. Slide the other hand down your side and back up.', '', ['shoulders', 'balance']]],
+    'One-arm row': [['Bent-over row', 'Lean forward from your hips, back flat. Pull both weights to your ribs, lower slowly.', 'l', ['back', 'balance']]],
     'Split squat': [['Reverse lunge', 'Weights by your sides. Step one foot back, lower, push back up to standing. Swap legs.', 'l', ['knees', 'hips', 'balance']]],
-    'Overhead press': [['Lateral raise', 'Weights by your sides. Lift your arms out to shoulder height, no higher. Lower slowly.', 'l', ['shoulders']]],
+    'Overhead press': [['Lateral raise', 'Weights by your sides. Lift your arms out to shoulder height, no higher. Lower slowly.', 'l', ['shoulders', 'balance']]],
     'Suitcase carry': [['Weighted march', 'Hand weights by your sides. March on the spot, standing tall.', 'hl', ['balance']]],
     'Seated march': [['Seated side taps', 'Weights on your thighs. Take one leg out to the side and back. Swap.', '', []]]
   },
@@ -60,7 +60,7 @@ const CONTENT = {
     squat: { gym: ['Leg press', 'Feet hip width. Lower until knees reach 90 degrees.', 'l'], dumbbells: ['Goblet squat', 'One dumbbell at your chest. Sit between your hips.', 'l'], kettlebell: ['Kettlebell goblet squat', 'Hold the bell by the horns at your chest.', 'l'], bands: ['Band squat', 'Stand on the band, handles at shoulders.', ''], none: ['Sit to stand', 'From a chair, no hands. Lower for 3 seconds.', ''] },
     push: { gym: ['Chest press machine', 'Handles level with mid chest. Press without locking out.', 'l'], dumbbells: ['Floor press', 'Lie on the floor. Elbows touch down softly.', 'lf'], kettlebell: ['Kettlebell floor press', 'One arm at a time. Wrist straight.', 'lf'], bands: ['Band chest press', 'Band anchored behind you at chest height.', ''], none: ['Wall press-up', 'Hands on a wall at chest height. Lean in, press away.', ''] },
     pull: { gym: ['Seated row machine', 'Sit tall. Pull elbows past your ribs.', 'l'], dumbbells: ['One-arm row', 'Hand on a chair. Pull to your hip.', 'l'], kettlebell: ['Kettlebell row', 'Hand on a chair. Pull the bell to your hip.', 'l'], bands: ['Band row', 'Anchor at waist height. Elbows brush your ribs.', ''], none: ['Chair-supported row', 'One hand on a chair. Pull a full water bottle or filled bag to your hip.', ''] },
-    core: { bands: ['Pallof press', 'Band to your side. Press out and resist the twist.', 'h'], none: ['Dead bug', 'Lower back stays on the floor. Opposite arm and leg.', 'hf'] },
+    core: { bands: ['Pallof press', 'Band to your side. Press out and resist the twist.', 'h'], none: ['Dead bug', 'Lower back stays on the floor. Opposite arm and leg.', 'f'] },
     hinge: { gym: ['Dumbbell Romanian deadlift', 'Soft knees. Weights slide down your thighs.', 'l'], dumbbells: ['Romanian deadlift', 'Soft knees. Dumbbells slide down your thighs.', 'l'], kettlebell: ['Kettlebell deadlift', 'Bell between your feet. Push the floor away.', 'l'], bands: ['Band deadlift', 'Stand on the band. Hinge at the hips, back long.', ''], none: ['Glute bridge', 'Pause for 2 seconds at the top.', 'f'] },
     lunge: { gym: ['Split squat', 'Hold a rail if you need balance.', 'l'], dumbbells: ['Split squat', 'Hold a chair if you need balance.', 'l'], kettlebell: ['Kettlebell step-up', 'Bell at your chest. Push through the whole foot.', 'l'], bands: ['Banded side step', 'Band above knees. Small steps, hips level.', ''], none: ['Step-up', 'Bottom stair. Push through the whole foot.', ''] },
     press: { gym: ['Shoulder press machine', 'Press up without shrugging.', 'l'], dumbbells: ['Overhead press', 'Seated if standing feels wobbly.', 'l'], kettlebell: ['Kettlebell press', 'One arm. Ribs down, squeeze your glutes.', 'l'], bands: ['Band overhead press', 'Stand on the band. Press straight up.', ''], none: ['Bag press overhead', 'Filled bag or two water bottles. Ribs down.', ''] },
@@ -70,12 +70,13 @@ const CONTENT = {
 
   /* Gentler swaps when a member flags something to look after: movement -> list of [area, exercise]. First match wins. */
   ALT: {
-    squat: [['knees', ['Sit to stand, high seat', 'Use a higher chair or add a cushion. Slow and steady.', '']], ['hips', ['Sit to stand, high seat', 'Use a higher chair or add a cushion. Slow and steady.', '']]],
+    squat: [['knees', ['Sit to stand, high seat', 'Use a higher chair or add a cushion. Slow and steady.', '']], ['hips', ['Sit to stand, high seat', 'Use a higher chair or add a cushion. Slow and steady.', '']], ['balance', ['Sit to stand', 'Sit on a sturdy chair, arms crossed. Stand up, sit down slowly.', '']]],
     push: [['wrists', ['Wall press-up', 'Hands on a wall at chest height. Lean in, press away.', '']]],
     lunge: [['knees', ['Glute bridge march', 'Hips up, lift one foot at a time.', 'f']], ['balance', ['Supported step-back', 'Hold a chair. Step one foot back, bend a little, return.', '']], ['hips', ['Supported step-back', 'Hold a chair. Step one foot back, bend a little, return.', '']]],
-    hinge: [['back', ['Glute bridge', 'Pause for 2 seconds at the top.', 'f']], ['hips', ['Glute bridge', 'Pause for 2 seconds at the top.', 'f']]],
-    press: [['shoulders', ['Wall slide', 'Back to the wall. Slide arms up as far as is comfortable.', '']]],
-    carry: [['balance', ['Suitcase hold by a worktop', 'One hand on the worktop, weight in the other. Stand tall. Swap sides.', 'h']]]
+    hinge: [['balance', ['Glute bridge', 'Pause for 2 seconds at the top.', 'f']], ['back', ['Glute bridge', 'Pause for 2 seconds at the top.', 'f']], ['hips', ['Glute bridge', 'Pause for 2 seconds at the top.', 'f']]],
+    press: [['shoulders', ['Wall slide', 'Back to the wall. Slide arms up as far as is comfortable.', '']], ['balance', ['Seated overhead press', 'Press water bottles or light weights straight up.', 'l']]],
+    carry: [['balance', ['Seated suitcase hold', 'Weight in one hand by your side. Sit tall. Swap sides.', 'hl']]],
+    pull: [['balance', ['Chair-supported row', 'One hand on a chair. Pull a full water bottle or filled bag to your hip.', 'l']]]
   },
   /* For members who cannot get down to the floor: any exercise flagged f is replaced with one of these. */
   FLOORFREE: {
