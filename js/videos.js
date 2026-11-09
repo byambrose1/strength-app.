@@ -15,6 +15,7 @@ const VIDEOS = {
   'Sit to stand, high seat': 'https://youtube.com/shorts/XD_qLTg3Xas',
   'Seated leg extension': 'https://youtube.com/shorts/7abOcwJFtkc',
   'Single-arm seated row': 'https://youtube.com/shorts/cpvD4Dk48UE',
+  'Seated overhead press': 'https://youtube.com/shorts/tgaAfNVrSXY',
   'Seated reverse fly': 'https://youtube.com/shorts/FgAWfqFk7S0',
   'Weighted seated march': 'https://youtube.com/shorts/JMo8rpI6CQY',
   'Seated weighted bicycle': 'https://youtube.com/shorts/sW8L5sahY5g',
