@@ -7,10 +7,11 @@ const CONTENT = {
 
   /* Six levels: [sets, reps]. Timed holds use reps x 3 seconds. */
   /* Harder versions for members training with no kit, who cannot add weight.
-     [first stage it appears at (0 = level 1), exercise]. Not used when the easier one was chosen to protect an area. */
+     [first stage it appears at (0 = level 1), exercise, areas it is not suitable for]. Not used when the easier one was chosen to protect an area. */
   PROGRESS: {
     'Glute bridge': [3, ['Single-leg glute bridge', 'One foot down, the other knee lifted. Lift, pause, lower.', 'f']],
     'Seated leg extension': [3, ['Seated double leg extension', 'Hold the seat. Straighten both legs together, squeeze, lower slowly.', '']],
+    'Overhead press': [3, ['Push press', 'Weights at your shoulders. Small dip at the knees, then drive the weights up overhead.', 'l'], ['knees']],
     'Wall press-up': [3, ['Incline press-up', 'Hands on a worktop. Body in one straight line.', '']],
     'Seated suitcase hold': [3, ['Seated weighted side bend', 'Weight in one hand. Lean slowly to that side, come back up tall. Swap sides.', '']],
     'Seated knee lift': [3, ['Seated weighted bicycle', 'Weight held at your chest. Lift one knee and turn towards it. Swap sides.', '']],

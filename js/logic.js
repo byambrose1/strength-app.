@@ -16,7 +16,7 @@ function rotate(e, p, block) {
   const opts = [e].concat(alts).filter(x => !(p.skip || []).includes(x[0]));
   return opts.length ? opts[(block || 0) % opts.length] : e;
 }
-const levelUp = (e, p) => { const up = C.PROGRESS && C.PROGRESS[e[0]]; return up && (p.stage || 0) >= up[0] ? up[1] : e; };
+const levelUp = (e, p) => { const up = C.PROGRESS && C.PROGRESS[e[0]]; return up && (p.stage || 0) >= up[0] && !(up[2] || []).some(x => (p.care || []).includes(x)) ? up[1] : e; };
 function blockNo(p, today) { return today && p.start ? Math.floor((weekNo(p.start, today) - 1) / 4) : 0; }
 
 function pick(slot, p, block) {

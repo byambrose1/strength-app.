@@ -1,6 +1,6 @@
 # Filming list
 
-Generated from the app, so every title here matches the app exactly. 67 exercise clips, plus 7 routines, 8 lessons, 4 coach notes, a test demo and a short film for the home page.
+Generated from the app, so every title here matches the app exactly. 68 exercise clips, plus 7 routines, 8 lessons, 4 coach notes, a test demo and a short film for the home page.
 
 ## How to film
 
@@ -21,7 +21,7 @@ Generated from the app, so every title here matches the app exactly. 67 exercise
 
 Unlisted means anyone with the link can watch, but it does not appear in search. YouTube labels short upright clips as Shorts; that is fine, they still play in the app.
 
-## Day one: film these first (39 clips)
+## Day one: film these first (40 clips)
 
 These cover every member with no equipment, including the floor-free and supported versions. The app is usable with only these.
 
@@ -39,6 +39,7 @@ These cover every member with no equipment, including the floor-free and support
 | Suitcase hold | Stand tall beside something steady. Hold a heavy bag in one hand, like a suitcase. Stand as if the bag were not there. Do not lean. Hold for the time. Put it down and swap hands. | Hold 10 sec |
 | Single-leg glute bridge | Lie on your back, knees bent, feet flat. Lift one foot and bring that knee up over your hip, or straighten the leg if that feels better. Push through the heel that is still on the floor. Lift your hips until your body is a straight line from knee to shoulder, keeping your hips level. Pause for two seconds, lower slowly. Do all your reps, then swap legs. | 3 slow reps |
 | Seated double leg extension | Sit tall on a sturdy chair and hold the sides of the seat. Sit back a little so your back is supported, feet flat. Straighten both knees together until your legs are out in front of you. Squeeze the tops of your thighs and hold for two seconds. Lower both feet slowly back to the floor. | 3 slow reps |
+| Push press | Stand tall, feet hip-width apart. Hold a hand weight in each hand at your shoulders, palms facing in. Bend your knees slightly, a small dip, keeping your chest up. Straighten your legs quickly and use that drive to press the weights straight up overhead. Lower the weights back to your shoulders with control before the next rep. | 3 slow reps |
 | Incline press-up | Place your hands on a kitchen worktop, a little wider than your shoulders. Walk your feet back until your body is a straight line. Bend your elbows and lower your chest towards the worktop. Keep your body straight, no sagging hips. Press yourself back up. | 3 slow reps |
 | Seated weighted side bend | Sit tall towards the front of a sturdy chair, feet flat and wide. Hold a dumbbell or full water bottle in one hand, arm hanging by your side. Rest your other hand on your thigh. Lean slowly sideways towards the weight, sliding it down beside the chair leg. Use the side of your waist to pull yourself back up to sitting tall. Do all your reps, then swap the weight to the other hand. | 3 slow reps |
 | Seated weighted bicycle | Sit tall towards the front of a sturdy chair, feet flat. Hold one dumbbell or a full water bottle against your chest with both hands. Lift your right knee and turn your chest towards it. Lower the foot and come back to the middle. Lift your left knee and turn the other way. That is one rep each side. | 3 slow reps |

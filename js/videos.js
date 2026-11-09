@@ -37,6 +37,7 @@ const VIDEOS = {
   'Reverse lunge': 'https://youtube.com/shorts/LtoEbbkynQo',
   'Lateral raise': 'https://youtube.com/shorts/a0jA9dUQFko',
   'Weighted march': 'https://youtube.com/shorts/at_GjxHAkUE',
+  'Push press': 'https://youtube.com/shorts/HDGQW-Wx5do',
   'Overhead press': 'https://youtube.com/shorts/ZVlMA-BJ-q8',
   'Seated arm raise': 'https://youtube.com/shorts/LtN_K734ves',
   'Seated bicep curl': 'https://youtube.com/shorts/bhMDCSCqTZo',
