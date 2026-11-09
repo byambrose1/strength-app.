@@ -44,6 +44,10 @@ assert.strictEqual(L.sessionList({ ...base, len: 35 }, 'B').slice(-1)[0][0], 'De
 assert.strictEqual(L.dayPlan({ ...base, med: 'daily', jab: 1, care: ['seated'] }, 2).title, 'Move day');
 // Wrists and hips.
 assert.strictEqual(L.pick('push', { ...base, care: ['wrists'] })[0], 'Wall press-up');
+// No-kit push: wall press-up first, worktop press-up from level 4, but never for sore wrists.
+assert.strictEqual(L.pick('push', { ...base, equip: ['none'] })[0], 'Wall press-up');
+assert.strictEqual(L.pick('push', { ...base, equip: ['none'], stage: 3 })[0], 'Incline press-up');
+assert.strictEqual(L.pick('push', { ...base, equip: ['none'], care: ['wrists'], stage: 5 })[0], 'Wall press-up');
 assert.strictEqual(L.pick('squat', { ...base, care: ['hips'] })[0], 'Sit to stand, high seat');
 assert.strictEqual(L.pick('lunge', { ...base, care: ['hips'] })[0], 'Supported step-back');
 assert.strictEqual(L.pick('hinge', { ...base, care: ['hips', 'floor'] })[0], 'Chair hip hinge');

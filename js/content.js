@@ -11,6 +11,7 @@ const CONTENT = {
   PROGRESS: {
     'Glute bridge': [3, ['Single-leg glute bridge', 'One foot down, the other knee lifted. Lift, pause, lower.', 'f']],
     'Seated leg extension': [3, ['Seated double leg extension', 'Hold the seat. Straighten both legs together, squeeze, lower slowly.', '']],
+    'Wall press-up': [3, ['Incline press-up', 'Hands on a worktop. Body in one straight line.', '']],
     'Seated suitcase hold': [3, ['Seated weighted side bend', 'Weight in one hand. Lean slowly to that side, come back up tall. Swap sides.', '']],
     'Seated knee lift': [3, ['Seated weighted bicycle', 'Weight held at your chest. Lift one knee and turn towards it. Swap sides.', '']],
     'Seated march': [3, ['Weighted seated march', 'A weight resting on each thigh. Lift and lower each knee in turn.', '']],
@@ -33,7 +34,7 @@ const CONTENT = {
   /* Exercise library: movement -> kit -> [name, coaching cue, flags]. Flags: h = timed hold, l = weight can be logged. */
   LIB: {
     squat: { gym: ['Leg press', 'Feet hip width. Lower until knees reach 90 degrees.', 'l'], dumbbells: ['Goblet squat', 'One dumbbell at your chest. Sit between your hips.', 'l'], kettlebell: ['Kettlebell goblet squat', 'Hold the bell by the horns at your chest.', 'l'], bands: ['Band squat', 'Stand on the band, handles at shoulders.', ''], none: ['Sit to stand', 'From a chair, no hands. Lower for 3 seconds.', ''] },
-    push: { gym: ['Chest press machine', 'Handles level with mid chest. Press without locking out.', 'l'], dumbbells: ['Floor press', 'Lie on the floor. Elbows touch down softly.', 'lf'], kettlebell: ['Kettlebell floor press', 'One arm at a time. Wrist straight.', 'lf'], bands: ['Band chest press', 'Band anchored behind you at chest height.', ''], none: ['Incline press-up', 'Hands on a worktop. Body in one straight line.', ''] },
+    push: { gym: ['Chest press machine', 'Handles level with mid chest. Press without locking out.', 'l'], dumbbells: ['Floor press', 'Lie on the floor. Elbows touch down softly.', 'lf'], kettlebell: ['Kettlebell floor press', 'One arm at a time. Wrist straight.', 'lf'], bands: ['Band chest press', 'Band anchored behind you at chest height.', ''], none: ['Wall press-up', 'Hands on a wall at chest height. Lean in, press away.', ''] },
     pull: { gym: ['Seated row machine', 'Sit tall. Pull elbows past your ribs.', 'l'], dumbbells: ['One-arm row', 'Hand on a chair. Pull to your hip.', 'l'], kettlebell: ['Kettlebell row', 'Hand on a chair. Pull the bell to your hip.', 'l'], bands: ['Band row', 'Anchor at waist height. Elbows brush your ribs.', ''], none: ['Chair-supported row', 'One hand on a chair. Pull a full water bottle or filled bag to your hip.', ''] },
     core: { bands: ['Pallof press', 'Band to your side. Press out and resist the twist.', 'h'], none: ['Dead bug', 'Lower back stays on the floor. Opposite arm and leg.', 'hf'] },
     hinge: { gym: ['Dumbbell Romanian deadlift', 'Soft knees. Weights slide down your thighs.', 'l'], dumbbells: ['Romanian deadlift', 'Soft knees. Dumbbells slide down your thighs.', 'l'], kettlebell: ['Kettlebell deadlift', 'Bell between your feet. Push the floor away.', 'l'], bands: ['Band deadlift', 'Stand on the band. Hinge at the hips, back long.', ''], none: ['Glute bridge', 'Pause for 2 seconds at the top.', 'f'] },
