@@ -80,7 +80,7 @@ const CONTENT = {
     arms: ['Seated bicep curl', 'Curl a bottle or light weight to your shoulder, lower slowly.', 'l'],
     fly: ['Seated reverse fly', 'Lean forward, arms hanging. Open them out to the sides, squeeze, lower.', 'l']
   },
-  SEATED_SHOULDERS: ['Seated arm raise', 'Lift both arms forward to shoulder height, no higher.', 'l'],
+  SEATED_SHOULDERS: ['Seated arm raise', 'One arm at a time, lift forward to shoulder height, no higher.', 'l'],
 
   /* Shown once, before a member's very first session. */
   READY: ['A sturdy chair that will not slide. Put it against a wall if you can.', 'Clear floor space with no loose rugs.', 'Flat shoes or bare feet. No socks on a hard floor.', 'Water within reach.', 'Your phone within reach.', 'You have eaten in the last couple of hours.'],
