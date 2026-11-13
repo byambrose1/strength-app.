@@ -103,9 +103,10 @@ function phoneMock() {
 function viewWelcome() {
   const mine = S.profile && !S.profile.example;
   const cta = mine ? `<button class="btn" data-go="today">Open my plan</button>` : `<button class="btn" data-act="start">Start my plan</button>`;
-  const join = C.LAUNCH.joinUrl ? `<a class="btn ghost" href="${C.LAUNCH.joinUrl}" target="_blank" rel="noopener">Join now</a>` : '';
-  const faqs = [['I have never done strength training. Is this for me?', 'Yes. It is made for beginners. Every exercise is shown on video and explained step by step, and you can make any of them easier with one tap.'], ['Do I need to be on weight-loss medication?', 'No. Strenda is for anyone losing weight. If you are on a weekly injection or a daily dose, your plan works around it. We never ask for the name or the dose.'], ['Do I need a gym or equipment?', 'No. A sturdy chair is enough. If you cannot get down on the floor, tell us and everything will be standing or seated.'], ['What does it cost?', 'Setting up your plan is free. You will always see the price before you pay anything.']];
+  const join = C.LAUNCH.joinUrl ? `<a class="btn ghost" href="${C.LAUNCH.joinUrl}" target="_blank" rel="noopener">Join now</a>` : C.LAUNCH.waitlistUrl ? `<a class="btn ghost" href="${C.LAUNCH.waitlistUrl}" target="_blank" rel="noopener">Join the founding 20</a>` : '';
+  const faqs = [['I have never done strength training. Is this for me?', 'Yes. It is made for beginners. Every exercise is shown on video and explained step by step, and you can make any of them easier with one tap.'], ['Do I need to be on weight-loss medication?', 'No. Strenda is for anyone losing weight. If you are on a weekly injection or a daily dose, your plan works around it. We never ask for the name or the dose.'], ['Do I need a gym or equipment?', 'No. A sturdy chair is enough. If you cannot get down on the floor, tell us and everything will be standing or seated.'], ['What does it cost?', 'Setting up your plan is free. Founding members pay £19 a month, then it is £29 a month. You will always see the price before you pay, and you can cancel any time.'], ['What if it does not work for me?', 'Follow your plan for 12 weeks. If your strength score has not held or gone up, we refund your last three months. That is our strength promise.']];
   return `<section class="lhero"><div class="lcopy"><h1>Lose the weight.<br>Keep your strength.</h1>
+    <p class="lead"><strong>A plan that moves with you. A coach who is there when you need them.</strong></p>
     <p class="lead">Strenda is the strength and nutrition programme for anyone losing weight, whether through medication, a strict diet, surgery or your own way. Short workouts that move you up as you get stronger, simple food guidance, and a real coach in your corner.</p>
     <div class="row">${cta}${join}</div><p class="small muted">Two minutes to set up. No card needed.</p></div>${hasVideo('See how Strenda works') ? video('See how Strenda works', '') : phoneMock()}</section>
 
@@ -113,6 +114,11 @@ function viewWelcome() {
     <div><h3>Move</h3><p>Two or three short strength sessions a week. Every exercise is shown on video and explained step by step. No gym needed.</p></div>
     <div><h3>Eat</h3><p>Simple guidance on protein, fluids and what to eat when you are not hungry. No calorie counting.</p></div>
     <div><h3>Feel better</h3><p>Tell the app how you feel each day. If you are sick, tired or sore, it gives you something gentler.</p></div></div></section>
+
+  <section class="lsec"><h2>Other apps give you workouts. Strenda gives you a programme.</h2><div class="plain">
+    <div><h3>It starts where you are</h3><p>Your plan is built from your answers: your body, your week, your kit, and anything you need us to look after.</p></div>
+    <div><h3>It moves you up</h3><p>Every week it adjusts to how sessions felt. Every four weeks you test your strength and move on to a new block.</p></div>
+    <div><h3>A real coach steps in</h3><p>The app does the routine work. A qualified coach reviews your progress, reads your messages, and changes your plan by hand when life or an injury gets in the way.</p></div></div></section>
 
   <section class="who"><h2>Made by the people your GP would send you to</h2><p>When a doctor wants a patient to exercise safely with a health condition, they refer them to an exercise referral specialist. That is who built Strenda, and every Strenda coach is one. We work every day with people living with obesity, type 2 diabetes, high blood pressure and sore joints.</p></section>
 
@@ -183,7 +189,7 @@ function viewPaywall() {
   const L = C.LAUNCH, p = S.profile;
   return `<div class="quiz"><div class="say"><span class="mark"></span><p>${p ? esc(p.name) + ', your plan is ready and waiting.' : 'Your plan is waiting.'} One step left.</p></div>
     <section class="factcard"><p class="eyebrow">Join Strenda</p><h2>${L.price}</h2><p>${L.priceNote}</p></section>
-    <div class="card"><ul class="ticks"><li><span>Your full plan, adjusting every week</span></li><li><span>Every exercise on video, step by step</span></li><li><span>Nutrition guidance and help on rough days</span></li><li><span>A qualified coach to ask</span></li></ul>
+    <div class="card"><ul class="ticks"><li><span>A plan that adjusts every week and moves you up every four</span></li><li><span>Every exercise on video, step by step</span></li><li><span>Food guidance and help on rough days</span></li><li><span>A qualified coach who reviews your progress and steps in when you need it</span></li><li><span>The strength promise: stronger in 12 weeks, or your last three months back</span></li></ul>
       <a class="btn" href="${L.joinUrl}" target="_blank" rel="noopener">Join now</a><p class="small muted">Secure payment by Stripe. You come straight back here afterwards.</p></div>
     <div class="card"><label for="code" class="small"><strong>Already joined? Enter your access code</strong></label><input type="text" id="code" autocomplete="off" autocapitalize="characters" maxlength="24"><button class="btn ghost" data-act="unlock">Unlock</button>${msg ? `<p role="status" class="small"><strong>${msg}</strong></p>` : ''}</div>
     <button class="link" data-act="home">Not now</button></div>`;
@@ -327,11 +333,21 @@ function viewRoutine() {
     <button class="link" data-act="endroutine">Stop</button>`;
 }
 
+/* Where the member is on the journey. There is always a next stage, so finishing the weight loss is not the end. */
+function stageOf(p) { if (p.goalReached && (parseDay(TODAY) - parseDay(p.goalReached)) / 864e5 >= 84) return 'life'; if (p.med === 'none') return 'coming'; if (p.goalReached) return 'keeping'; return 'losing'; }
+function journeyCard(p) {
+  if (p.example) return '';
+  const now = stageOf(p), steps = C.JOURNEY.filter(j => j[0] !== 'coming' || p.med === 'none' || p.med === 'weekly' || p.med === 'daily');
+  return `<div class="card"><h3>Your journey</h3><div class="list">${steps.map(j => `<div class="item" style="grid-template-columns:1fr auto"><span><strong>${j[1]}</strong><br><span class="small muted">${j[2]}</span></span>${j[0] === now ? '<span class="tag">You are here</span>' : ''}</div>`).join('')}</div>
+    ${p.goalReached ? `<p class="small muted">Goal reached on ${fmtDate(p.goalReached)}. Well done. Your plan now keeps building strength. <button class="link inline" data-act="goalundo">Not yet, undo</button></p>` : `<button class="btn ghost" data-act="goal">I have reached my goal weight</button>`}</div>`;
+}
+
 function viewPlan() {
   const p = S.profile, w = wk(), ph = phase(w);
   const title = p.med === 'weekly' ? 'Built around ' + C.FULL[p.jab] : p.med === 'daily' || p.med === 'never' ? 'Spread across your week' : 'Your keep-it-off plan';
   let h = exNote() + `<div><p class="eyebrow muted">My plan</p><h2>${title}</h2><p class="muted">It does not stop at 12 weeks. The first three phases build you up, then it becomes how you train for good.</p></div>
   <div class="phases">${[['Foundations', 'Weeks 1 to 4'], ['Build', 'Weeks 5 to 8'], ['Strong', 'Weeks 9 to 12'], ['For life', 'Week 13 on']].map(x => `<div class="phase${ph === x[0] ? ' now' : ''}"><b>${x[0]}</b><span class="small">${x[1]}</span></div>`).join('')}</div>
+  ${journeyCard(p)}
   <div class="card"><h3>Your week</h3><div class="list">`;
   for (let i = 0; i < 7; i++) { const dow = (p.jab + i) % 7, pl = dayPlan(p, dow);
     h += `<div class="item"><strong>${C.DAYS[dow]}</strong><div><span class="tag ${pl.type}">${pl.title}</span><p class="small muted">${pl.type === 'strength' ? sessionList(p, pl.session).map(e => e[0]).join(', ') : pl.text}</p></div></div>`; }
@@ -480,18 +496,20 @@ function viewProgress() {
 
 function viewCircle() {
   const p = S.profile, month = parseDay(p.start).toLocaleDateString('en-GB', { month: 'long' });
-  let h = exNote() + `<div><p class="eyebrow muted">Circle</p><h2>You are not doing this on your own</h2></div>
-  <div class="card"><h3>Your coach</h3><p class="small muted">A qualified coach reads every message. You get a reply from a person within one working day.</p>
+  let h = exNote() + `<div><p class="eyebrow muted">Community</p><h2>You are not doing this on your own</h2></div>
+  <div class="card"><h3>Your coach</h3><p class="small muted">A qualified coach reads every message. A person replies, usually within two working days.</p>
     <label for="coachmsg" class="small"><strong>Ask anything about your training</strong></label><textarea id="coachmsg" rows="3" maxlength="600" placeholder="My knee aches on the step-ups. What should I do instead?"></textarea>
     <button class="btn" data-act="sendmsg">Send to my coach</button>
     ${S.msgs.length ? `<div class="list">${S.msgs.slice(-3).reverse().map(m => `<div class="item" style="grid-template-columns:1fr"><span class="small">${esc(m.t)}</span></div>`).join('')}</div>` : ''}
     ${C.LAUNCH.coachEmail ? `<p class="small muted">Your email app opens with your message ready. Press send and it reaches your coach. Or write to <strong>${C.LAUNCH.coachEmail}</strong>.</p>` : proto('Messages are saved on this device only. Add a coach email in js/content.js to send them by email.')}</div>
-  <div class="card"><h3>The ${month} circle</h3><p class="small muted">Up to 12 members who started the same month as you. Small enough that people notice when you go quiet.</p>
-    <div class="resp info"><strong>This week's question</strong><p class="small">${C.CIRCLE_PROMPT}</p></div>
+  <div class="card"><h3>Your local group</h3><p class="small muted">Members near you, in a private group run by a Strenda coach. Only paying members can join, and we only ever show your region, never where you live.</p>
+    <label for="region" class="small"><strong>Your region</strong></label><select id="region" data-act="region"><option value="">Choose your region</option>${C.REGIONS.map(r => `<option${p.region === r ? ' selected' : ''}>${r}</option>`).join('')}</select>
+    ${p.region ? (C.LAUNCH.groups[p.region] ? `<a class="btn" href="${C.LAUNCH.groups[p.region]}" target="_blank" rel="noopener">Join the ${p.region} group</a>` : `<p class="small">The ${p.region} group opens soon. We will let you know.</p>`) : ''}
+    <details><summary class="small"><strong>Group rules</strong></summary><ul class="small">${C.GROUP_RULES.map(r => `<li>${r}</li>`).join('')}</ul></details></div>
+  <div class="card"><h3>This week's question</h3><p class="small">${C.CIRCLE_PROMPT}</p>
     <label for="circlepost" class="small"><strong>Your answer</strong></label><textarea id="circlepost" rows="2" maxlength="300" placeholder="Getting up off the sofa without using my hands."></textarea>
-    <button class="btn ghost" data-act="postwin">Share with my circle</button>
-    ${proto('No other members are shown because none exist yet. Your answer is saved to your wins.')}</div>
-  <div class="card"><h3>Live session</h3><p class="small muted">A coached group class on video every week. Cameras optional. The recording stays up for 7 days.</p>${proto('The booking link goes here once live sessions launch.')}</div>
+    <button class="btn ghost" data-act="postwin">Save to my wins</button></div>
+  <div class="card"><h3>Monthly live Q&amp;A</h3><p class="small muted">Once a month, a Strenda coach answers members' questions live on video. Cameras optional, and the recording is shared afterwards.</p>${proto('The date and link go here once the first session is booked.')}</div>
   <div class="card"><h3>Bring a friend</h3><p class="small muted">People who train with someone they know stick at it. Share where you have got to.</p><textarea id="sharetext" rows="4" readonly>${esc(shareText())}</textarea><button class="btn ghost" data-act="copy">Copy to share</button></div>`;
   if (msg) h += `<p role="status"><strong>${msg}</strong></p>`;
   return h;
@@ -636,6 +654,8 @@ document.addEventListener('click', e => {
   if (a === 'skipex') { const l = log(); l.pos = (l.pos || 0) + 1; resetEx(); save(); go('session'); return; }
   if (a === 'loadup' || a === 'loaddown') { S.loads[val] = Math.max(0, (S.loads[val] || 0) + (a === 'loadup' ? 1 : -1)); save(); render(); return; }
   if (a === 'win') { S.wins.push({ d: TODAY, t: val }); save(); render(); return; }
+  if (a === 'goal') { S.profile.goalReached = TODAY; save(); msg = ''; render(); return; }
+  if (a === 'goalundo') { delete S.profile.goalReached; save(); render(); return; }
   if (a === 'postwin') { const t = document.getElementById('circlepost').value.trim(); if (t) { S.wins.push({ d: TODAY, t }); save(); msg = 'Saved to your wins.'; } render(); return; }
   if (a === 'sendmsg') { const t = document.getElementById('coachmsg').value.trim(); if (t) { S.msgs.push({ d: TODAY, t }); save(); msg = 'Message saved.'; if (C.LAUNCH.coachEmail) { msg = 'Your email app should have opened. Press send there.'; mail('A question for my coach', t + '\n\n' + S.profile.name); } } render(); return; }
   if (a === 'copy') { const ta = document.getElementById('sharetext'); const done = () => { msg = 'Copied. Paste it into a message to a friend.'; render(); };
@@ -669,7 +689,7 @@ document.addEventListener('click', e => {
 });
 document.addEventListener('input', e => { if (e.target.id === 'carenote') S.draft.careNote = e.target.value;
   if (e.target.id === 'name') { S.draft.name = e.target.value; const n = document.getElementById('nextbtn'); if (n) n.disabled = !e.target.value.trim(); } });
-document.addEventListener('change', e => { const a = e.target.dataset.act; if (a === 'cleared') { S.draft.cleared = e.target.checked; render(); } if (a === 'voice') { S.voice = e.target.checked; save(); } });
+document.addEventListener('change', e => { const a = e.target.dataset.act; if (a === 'region') { S.profile.region = e.target.value; save(); render(); return; } if (a === 'cleared') { S.draft.cleared = e.target.checked; render(); } if (a === 'voice') { S.voice = e.target.checked; save(); } });
 if (hashCode && S.unlocked) save();
 if (GATED.includes(view) && !paid()) view = 'paywall';
 render();

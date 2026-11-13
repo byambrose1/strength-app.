@@ -87,7 +87,7 @@ Film every one of these sitting down the whole time, on a sturdy chair with no a
 |---|---|---|
 | How to do the test | The 30-second sit to stand: arms crossed, full stand, full sit | 30 sec |
 | How to do the seated test | The 30-second arm curl: seated, weight in one hand, full curl up, all the way down | 30 sec |
-| See how Holdfast works | The home page film: who it is for and what it does | 60 sec |
+| See how Strenda works | The home page film: who it is for and what it does | 60 sec |
 | Coach note: Foundations | Say this in your own words: "These first weeks are about turning up, not lifting heavy. If you finish thinking "I could have done more", you got it exactly right." | 30 sec |
 | Coach note: Build | Say this in your own words: "You have the habit now. This is where we ask a bit more of you. Add a little weight when the last two reps feel easy." | 30 sec |
 | Coach note: Strong | Say this in your own words: "Look back at your first strength score. That gap is yours, and nobody gave it to you." | 30 sec |

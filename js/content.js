@@ -201,15 +201,22 @@ const CONTENT = {
   LAUNCH: {
     joinUrl: '',
     codeHash: '',
-    price: '[£X a month]',
-    priceNote: '[What they get and how to cancel, in one sentence.]',
+    price: '£19 a month',
+    priceNote: 'Founding member price for the first 20, kept for as long as you stay. £29 a month after that. Cancel any time.',
+    waitlistUrl: '',  // Tally form link: shows "Join the founding 20" on the home page until payments open
+    /* Local member groups by UK region: region -> invite link (WhatsApp Community or similar). Empty = "opening soon". */
+    groups: {},
     coachEmail: '',
     business: '[your business name and address]',
     contact: '[your contact email]',
-    payTerms: '[Price, how often it is charged, how to cancel, and your refund policy. By law, people who buy online usually have 14 days to change their mind.]',
+    payTerms: 'Strenda costs £19 a month for founding members and £29 a month for everyone else, charged monthly by card through Stripe from the day you join. You can cancel at any time by emailing us, and you will not be charged again. If you change your mind within 14 days of joining, we refund you in full. The strength promise: if you follow your plan for 12 weeks (at least two sessions in most weeks, and your strength tests at the start and at 12 weeks) and your strength score has not held or gone up, email us within 14 days of the 12-week test and we will refund your last three monthly payments.',
     updated: 'October 2026'
   },
 
+  REGIONS: ['North East', 'North West', 'Yorkshire and the Humber', 'East Midlands', 'West Midlands', 'East of England', 'London', 'South East', 'South West', 'Wales', 'Scotland', 'Northern Ireland'],
+  GROUP_RULES: ['Be kind about every body, including your own.', 'No selling, swapping or advising on medication.', 'No medical advice between members. Ask your coach or GP.', 'What is shared in the group stays in the group.'],
+  /* The member journey: shown in My plan so there is always a next stage. */
+  JOURNEY: [['losing', 'Losing', 'Protect your muscle while the weight comes off'], ['keeping', 'Keeping it off', 'Goal reached. Now strength is the measure'], ['coming', 'Coming off medication', 'Strength and protein keep the weight off'], ['life', 'Strength for life', 'New targets, harder versions, your community']],
   WINS: ['Stairs felt easier', 'Carried the shopping', 'Clothes fit differently', 'Slept better', 'Trained when I did not feel like it', 'Got up off the floor easily'],
   CIRCLE_PROMPT: 'What felt easier this week than it did a month ago?'
 };
