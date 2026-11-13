@@ -1,6 +1,6 @@
 {
-  "name": "Holdfast",
-  "short_name": "Holdfast",
+  "name": "Strenda",
+  "short_name": "Strenda",
   "description": "The strength and nutrition app for people on weight-loss medication.",
   "start_url": "./",
   "display": "standalone",

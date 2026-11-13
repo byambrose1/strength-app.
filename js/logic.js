@@ -1,4 +1,4 @@
-/* Holdfast programme rules. Pure functions only: no screen, no storage. Tested in tests/logic.test.js. */
+/* Strenda programme rules. Pure functions only: no screen, no storage. Tested in tests/logic.test.js. */
 const C = typeof CONTENT !== 'undefined' ? CONTENT : require('./content.js');
 
 const iso = d => d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0') + '-' + String(d.getDate()).padStart(2, '0');

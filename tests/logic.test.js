@@ -11,6 +11,8 @@ assert.strictEqual(week({ ...base, sessions: 2 }), 'Jab Rest Walk Lift Walk Walk
 // Daily medication, first training day Monday: evenly spread, no injection day.
 assert.strictEqual(week({ ...base, med: 'daily', jab: 1 }), 'Rest Lift Walk Lift Walk Lift Walk');
 assert.strictEqual(week({ ...base, med: 'none', jab: 1, sessions: 2 }), 'Rest Lift Walk Walk Lift Walk Walk');
+// Not on medication at all: the same even spread, no injection day.
+assert.strictEqual(week({ ...base, med: 'never', jab: 1 }), 'Rest Lift Walk Lift Walk Lift Walk');
 
 // Kit: best available wins; bench upgrades the dumbbell press; bodyweight is the fallback.
 assert.strictEqual(L.pick('squat', base)[0], 'Goblet squat');

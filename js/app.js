@@ -1,4 +1,4 @@
-/* Holdfast screens and interactions. Programme rules live in logic.js, reviewable content in content.js. */
+/* Strenda screens and interactions. Programme rules live in logic.js, reviewable content in content.js. */
 const KEY = 'holdfast-v4';
 const NOW = new Date(), TODAY = iso(NOW);
 const esc = s => String(s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
@@ -72,7 +72,7 @@ function badges() {
 function shareText() {
   const t = S.tests, tot = Object.values(weeksMap()).reduce((a, b) => a + b, 0);
   const score = t.length > 1 ? `My strength score has gone from ${t[0].n} to ${t[t.length - 1].n}. ` : t.length ? `My strength score is ${t[0].n}. ` : '';
-  return `I'm ${wk()} weeks into Holdfast, the strength programme for people on weight-loss medication. ${tot} sessions done. ${score}Losing the weight, keeping the strength.`;
+  return `I'm ${wk()} weeks into Strenda, the strength programme for anyone losing weight. ${tot} sessions done. ${score}Losing the weight, keeping the strength.`;
 }
 
 /* ---------- shared pieces ---------- */
@@ -92,7 +92,7 @@ const routineRow = id => { const r = C.ROUTINES[id]; return `<button class="rowb
 /* A small, static picture of the app for the landing page. Example data, not a real member. */
 function phoneMock() {
   const days = [['Mon', 'walk', 'Walk'], ['Tue', 'strength done', 'Lift'], ['Wed', 'jab', 'Jab'], ['Thu', 'easy', 'Rest'], ['Fri', 'strength today', 'Lift'], ['Sat', 'walk', 'Walk'], ['Sun', 'strength', 'Lift']];
-  return `<div class="phone" role="img" aria-label="The Holdfast app showing an example member's week and today's strength session"><div class="phonein">
+  return `<div class="phone" role="img" aria-label="The Strenda app showing an example member's week and today's strength session"><div class="phonein">
     <section class="stage"><div class="stagehead"><div><span class="pill">Week 3 · Foundations</span><h2>Hi Sam</h2><p class="soft small">2 more this week to keep your muscle.</p></div>${ring(1, 3)}</div>
       <div class="week">${days.map(d => `<div class="day ${d[1]}"><b>${d[0]}</b><i></i><span>${d[2]}</span></div>`).join('')}</div></section>
     <section class="todaycard strength"><p class="eyebrow">Today · Friday</p><h2>Strength session A</h2><p>4 exercises · about 25 minutes</p><span class="btn white">Start session</span></section>
@@ -104,20 +104,20 @@ function viewWelcome() {
   const mine = S.profile && !S.profile.example;
   const cta = mine ? `<button class="btn" data-go="today">Open my plan</button>` : `<button class="btn" data-act="start">Start my plan</button>`;
   const join = C.LAUNCH.joinUrl ? `<a class="btn ghost" href="${C.LAUNCH.joinUrl}" target="_blank" rel="noopener">Join now</a>` : '';
-  const faqs = [['I have never done strength training. Is this for me?', 'Yes. It is made for beginners. Every exercise is shown on video and explained step by step, and you can make any of them easier with one tap.'], ['Which medication does it work with?', 'All of them: weekly injections, daily tablets, or if you have stopped. We never ask for the name or the dose.'], ['Do I need a gym or equipment?', 'No. A sturdy chair is enough. If you cannot get down on the floor, tell us and everything will be standing or seated.'], ['What does it cost?', 'Setting up your plan is free. You will always see the price before you pay anything.']];
+  const faqs = [['I have never done strength training. Is this for me?', 'Yes. It is made for beginners. Every exercise is shown on video and explained step by step, and you can make any of them easier with one tap.'], ['Do I need to be on weight-loss medication?', 'No. Strenda is for anyone losing weight. If you are on a weekly injection or a daily dose, your plan works around it. We never ask for the name or the dose.'], ['Do I need a gym or equipment?', 'No. A sturdy chair is enough. If you cannot get down on the floor, tell us and everything will be standing or seated.'], ['What does it cost?', 'Setting up your plan is free. You will always see the price before you pay anything.']];
   return `<section class="lhero"><div class="lcopy"><h1>Lose the weight.<br>Keep your strength.</h1>
-    <p class="lead">Holdfast is the strength and nutrition app for people on weight-loss medication. Short workouts, simple food guidance, and help on the days you feel rough.</p>
-    <div class="row">${cta}${join}</div><p class="small muted">Two minutes to set up. No card needed.</p></div>${hasVideo('See how Holdfast works') ? video('See how Holdfast works', '') : phoneMock()}</section>
+    <p class="lead">Strenda is the strength and nutrition programme for anyone losing weight, whether through medication, a strict diet, surgery or your own way. Short workouts that move you up as you get stronger, simple food guidance, and a real coach in your corner.</p>
+    <div class="row">${cta}${join}</div><p class="small muted">Two minutes to set up. No card needed.</p></div>${hasVideo('See how Strenda works') ? video('See how Strenda works', '') : phoneMock()}</section>
 
   <section class="lsec"><h2>What you do with it</h2><div class="plain">
     <div><h3>Move</h3><p>Two or three short strength sessions a week. Every exercise is shown on video and explained step by step. No gym needed.</p></div>
     <div><h3>Eat</h3><p>Simple guidance on protein, fluids and what to eat when you are not hungry. No calorie counting.</p></div>
     <div><h3>Feel better</h3><p>Tell the app how you feel each day. If you are sick, tired or sore, it gives you something gentler.</p></div></div></section>
 
-  <section class="who"><h2>Made by the people your GP would send you to</h2><p>When a doctor wants a patient to exercise safely with a health condition, they refer them to an exercise referral specialist. That is who built Holdfast, and every Holdfast coach is one. We work every day with people living with obesity, type 2 diabetes, high blood pressure and sore joints.</p></section>
+  <section class="who"><h2>Made by the people your GP would send you to</h2><p>When a doctor wants a patient to exercise safely with a health condition, they refer them to an exercise referral specialist. That is who built Strenda, and every Strenda coach is one. We work every day with people living with obesity, type 2 diabetes, high blood pressure and sore joints.</p></section>
 
   <section class="lsec"><h2>How to start</h2><div class="steps">
-    <div class="step"><b>1</b><div><strong>Answer a few questions</strong><p class="small muted">About your medication, your body and what you have at home.</p></div></div>
+    <div class="step"><b>1</b><div><strong>Answer a few questions</strong><p class="small muted">About your body, your week and what you have at home.</p></div></div>
     <div class="step"><b>2</b><div><strong>Get your plan</strong><p class="small muted">Built for you, on the days that suit you.</p></div></div>
     <div class="step"><b>3</b><div><strong>Press start</strong><p class="small muted">We show you each move and count with you.</p></div></div></div><div>${cta}</div></section>
 
@@ -134,7 +134,7 @@ function say(key) {
   switch (key) {
     case 'name': return 'Hello. A few quick questions, then I will build your plan. Two minutes, and no trick questions.';
     case 'med': return `Good to meet you, ${n}. First, the practical bit.`;
-    case 'jab': return d.med === 'weekly' ? 'So I will keep your hardest sessions well away from injection day.' : d.med === 'daily' ? 'With a daily dose there is no rough day to plan round, so I will spread things evenly.' : 'Coming off is when strength matters most. You are in the right place.';
+    case 'jab': return d.med === 'weekly' ? 'So I will keep your hardest sessions well away from injection day.' : d.med === 'daily' ? 'With a daily dose there is no rough day to plan round, so I will spread things evenly.' : d.med === 'never' ? 'Then I will spread your sessions evenly, with rest days in between.' : 'Coming off is when strength matters most. You are in the right place.';
     case 'goal': return `${C.FULL[d.jab]} it is. Now the important one.`;
     case 'screen': return 'Next, a safety check. I take this bit seriously.';
     case 'cond': return has('screen', 'none') ? 'Nothing there to hold you back. Good.' : 'Thank you for telling me. Your GP\'s say-so comes first, always.';
@@ -145,14 +145,14 @@ function say(key) {
 }
 function viewSetup() {
   const d = S.draft, order = seq(), key = order[step]; let body, ok = true, auto = false;
-  if (key.startsWith('fact')) { const f = C.FACTS[key];
+  if (key.startsWith('fact')) { const f = d.med === 'never' && C.FACTS[key + 'never'] || C.FACTS[key];
     return `<div class="quiz"><div class="bar" style="grid-template-columns:repeat(${order.length},1fr)">${order.map((_, i) => `<i class="${i <= step ? 'on' : ''}"></i>`).join('')}</div>
       <section class="factcard"><p class="eyebrow">${f.label}</p><h2>${f.head}</h2><p>${f.body}</p>${f.source ? `<p class="small source">${f.source}</p>` : ''}</section>
       <div class="row"><button class="btn ghost" data-act="back">Back</button><button class="btn" id="nextbtn" data-act="next">${f.button}</button></div></div>`; }
   if (key === 'name') { ok = !!(d.name && d.name.trim());
     body = `<h2>What should I call you?</h2><div class="card"><label for="name" class="small muted">First name</label><input type="text" id="name" maxlength="24" autocomplete="given-name" value="${esc(d.name || '')}"></div>`;
   } else if (key === 'med') { auto = true;
-    body = `<h2>How do you take your medication?</h2><p class="muted">I only need the rhythm. Never the name, never the dose.</p><div class="tiles one">${tile('med', 'weekly', d.med, 'A weekly injection', 'Your week is built around injection day')}${tile('med', 'daily', d.med, 'A daily tablet or injection', 'Sessions spread evenly across your week')}${tile('med', 'none', d.med, 'I am coming off it, or already have', 'A plan for keeping the weight off and the strength on')}</div>`;
+    body = `<h2>Are you taking weight-loss medication?</h2><p class="muted">If you are, I only need the rhythm. Never the name, never the dose.</p><div class="tiles one">${tile('med', 'weekly', d.med, 'A weekly injection', 'Your week is built around injection day')}${tile('med', 'daily', d.med, 'A daily tablet or injection', 'Sessions spread evenly across your week')}${tile('med', 'none', d.med, 'I am coming off it, or already have', 'A plan for keeping the weight off and the strength on')}${tile('med', 'never', d.med, 'No, I am not on medication', 'Losing weight through food, activity or surgery')}</div>`;
   } else if (key === 'jab') { auto = true;
     body = (d.med === 'weekly' ? `<h2>Which day is your injection?</h2><p class="muted">No strength that day, and rest the day after.</p>` : `<h2>Which day shall we start your week?</h2><p class="muted">Your first strength session lands here.</p>`) + `<div class="card"><div class="chips">${C.FULL.map((n, i) => chip('jab', i, d.jab, n)).join('')}</div></div>`;
   } else if (key === 'goal') { auto = true;
@@ -182,7 +182,7 @@ function tryCode(raw) { const ok = !!raw && codeHash(raw) === C.LAUNCH.codeHash;
 function viewPaywall() {
   const L = C.LAUNCH, p = S.profile;
   return `<div class="quiz"><div class="say"><span class="mark"></span><p>${p ? esc(p.name) + ', your plan is ready and waiting.' : 'Your plan is waiting.'} One step left.</p></div>
-    <section class="factcard"><p class="eyebrow">Join Holdfast</p><h2>${L.price}</h2><p>${L.priceNote}</p></section>
+    <section class="factcard"><p class="eyebrow">Join Strenda</p><h2>${L.price}</h2><p>${L.priceNote}</p></section>
     <div class="card"><ul class="ticks"><li><span>Your full plan, adjusting every week</span></li><li><span>Every exercise on video, step by step</span></li><li><span>Nutrition guidance and help on rough days</span></li><li><span>A qualified coach to ask</span></li></ul>
       <a class="btn" href="${L.joinUrl}" target="_blank" rel="noopener">Join now</a><p class="small muted">Secure payment by Stripe. You come straight back here afterwards.</p></div>
     <div class="card"><label for="code" class="small"><strong>Already joined? Enter your access code</strong></label><input type="text" id="code" autocomplete="off" autocapitalize="characters" maxlength="24"><button class="btn ghost" data-act="unlock">Unlock</button>${msg ? `<p role="status" class="small"><strong>${msg}</strong></p>` : ''}</div>
@@ -193,7 +193,7 @@ function viewPaywall() {
 function viewReveal() {
   const p = S.profile; let first = null;
   for (let i = 0; i < 7 && !first; i++) { const d = addDays(NOW, i), pl = dayPlan(p, d.getDay()); if (pl.type === 'strength') first = { when: i === 0 ? 'Today' : i === 1 ? 'Tomorrow' : C.FULL[d.getDay()], pl }; }
-  const built = [p.med === 'weekly' ? `Strength kept well away from your ${C.FULL[p.jab]} injection` : p.med === 'daily' ? 'Sessions spread evenly across your week' : 'A plan for keeping the weight off and the strength on',
+  const built = [p.med === 'weekly' ? `Strength kept well away from your ${C.FULL[p.jab]} injection` : p.med === 'daily' || p.med === 'never' ? 'Sessions spread evenly across your week' : 'A plan for keeping the weight off and the strength on',
     `${p.sessions} sessions a week, ${p.len} minutes each, starting at level ${p.stage + 1} of 6`, 'Using ' + p.equip.map(k => C.KIT[k][0].toLowerCase()).join(', ')];
   if (!p.care.includes('none')) built.push('Adapted for: ' + p.care.map(k => C.CARE[k][0].toLowerCase()).join(', '));
   if (!p.cond.includes('none')) built.push('Safety notes for ' + p.cond.map(k => C.CONDITIONS[k][0].toLowerCase()).join(', '));
@@ -329,7 +329,7 @@ function viewRoutine() {
 
 function viewPlan() {
   const p = S.profile, w = wk(), ph = phase(w);
-  const title = p.med === 'weekly' ? 'Built around ' + C.FULL[p.jab] : p.med === 'daily' ? 'Spread across your week' : 'Your keep-it-off plan';
+  const title = p.med === 'weekly' ? 'Built around ' + C.FULL[p.jab] : p.med === 'daily' || p.med === 'never' ? 'Spread across your week' : 'Your keep-it-off plan';
   let h = exNote() + `<div><p class="eyebrow muted">My plan</p><h2>${title}</h2><p class="muted">It does not stop at 12 weeks. The first three phases build you up, then it becomes how you train for good.</p></div>
   <div class="phases">${[['Foundations', 'Weeks 1 to 4'], ['Build', 'Weeks 5 to 8'], ['Strong', 'Weeks 9 to 12'], ['For life', 'Week 13 on']].map(x => `<div class="phase${ph === x[0] ? ' now' : ''}"><b>${x[0]}</b><span class="small">${x[1]}</span></div>`).join('')}</div>
   <div class="card"><h3>Your week</h3><div class="list">`;
@@ -344,7 +344,7 @@ function viewPlan() {
   if ((p.skip || []).length) h += `<div class="card"><h3>Left out of your plan</h3><p class="small muted">These do not appear in your sessions.</p><div class="list">${p.skip.map(x => `<div class="item"><strong>${x}</strong><button class="link" data-act="putback" data-val="${esc(x)}">Put back</button></div>`).join('')}</div></div>`;
   if (!p.example) h += `<div class="card"><h3>Has something changed?</h3><p class="small muted">A new injury, an operation coming up, a sore joint, anything. Tell your coach and they will adjust your plan by hand.</p><textarea id="changemsg" rows="3" maxlength="600" placeholder="I have hurt my wrist and cannot grip anything heavy."></textarea><button class="btn" data-act="sendchange">Tell my coach</button></div>`;
   h += `<div class="card"><h3>Built for you</h3><p class="small muted">Kit: ${p.equip.map(k => C.KIT[k][0].toLowerCase()).join(', ')}. ${p.sessions} sessions a week, ${p.len} minutes each.${p.care.includes('none') ? '' : ' Adapted for: ' + p.care.map(k => C.CARE[k][0].toLowerCase()).join(', ') + '.'}</p>${p.example ? '' : '<button class="btn ghost" data-act="edit">Change my plan</button>'}</div>`;
-  if (p.med !== 'none') h += `<div class="card"><h3>Coming off your medication?</h3><p class="small muted">In one large trial, people regained about two-thirds of the weight they had lost within a year of stopping (STEP 1 trial extension, 2022). Strength training, protein and daily movement are your best defence. Tell us when you stop and your plan switches to keeping it off.</p>${p.example ? '' : '<button class="btn ghost" data-act="comeoff">I have stopped my medication</button>'}</div>`;
+  if (p.med === 'weekly' || p.med === 'daily') h += `<div class="card"><h3>Coming off your medication?</h3><p class="small muted">In one large trial, people regained about two-thirds of the weight they had lost within a year of stopping (STEP 1 trial extension, 2022). Strength training, protein and daily movement are your best defence. Tell us when you stop and your plan switches to keeping it off.</p>${p.example ? '' : '<button class="btn ghost" data-act="comeoff">I have stopped my medication</button>'}</div>`;
   return h;
 }
 
@@ -428,7 +428,7 @@ function reportData(weeks) {
   const p = S.profile, from = iso(addDays(NOW, -(weeks * 7 - 1))), ds = diarySummary(p, S.logs, from, TODAY);
   const inRange = x => x.d >= from && x.d <= TODAY, b = S.body.filter(inRange), t = myTests().filter(inRange), doses = (S.doses || []).filter(d => d >= from);
   const sec = [];
-  sec.push(['Medication', [['Rhythm', p.med === 'weekly' ? 'Weekly injection, on ' + C.FULL[p.jab] + 's' : p.med === 'daily' ? 'Daily dose' : 'Coming off, or stopped'], ['Dose changes logged', doses.length ? doses.map(fmtDate).join(', ') : 'None in this period']]]);
+  sec.push(['Medication', [['Rhythm', p.med === 'weekly' ? 'Weekly injection, on ' + C.FULL[p.jab] + 's' : p.med === 'daily' ? 'Daily dose' : p.med === 'never' ? 'Not on weight-loss medication' : 'Coming off, or stopped'], ['Dose changes logged', doses.length ? doses.map(fmtDate).join(', ') : 'None in this period']]]);
   const sy = SYMPTOMS.map(k => { const pk = peakDay(ds.after[k]); return [symLabel(k), ds.sym[k] + ' of ' + ds.days + ' days' + (p.med === 'weekly' && ds.sym[k] > 1 && pk >= 0 ? ', most often ' + AFTER[pk] : '')]; });
   sy.push(['Days logged as feeling good', ds.good + ' of ' + ds.days]);
   sec.push(['Side effects', sy]);
@@ -468,7 +468,7 @@ function viewProgress() {
   <div class="card"><h3>Milestones</h3><div class="badges">${badges().map(b => `<div class="badge${b[2] ? ' won' : ''}"><i>${b[0]}</i>${b[1]}</div>`).join('')}</div></div>
   <div class="card"><h3>Weekly check-in</h3><p class="small muted">Level ${p.stage + 1} of 6: ${C.STAGES[p.stage][0]} sets of ${C.STAGES[p.stage][1]}</p><div class="bar" style="grid-template-columns:repeat(6,1fr)">${C.STAGES.map((_, i) => `<i class="${i <= p.stage ? 'on' : ''}"></i>`).join('')}</div>
     <fieldset><legend>Any new pain that lasted beyond a session?</legend><div class="chips">${chip('pain', 'no', d.pain, 'No')}${chip('pain', 'yes', d.pain, 'Yes')}</div></fieldset>
-    ${p.med === 'none' ? '' : `<fieldset><legend>Did your dose change this week?</legend><div class="chips">${chip('dosechg', 'no', d.dosechg, 'No')}${chip('dosechg', 'yes', d.dosechg, 'Yes')}</div></fieldset>`}`;
+    ${p.med === 'none' || p.med === 'never' ? '' : `<fieldset><legend>Did your dose change this week?</legend><div class="chips">${chip('dosechg', 'no', d.dosechg, 'No')}${chip('dosechg', 'yes', d.dosechg, 'Yes')}</div></fieldset>`}`;
   if (d.pain === 'yes') h += `<p><strong>Next week stays the same.</strong> Skip the movement that hurts and message your coach before your next session. If it is getting worse, see your GP or a physio.</p>`;
   else if (d.dosechg === 'yes') h += `<p><strong>Easy week ahead.</strong> Side effects are often stronger after a dose change, so your sessions switch to the lighter version for 7 days and your level stays where it is.</p><button class="btn" data-act="easeweek">Set my easy week</button>`;
   else h += `<p><strong>${r.move > 0 ? 'Step up.' : r.move < 0 ? 'Step back.' : 'Hold steady.'}</strong> ${r.why}</p><button class="btn" data-act="apply" data-val="${r.next}">Set next week to ${C.STAGES[r.next][0]} sets of ${C.STAGES[r.next][1]}</button>`;
@@ -500,18 +500,18 @@ function viewCircle() {
 function viewPrivacy() {
   const L = C.LAUNCH;
   return `<div><h2>Privacy</h2><p class="muted">Plain English. Last updated ${L.updated}.</p></div>
-  <div class="card"><h3>What you tell us stays with you</h3><p>Everything you enter in Holdfast, including your name, your health check answers, how you feel and your sessions, is saved in the browser on your own phone or computer. It is not sent to us and we cannot see it.</p><p>You can delete it at any time: open Progress and choose "Erase my plan and start again".</p></div>
+  <div class="card"><h3>What you tell us stays with you</h3><p>Everything you enter in Strenda, including your name, your health check answers, how you feel and your sessions, is saved in the browser on your own phone or computer. It is not sent to us and we cannot see it.</p><p>You can delete it at any time: open Progress and choose "Erase my plan and start again".</p></div>
   <div class="card"><h3>When you contact your coach</h3><p>If you send a message or a form check, it goes by email to our coaching team. We use it only to reply to you, and we delete it within 12 months.</p></div>
   <div class="card"><h3>Videos and fonts</h3><p>Videos are played from YouTube in privacy-enhanced mode, and fonts are loaded from Google. Both are run by Google, which may record that your device requested them.</p></div>
   <div class="card"><h3>Payments</h3><p>Payments are handled by Stripe. We never see or store your card details.</p></div>
-  <div class="card"><h3>Who we are and your rights</h3><p>Holdfast is run by ${L.business}. To ask what we hold about you, or to have it corrected or deleted, write to ${L.contact}. You can also complain to the Information Commissioner's Office at ico.org.uk.</p></div>
+  <div class="card"><h3>Who we are and your rights</h3><p>Strenda is run by ${L.business}. To ask what we hold about you, or to have it corrected or deleted, write to ${L.contact}. You can also complain to the Information Commissioner's Office at ico.org.uk.</p></div>
   <button class="btn ghost" data-act="home">Back</button>`;
 }
 function viewTerms() {
   const L = C.LAUNCH;
   return `<div><h2>Terms</h2><p class="muted">Plain English. Last updated ${L.updated}.</p></div>
-  <div class="card"><h3>What Holdfast is</h3><p>Holdfast gives exercise, nutrition and wellbeing guidance for adults aged 18 and over who are taking, or have taken, weight-loss medication. It is run by ${L.business}.</p></div>
-  <div class="card"><h3>What it is not</h3><p>Holdfast is not medical advice and does not replace your GP, prescriber, pharmacist or dietitian. We never advise on your medication or dose. In an emergency call 999.</p></div>
+  <div class="card"><h3>What Strenda is</h3><p>Strenda gives exercise, nutrition and wellbeing guidance for adults aged 18 and over who are losing weight or keeping it off, including people taking weight-loss medication. It is run by ${L.business}.</p></div>
+  <div class="card"><h3>What it is not</h3><p>Strenda is not medical advice and does not replace your GP, prescriber, pharmacist or dietitian. We never advise on your medication or dose. In an emergency call 999.</p></div>
   <div class="card"><h3>Your part</h3><ul><li>Answer the health check honestly, and tell us if anything changes.</li><li>If the health check asks you to speak to your GP or prescriber first, do that before you start.</li><li>Stop if you feel unwell or have pain, and get medical advice if it does not settle.</li><li>Exercise in a safe, clear space.</li></ul></div>
   <div class="card"><h3>Paying and cancelling</h3><p>${L.payTerms}</p></div>
   <div class="card"><h3>Our responsibility</h3><p>We take care that our guidance is safe and accurate. Nothing in these terms limits our liability for death or personal injury caused by our negligence, or any liability that cannot be limited by law. Beyond that, we are not responsible for loss caused by guidance not being followed or by information you did not give us.</p></div>
@@ -525,7 +525,7 @@ function render() {
   tabs.hidden = !inApp;
   document.body.className = view === 'welcome' ? 'landing' : inApp ? 'inapp' : 'focus';
   tabs.querySelectorAll('button').forEach(b => b.setAttribute('aria-current', b.dataset.go === (view === 'food' ? 'toolkit' : view === 'moves' ? 'plan' : view === 'report' ? 'progress' : view)));
-  hd.innerHTML = `<button class="brand" data-act="home" aria-label="Holdfast home"><span class="mark"></span>Holdfast</button>${view === 'welcome' && !(S.profile && !S.profile.example) ? '<button class="btn small" data-act="start">Start my plan</button>' : ''}`;
+  hd.innerHTML = `<button class="brand" data-act="home" aria-label="Strenda home"><span class="mark"></span>Strenda</button>${view === 'welcome' && !(S.profile && !S.profile.example) ? '<button class="btn small" data-act="start">Start my plan</button>' : ''}`;
   app.innerHTML = VIEWS[view]();
 }
 const GATED = ['today', 'session', 'test', 'routine', 'plan', 'moves', 'toolkit', 'food', 'progress', 'circle', 'report'];

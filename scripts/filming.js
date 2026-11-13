@@ -59,7 +59,7 @@ ${table(tiers.seated)}
 |---|---|---|
 | How to do the test | The 30-second sit to stand: arms crossed, full stand, full sit | 30 sec |
 | How to do the seated test | The 30-second arm curl: seated, weight in one hand, full curl up, all the way down | 30 sec |
-| See how Holdfast works | The home page film: who it is for and what it does | 60 sec |
+| See how Strenda works | The home page film: who it is for and what it does | 60 sec |
 ${Object.keys(C.COACH).map(k => `| Coach note: ${k} | Say this in your own words: "${C.COACH[k]}" | 30 sec |`).join('\n')}
 
 ## Next: by kit

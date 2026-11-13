@@ -1,4 +1,4 @@
-/* Holdfast content. Everything a qualified exercise professional needs to review lives in this one file:
+/* Strenda content. Everything a qualified exercise professional needs to review lives in this one file:
    exercises, sets and reps, injury swaps, screening questions, safety notes, routines and written guidance.
    All of it is DRAFT until reviewed. Nothing here gives advice on medication, dose or diagnosis. */
 const CONTENT = {
@@ -187,6 +187,8 @@ const CONTENT = {
   FACTS: {
     fact1: { label: 'Worth knowing', head: 'Up to half the weight lost can be muscle and bone.', body: 'A 2025 UK evidence review found that 20 to 50% of the weight people lose on these medicines can be lean mass, and that the loss can be like ten years of ageing. Strength training is how you keep it.', source: 'Source: ukactive and Les Mills, GLP-1 medications and muscle mass preservation, December 2025', button: 'Good to know' },
     fact2: { label: 'You are in good company', head: 'You are one of about 1.5 million.', body: 'That is roughly how many people in the UK were on weight-loss medication in March 2025. The Chief Medical Officer\'s advice to all of them: "concentrate on strength as weight decreases to protect muscle." That is exactly what your plan does.', source: 'Sources: IQVIA, reported by Pulse, 2025; UK Chief Medical Officers\' physical activity guidelines, July 2026', button: 'Keep going' },
+    fact1never: { label: 'Worth knowing', head: 'Lose weight fast, and some of it is muscle.', body: 'When weight comes off quickly, part of what you lose is muscle, not just fat. Less muscle means less strength, a slower metabolism and weight that comes back more easily. Strength training is how you keep it.', button: 'Good to know' },
+    fact2never: { label: 'The official advice', head: 'Two days a week. That is all.', body: 'UK guidelines say every adult should do muscle-strengthening activity on at least two days a week. That is exactly what your plan does, in sessions as short as 15 minutes.', source: "Source: UK Chief Medical Officers' physical activity guidelines", button: 'Keep going' },
     fact3: { label: 'About your plan', head: 'Two short sessions a week is enough.', body: 'You do not need a gym, an hour, or to be fit already. About 20 minutes, twice a week, with every move shown to you. We start where you are.', source: '', button: 'Nearly done' }
   },
 
